@@ -1,0 +1,14 @@
+.search {
+  width: 100%;
+  /*color: black !important;*/
+  /*border: 1px solid black;*/
+}
+
+.content {
+  /*background-color: #ffffff;*/
+  height: calc(100vh - 160px);
+  padding: 16px;
+  font-size: 2rem;
+  color: #000000;
+}
+

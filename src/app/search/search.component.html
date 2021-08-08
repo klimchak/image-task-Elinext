@@ -1,0 +1,18 @@
+<div class="content mat-elevation-z8">
+  <form class="search-form" (submit)="searchImage($event)">
+    <mat-form-field class="search" color="primary">
+      <mat-label>Search</mat-label>
+<!--      <input matInput placeholder="Please insert you`r query" (input)="getSearchValue($event)">-->
+      <input matInput placeholder="Please insert you`r query" name="searchValue" [(ngModel)]="searchMessage">
+      <mat-icon matSuffix style="font-size: 1.2em" >search</mat-icon>
+    </mat-form-field>
+  </form>
+  <div *ngIf="response">
+    <mat-grid-list cols="4" rowHeight="1:1.1">
+      <mat-grid-tile *ngFor="let ph of response.photos.photo">
+        <app-cardblock [idImage]="ph.id" [secret]="ph.secret"></app-cardblock>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
+

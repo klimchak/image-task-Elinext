@@ -1,0 +1,20 @@
+mat-sidenav {
+  width: fit-content;
+  /*background: #ffffff;*/
+  color: #000000;
+  padding: 16px;
+  text-align: center;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+
+
+/*mat-sidenav-container {*/
+/*  height: calc(100vh - 128px);*/
+/*}*/
+
+mat-toolbar{
+  /*background-color: #797979 !important;*/
+}
+

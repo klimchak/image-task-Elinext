@@ -1,0 +1,28 @@
+
+mat-grid-list{
+  font-size: 1rem;
+}
+
+mat-card{
+  --width-card: calc(90% - 5px);
+  --height-card: calc(100% - 5px);
+  width: var(--width-card);
+  height: var(--height-card);
+  text-align: center;
+}
+mat-card-header{
+  width: 100%;
+  /*height: 50px;*/
+}
+
+mat-card-content{
+  width: 100%;
+  height: 250px;
+}
+
+img{
+  object-fit: cover;
+  padding: 5px;
+  width: calc(100% - 5px);
+  height: calc(var(--height-card) - 30px);
+}
