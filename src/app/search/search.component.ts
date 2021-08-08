@@ -32,7 +32,7 @@ export class SearchComponent implements OnInit {
     this.http.get('https://www.flickr.com/services/rest/', {
       params: {
         method: 'flickr.photos.search',
-        api_key: '1c44ca9eb138464386fd49c999380764',
+        api_key: 'key',
         text: this.searchMessage,
         format: 'json',
         nojsoncallback: '1',

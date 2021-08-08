@@ -71,7 +71,7 @@ import {MatDividerModule} from "@angular/material/divider";
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '220448430227-7f66navqnc6jnfoss5cpn3rqddvhov0c.apps.googleusercontent.com'
+              'key'
             )
           }
         ]
