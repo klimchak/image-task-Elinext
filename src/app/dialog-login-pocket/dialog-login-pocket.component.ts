@@ -55,8 +55,9 @@ export class DialogLoginPocketComponent implements OnInit {
       return;
     }
     let base = window.btoa(this.f.username.value + ':' + this.f.password.value);
-    const headers = new HttpHeaders().append('Authorization', 'Basic ' + base)
-    this.http.post<any>(`https://www.instapaper.com/api/authenticate`, { username: this.f.username.value, password: this.f.password.value }, {headers}).subscribe((data)=>{
+    const headers = new HttpHeaders().set('Authorization', 'Basic ' + base);
+    headers.set('Access-Control-Allow-Origin', '*')
+    this.http.get(`https://www.instapaper.com/api/authenticate`,  {headers}).subscribe((data)=>{
       this.req = data;
       console.log(this.req);
     })

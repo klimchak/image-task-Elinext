@@ -1,7 +1,10 @@
 {
-  "*": {
+  "/*": {
     "target": "https://raindrop.io/oauth/authorize",
-    "secure": false,
-    "logLevel": "debug"
+    "secure": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api": ""
+    }
   }
 }
