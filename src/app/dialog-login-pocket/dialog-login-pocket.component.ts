@@ -47,14 +47,10 @@ export class DialogLoginPocketComponent implements OnInit {
 
     console.log(this.consumer_key, this.redUri, headers)
     const body = {
-      "consumer_key": '98497-3b66bb26072054e7a7281983',
-      "redirect_uri": 'http://localhost:4200'
+      consumer_key: '98497-3b66bb26072054e7a7281983',
+      redirect_uri: 'https://task-img-elinext.herokuapp.com/'
     };
-    this.http.post('https://getpocket.com/v3/oauth/request',
-      {
-        consumer_key: '98497-3b66bb26072054e7a7281983',
-        "redirect_uri": 'http://localhost:4200'
-      }, {headers}).subscribe(data => {
+    this.http.post<any>('https://getpocket.com/v3/oauth/request', body, {headers}).subscribe(data => {
       this.req = data;
       console.log(this.req)
 
