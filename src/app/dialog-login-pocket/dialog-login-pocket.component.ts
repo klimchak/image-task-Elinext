@@ -41,13 +41,22 @@ export class DialogLoginPocketComponent implements OnInit {
   loginWithPocket(event: any): void {
     event.preventDefault();
     const headers = new HttpHeaders();
+    // headers.append('Access-Control-Allow-Origin', 'http://localhost:4200/api')
     const body = {
-      redirect_uri: 'localhost:4200',
+      redirect_uri: 'http://localhost:4200',
       client_id: '611123ddcf708e9b6838133b'
     };
     this.http.post<any>('https://raindrop.io/oauth/authorize', body).subscribe(data => {
       this.req = data;
       console.log(this.req)
+    // this.http.get('https://raindrop.io/oauth/authorize', {
+    //   params:{
+    //     redirect_uri: 'http://localhost:4200/api',
+    //     client_id: '611123ddcf708e9b6838133b'
+    //   }, headers
+    // }).subscribe(data => {
+    //   this.req = data;
+    //   console.log(this.req)
 
       // this.http.get<any>('https://getpocket.com/auth/authorize', {
       //   params: {

@@ -10,13 +10,8 @@
 <!--  </div>-->
   <div >
     <form method="post" action="https://raindrop.io/oauth/authorize">
-      <mat-form-field appearance="fill">
-        <input matInput type="text" value="https://task-img-elinext.herokuapp.com" id="redirect_uri" name="redirect_uri">
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <input matInput type="text" value="611123ddcf708e9b6838133b" id="client_id" name="client_id">
-      </mat-form-field>
-      <button mat-raised-button type="submit">Login</button>
+
+      <button mat-raised-button type="button" (click)="loginWithPocket($event)">Login</button>
     </form>
   </div>
 </div>
