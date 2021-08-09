@@ -39,8 +39,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   openDialogPocket(): void {
     const dialogRef = this.dialog.open(DialogLoginPocketComponent, {
-      width: '350px',
-      data: {name: this.name, animal: this.animal}
+      width: '400px',
+      // data: {name: this.name, animal: this.animal}
     });
 
     dialogRef.afterClosed().subscribe(result => {

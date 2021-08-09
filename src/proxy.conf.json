@@ -1,7 +1,7 @@
 {
-  "/": {
+  "*": {
     "target": "https://raindrop.io/oauth/authorize",
-    "secure": true,
-    "changeOrigin": true
+    "secure": false,
+    "logLevel": "debug"
   }
 }

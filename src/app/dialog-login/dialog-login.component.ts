@@ -1,6 +1,6 @@
-import {Component, EventEmitter, HostListener, Inject, OnInit, Output} from '@angular/core';
+import {Component, HostListener, Inject, OnInit} from '@angular/core';
 
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GoogleLoginProvider, SocialAuthService, SocialUser} from "angularx-social-login";
 
@@ -16,7 +16,7 @@ export interface DialogData {
   templateUrl: './dialog-login.component.html',
   styleUrls: ['./dialog-login.component.css']
 })
-export class DialogLoginComponent {
+export class DialogLoginComponent implements OnInit{
 
   onNoClick(): void {
     this.dialogRef.close();
