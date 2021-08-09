@@ -1,0 +1,27 @@
+<div mat-dialog-content>
+  <h2>Login with Pocket</h2>
+  <mat-divider></mat-divider>
+  <div *ngIf="isLoggedin === false">
+<!--    <form>-->
+<!--      <mat-form-field appearance="fill">-->
+        <button mat-raised-button type="button" (click)="loginWithPocket()">Login with Pocket</button>
+<!--      </mat-form-field>-->
+<!--    </form>-->
+  </div>
+<!--  <div *ngIf="isLoggedin === true">-->
+<!--    <form method="post" action="https://getpocket.com/v3/oauth/request">-->
+<!--      <mat-form-field appearance="fill">-->
+<!--        <input matInput type="text" [value]="consumer_key" id="consumer_key" name="consumer_key" readonly>-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field appearance="fill">-->
+<!--        <input matInput type="text" [value]="redUri" id="redirect_uri" name="redirect_uri" readonly>-->
+<!--      </mat-form-field>-->
+<!--      -->
+<!--    </form>-->
+<!--  </div>-->
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-actions>
+  <button mat-raised-button type="button" (click)="onNoClick()">Close</button>
+</div>
+

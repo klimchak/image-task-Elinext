@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient }   from '@angular/common/http';
-import { SearchService } from './search.service';
-import { Imagedata } from "./imagedata";
-
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {PageEvent} from '@angular/material/paginator';
+import {apikeys} from "../app.apikey";
 
 @Component({
   selector: 'app-search',
@@ -11,43 +10,44 @@ import { Imagedata } from "./imagedata";
 })
 
 export class SearchComponent implements OnInit {
-  response: any;
+  length: number | undefined;
+  pageSize: number = 12;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+
+  response: any = null;
   searchMessage: string = "";
-  // length: number;
-  // pageSize: number;
-  // pageSizeOptions
-  // showFirstLastButtons
-  // (page)="pageEvent = initImages($event); paginatorBottom.pageIndex = $event.pageIndex"
-  url :string = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=cb3e97553e235bd32b2fa493a878398a&text=car&format=json&nojsoncallback=1&per_page=8';
 
-  constructor(private http: HttpClient) { }
-
-  getSearchValue(event: any){
-    this.searchMessage = event.target.value;
+  constructor(private http: HttpClient, public pageEvent: PageEvent) {
   }
 
-  searchImage(event: any){
+  getNextPage(event: any): void {
+    console.log(event)
+    this.searchImage(null,  event.pageIndex + 1, event.pageSize);
+  }
+
+  searchImage(event: any, pageNumber = 1, pageSize = 12) {
     console.log(this.searchMessage)
-    event.preventDefault();
+    event != null? event.preventDefault(): null;
     this.http.get('https://www.flickr.com/services/rest/', {
       params: {
         method: 'flickr.photos.search',
-        api_key: 'key',
+        api_key: apikeys.flick,
         text: this.searchMessage,
         format: 'json',
         nojsoncallback: '1',
-        per_page: '8'
+        per_page: pageSize,
+        page: pageNumber
       },
     }).subscribe((response) => {
       this.response = response;
+      this.length = this.response.photos.pages;
+      console.log(response)
     })
   }
 
   ngOnInit(): void {
 
   }
-
-
 
 
 }

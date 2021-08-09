@@ -8,7 +8,9 @@ mat-sidenav {
 .spacer {
   flex: 1 1 auto;
 }
-
+button{
+  margin-right: 15px;
+}
 
 /*mat-sidenav-container {*/
 /*  height: calc(100vh - 128px);*/

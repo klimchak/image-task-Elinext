@@ -1,18 +1,30 @@
-<div class="content mat-elevation-z8">
+<div class="content">
   <form class="search-form" (submit)="searchImage($event)">
     <mat-form-field class="search" color="primary">
       <mat-label>Search</mat-label>
-<!--      <input matInput placeholder="Please insert you`r query" (input)="getSearchValue($event)">-->
-      <input matInput placeholder="Please insert you`r query" name="searchValue" [(ngModel)]="searchMessage">
-      <mat-icon matSuffix style="font-size: 1.2em" >search</mat-icon>
+      <input matInput placeholder="Please enter your search term" name="searchValue" [(ngModel)]="searchMessage">
+      <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
     </mat-form-field>
   </form>
-  <div *ngIf="response">
-    <mat-grid-list cols="4" rowHeight="1:1.1">
-      <mat-grid-tile *ngFor="let ph of response.photos.photo">
-        <app-cardblock [idImage]="ph.id" [secret]="ph.secret"></app-cardblock>
-      </mat-grid-tile>
-    </mat-grid-list>
+  <mat-paginator [length]="length"
+                 [pageSize]="pageSize"
+                 [pageSizeOptions]="pageSizeOptions"
+                 (page)="getNextPage(pageEvent = $event)"
+                 aria-label="Select page"
+                 *ngIf="response != null">
+  </mat-paginator>
+  <div
+    fxLayout="row wrap"
+    fxLayoutGap="grid"
+    *ngIf="response != null">
+    <div
+      *ngFor="let ph of response.photos.photo"
+      fxFlex.xl="25%"
+      fxFlex.lg="33%"
+      fxFlex.md="50%"
+      fxFlex.xs="100%">
+      <app-cardblock [idImage]="ph.id" [secret]="ph.secret"></app-cardblock>
+    </div>
   </div>
 </div>
 

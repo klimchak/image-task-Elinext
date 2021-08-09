@@ -1,3 +1,21 @@
 <div class="content">
-
+  <div
+    class="image-container"
+    fxLayout="row wrap"
+    fxLayoutGap="grid"
+    *ngIf="dataStorage.length != 0; else elseBlock" >
+    <div
+      *ngFor="let ph of dataStorage; index as i"
+      fxFlex.xl="25%"
+      fxFlex.lg="33%"
+      fxFlex.md="50%"
+      fxFlex.xs="100%">
+      <app-cardblock [bookmarkPage]="true" [idImage]="ph.id"  [secret]="ph.secret"></app-cardblock>
+    </div>
+  </div>
+  <ng-template #elseBlock>
+    <div>
+      <h2>Bookmarks not found</h2>
+    </div>
+  </ng-template>
 </div>

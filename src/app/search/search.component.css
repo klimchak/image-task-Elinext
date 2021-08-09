@@ -10,5 +10,10 @@
   padding: 16px;
   font-size: 2rem;
   color: #000000;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
-
+mat-paginator{
+  margin-top: 0;
+}

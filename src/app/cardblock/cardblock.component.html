@@ -1,23 +1,19 @@
-<mat-card>
-  <mat-card-header>
-    <h3>{{ response.photo.title._content.length > 25? response.photo.title._content.slice(0, 25) + "..." : response.photo.title._content}}</h3>
-  </mat-card-header>
-  <mat-card-content>
-    <img mat-card-image
-         src="{{ 'https://live.staticflickr.com/' + response.photo.server + '/' + response.photo.id + '_' + response.photo.secret + '.jpg' }}">
-  </mat-card-content>
+<mat-card *ngIf="(response && !bookmarkPage) || (bookmarkPage && get()) ">
+  <img mat-card-image
+       src="{{ 'https://live.staticflickr.com/' + response.photo.server + '/' + response.photo.id + '_' + response.photo.secret + '.jpg' }}"
+       alt="{{ response.photo.title._content }}">
   <mat-card-actions>
-    <button mat-raised-button> Bookmark it! </button>
-    <button mat-raised-button> Remove Bookmark </button>
+    <button mat-raised-button (click)="set()" *ngIf="!bookmarkPage">Add bookmark</button>
+    <button mat-raised-button *ngIf="removeBookmark" (click)="remove()">Remove Bookmark</button>
   </mat-card-actions>
   <mat-card-footer>
     <mat-chip-list aria-label="Tags">
-      <mat-chip class="tag" disabled *ngIf="response.photo.tags.tag.length === 0; else elseBlock">
+      <mat-chip class="tag" disabled *ngIf="response.photo.tags.tag.length == 0; else elseBlock">
         No tags
       </mat-chip>
-      <ng-template #elseBlock ngFor let-tag [ngForOf]="response.photo.tags.tag" let-i="index" >
-        <mat-chip class="tag" disabled *ngIf="i <= 3">
-          {{tag.raw.length > 8 ? tag.raw.slice(0, 6) + '...': tag.raw}}
+      <ng-template #elseBlock ngFor let-tag [ngForOf]="response.photo.tags.tag" let-i="index">
+        <mat-chip class="tag" *ngIf="i <= 5">
+          {{tag.raw.length > 8 ? tag.raw.slice(0, 8) + '...': tag.raw}}
         </mat-chip>
       </ng-template>
     </mat-chip-list>

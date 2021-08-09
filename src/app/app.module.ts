@@ -1,33 +1,37 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule }   from '@angular/common/http';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCardModule } from '@angular/material/card';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http';
+import {AppComponent} from './app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {LayoutModule} from '@angular/cdk/layout';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatIconModule} from '@angular/material/icon';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCardModule} from '@angular/material/card';
 // import { MatGridListModule } from '@angular/material/grid-list';
-import { FooterComponent } from './footer/footer.component';
-import { SearchComponent } from './search/search.component';
-import { CardblockComponent } from './cardblock/cardblock.component';
-import { PaginationComponent } from './pagination/pagination.component';
+import {FooterComponent} from './footer/footer.component';
+import {SearchComponent} from './search/search.component';
+import {CardblockComponent} from './cardblock/cardblock.component';
+import {PaginationComponent} from './pagination/pagination.component';
 import {MatInputModule} from "@angular/material/input";
-import {SearchService} from "./search/search.service";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatChipsModule} from "@angular/material/chips";
 import {FormsModule} from "@angular/forms";
-import { BookmarkComponent } from './bookmark/bookmark.component';
-
-import { ReactiveFormsModule } from '@angular/forms';
-import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
-import { GoogleLoginProvider } from 'angularx-social-login';
-import { DialogLoginComponent } from './dialog-login/dialog-login.component';
+import {BookmarkComponent} from './bookmark/bookmark.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {ReactiveFormsModule} from '@angular/forms';
+import {SocialLoginModule, SocialAuthServiceConfig} from 'angularx-social-login';
+import {GoogleLoginProvider} from 'angularx-social-login';
+import {DialogLoginComponent} from './dialog-login/dialog-login.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatDividerModule} from "@angular/material/divider";
+import {AngularWebStorageModule} from 'angular-web-storage';
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {PageEvent} from '@angular/material/paginator';
+import { DialogLoginPocketComponent } from './dialog-login-pocket/dialog-login-pocket.component';
+import {apikeys} from "./app.apikey";
 
 @NgModule({
   declarations: [
@@ -37,7 +41,8 @@ import {MatDividerModule} from "@angular/material/divider";
     CardblockComponent,
     PaginationComponent,
     BookmarkComponent,
-    DialogLoginComponent
+    DialogLoginComponent,
+    DialogLoginPocketComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +63,9 @@ import {MatDividerModule} from "@angular/material/divider";
     SocialLoginModule,
     MatDialogModule,
     MatDividerModule,
+    FlexLayoutModule,
+    AngularWebStorageModule,
+    MatPaginatorModule,
     // MatListModule,
     // MatGridListModule
   ],
@@ -71,14 +79,15 @@ import {MatDividerModule} from "@angular/material/divider";
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              'key'
+              apikeys.google
             )
           }
         ]
       } as SocialAuthServiceConfig,
     },
-    SearchService
+    PageEvent
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
