@@ -12,7 +12,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
   styleUrls: ['./dialog-login-pocket.component.css']
 })
 export class DialogLoginPocketComponent implements OnInit {
-  email: string | undefined;
+  username: string | undefined;
   password: string | undefined;
   consumer_key = apikeys.pocket;
   redUri = apikeys.redirectUri;
@@ -38,19 +38,14 @@ export class DialogLoginPocketComponent implements OnInit {
 
   }
 
-  loginWithPocket(): void {
-
+  loginWithPocket(event: any): void {
+    event.preventDefault();
     const headers = new HttpHeaders();
-    headers.append('content-type', 'application/json; charset=UTF8')
-    headers.append('X-Accept', 'application/json')
-    headers.append('Access-Control-Allow-Origin', 'http://localhost:4200')
-
-    console.log(this.consumer_key, this.redUri, headers)
     const body = {
-      consumer_key: '98497-3b66bb26072054e7a7281983',
-      redirect_uri: 'https://task-img-elinext.herokuapp.com/'
+      redirect_uri: 'localhost:4200',
+      client_id: '611123ddcf708e9b6838133b'
     };
-    this.http.post<any>('https://getpocket.com/v3/oauth/request', body, {headers}).subscribe(data => {
+    this.http.post<any>('https://raindrop.io/oauth/authorize', body).subscribe(data => {
       this.req = data;
       console.log(this.req)
 
