@@ -32,6 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private location: Location,
     private activateRoute: ActivatedRoute,
+    private httpReq: HttpRequest<any>
   ) {
   }
 
@@ -57,9 +58,15 @@ export class AppComponent implements OnInit, OnDestroy {
       headers.append('Access-Control-Allow-Credentials', 'true')
       headers.delete('Content-Type');
       headers.delete('Origin');
-      headers.append('Content-Type', 'application/json')
-      headers.append('Origin', 'https://api.raindrop.io')
-      this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body),{headers}).subscribe((response) => {
+      headers.set('Content-Type', 'application/json')
+      headers.set('Origin', 'https://api.raindrop.io')
+      this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body),{headers: new HttpHeaders({
+          'Access-Control-Allow-Origin': 'https://task-img-elinext.herokuapp.com/login',
+          'Access-Control-Expose-Headers': 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset',
+          'Access-Control-Allow-Credentials': 'true',
+          'Content-Type': 'application/json',
+          'Origin': 'https://api.raindrop.io'
+        })}).subscribe((response) => {
         this.req = response;
         console.log('authorization_code', this.req)
       })
@@ -69,7 +76,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   funcRep(){
-    const headers = new HttpHeaders();
+    // const httpReq = new HttpRequest();
     let body = {
       grant_type: 'authorization_code',
       code: this.code,
@@ -77,14 +84,14 @@ export class AppComponent implements OnInit, OnDestroy {
       client_secret: 'b341602e-1268-4c7e-b210-70b795f027d9',
       redirect_uri: 'https://task-img-elinext.herokuapp.com'
     };
-    headers.append('Access-Control-Allow-Origin', 'https://task-img-elinext.herokuapp.com/login')
-    headers.append('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
-    headers.append('Access-Control-Allow-Credentials', 'true')
-    headers.delete('Content-Type');
-    headers.delete('Content-Type');
-    headers.delete('Origin');
-    headers.append('Content-Type', 'application/json')
-    headers.append('Origin', 'https://api.raindrop.io')
+    this.httpReq.headers.append('Access-Control-Allow-Origin', 'https://task-img-elinext.herokuapp.com/login')
+    this.httpReq.headers.append('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
+    this.httpReq.headers.append('Access-Control-Allow-Credentials', 'true')
+    this.httpReq.headers.delete('Content-Type');
+    this.httpReq.headers.delete('Content-Type');
+    this.httpReq.headers.delete('Origin');
+    this.httpReq.headers.append('Content-Type', 'application/json')
+    this.httpReq.headers.append('Origin', 'https://api.raindrop.io')
     // this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body),{headers}).subscribe((response) => {
     //   this.req = response;
     //   console.log('authorization_code', this.req)
@@ -99,6 +106,7 @@ export class AppComponent implements OnInit, OnDestroy {
             'Access-Control-Expose-Headers': 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset',
             'Access-Control-Allow-Credentials': 'true',
             'Content-Type': 'application/json',
+            'Origin': 'https://api.raindrop.io'
           },
           method: 'POST',
           mode: 'no-cors',
