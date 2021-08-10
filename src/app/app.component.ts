@@ -45,6 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
     const parameters = new URLSearchParams(window.location.search);
     if (parameters.get('code') != null) {
       this.code = parameters.get('code');
+      console.log(this.code)
       const headers = new HttpHeaders();
       let body = {
         grant_type: 'authorization_code',
@@ -60,13 +61,13 @@ export class AppComponent implements OnInit, OnDestroy {
       headers.delete('Origin');
       headers.set('Content-Type', 'application/json')
       headers.set('Origin', 'https://api.raindrop.io')
-      this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body),{headers: new HttpHeaders({
+      this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body),{headers: {
           'Access-Control-Allow-Origin': 'https://task-img-elinext.herokuapp.com/login',
           'Access-Control-Expose-Headers': 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset',
           'Access-Control-Allow-Credentials': 'true',
           'Content-Type': 'application/json',
           'Origin': 'https://api.raindrop.io'
-        })}).subscribe((response) => {
+        }}).subscribe((response) => {
         this.req = response;
         console.log('authorization_code', this.req)
       })
