@@ -66,7 +66,7 @@ export class DialogLoginPocketComponent implements OnInit {
     this.http.get(`https://www.instapaper.com/api/authenticate`,  {
       headers,
       params:{
-        redirect_uri: 'https://task-img-elinext.herokuapp.com',
+        redirect_uri: 'https://task-img-elinext.herokuapp.com/login',
         client_id: '611123ddcf708e9b6838133b'
       }
     }).subscribe((data)=>{
