@@ -4,7 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DataService} from "../app.service";
 import {DialogData} from "../dialog-login/dialog-login.component";
 import {apikeys} from "../app.apikey";
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpBackend, HttpRequest} from '@angular/common/http';
 
 import {Router, ActivatedRoute} from '@angular/router';
 import {first} from 'rxjs/operators';
@@ -34,6 +34,7 @@ export class DialogLoginPocketComponent implements OnInit {
     private readonly dataService: DataService,
     private http: HttpClient,
     private formBuilder: FormBuilder,
+    private httpBackend: HttpBackend,
   ) {
   }
 
@@ -58,42 +59,43 @@ export class DialogLoginPocketComponent implements OnInit {
     //   return;
     // }
     // let base = window.btoa(this.f.username.value + ':' + this.f.password.value);
-    const headers = new HttpHeaders();
-    headers.set('Access-Control-Allow-Origin', 'https://task-img-elinext.herokuapp.com');
-    headers.set('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset');
-    headers.set('Access-Control-Allow-Credentials', 'true');
-    headers.set('Content-Type', 'application/json');
-    this.http.get(`https://www.instapaper.com/api/authenticate`,  {
-      headers,
-      params:{
-        redirect_uri: 'https://task-img-elinext.herokuapp.com/login',
-        client_id: '611123ddcf708e9b6838133b'
-      }
-    }).subscribe((data)=>{
-      this.req = data;
-      console.log(this.req);
+    let body = {
+      redirect_uri: 'https://task-img-elinext.herokuapp.com/login',
+      client_id: '611123ddcf708e9b6838133b'
+    };
+    // let headers = new HttpHeaders();
+    // headers = headers.append('Access-Control-Allow-Origin', 'https://task-img-elinext.herokuapp.com/login')
+    // headers = headers.append('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
+    // headers = headers.append('Access-Control-Allow-Credentials', 'true')
+    // headers = headers.delete('Content-Type');
+    // headers = headers.delete('Origin');
+    // headers = headers.set('Content-Type', 'application/json')
+    // headers = headers.set('Origin', 'https://api.raindrop.io')
+    let obj = {
+      'Access-Control-Allow-Origin': 'https://localhost:4200',
+      'Access-Control-Expose-Headers': 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset',
+      'Access-Control-Allow-Credentials': 'true',
+      'Content-Type': 'application/json',
+      'Origin': 'https://api.raindrop.io',
+      'vary': 'Origin'
+    }
+
+
+    let httpOptions = {
+      headers: new HttpHeaders(obj).set('Origin', 'https://api.raindrop.io'),
+      params: body
+    };
+    let f = this.httpOptions.headers = new HttpHeaders(obj)
+    console.log(f)
+    let y = new HttpRequest('GET','https://raindrop.io/oauth/authorize', null, {headers:new HttpHeaders(obj)})
+    this.httpBackend.handle(y).subscribe((response) => {
+      this.req = response;
+      console.log('authorization_code', this.req)
     })
-    // this.httpOptions = {headers};
-
-
-    // this.http.jsonp(`https://raindrop.io/oauth/authorize?redirect_uri=localhost:4200&client_id=611123ddcf708e9b6838133b`, 'callbackName').subscribe((data)=>{
-    //   this.req = data;
-    //   console.log(this.req);
+    // this.http.get('https://raindrop.io/oauth/authorize',  httpOptions).subscribe((response) => {
+    //   this.req = response;
+    //   console.log('authorization_code', this.req)
     // })
-
-
-    // // this.loading = true;
-    // this.authenticationService.login(this.f.username.value, this.f.password.value)
-    //   .pipe(first())
-    //   .subscribe(
-    //     data => {
-    //       console.log(data)
-    //       // this.router.navigate([this.returnUrl]);
-    //     },
-    //     error => {
-    //       this.error = error;
-    //       this.loading = false;
-    //     });
 
   }
 
