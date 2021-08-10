@@ -59,9 +59,10 @@ export class DialogLoginPocketComponent implements OnInit {
     // }
     // let base = window.btoa(this.f.username.value + ':' + this.f.password.value);
     const headers = new HttpHeaders();
-    headers.set('Access-Control-Allow-Origin', 'https://task-img-elinext.herokuapp.com')
-    headers.set('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
-    headers.set('Access-Control-Allow-Credentials', 'true')
+    headers.set('Access-Control-Allow-Origin', 'https://task-img-elinext.herokuapp.com');
+    headers.set('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset');
+    headers.set('Access-Control-Allow-Credentials', 'true');
+    headers.set('Content-Type', 'application/json');
     this.http.get(`https://www.instapaper.com/api/authenticate`,  {
       headers,
       params:{
