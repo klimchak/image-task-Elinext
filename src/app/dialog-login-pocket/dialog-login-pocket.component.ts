@@ -51,20 +51,27 @@ export class DialogLoginPocketComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
-
-    // stop here if form is invalid
-    if (this.loginForm.invalid) {
-      return;
-    }
-    let base = window.btoa(this.f.username.value + ':' + this.f.password.value);
-    const headers = new HttpHeaders().set('Authorization', 'Basic ' + base);
-    // headers.set('Access-Control-Allow-Origin', '*')
-    // headers.set('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT')
-    // this.http.get(`https://www.instapaper.com/api/authenticate`,  {headers}).subscribe((data)=>{
-    //   this.req = data;
-    //   console.log(this.req);
-    // })
+    // this.submitted = true;
+    //
+    // // stop here if form is invalid
+    // if (this.loginForm.invalid) {
+    //   return;
+    // }
+    // let base = window.btoa(this.f.username.value + ':' + this.f.password.value);
+    const headers = new HttpHeaders();
+    headers.set('Access-Control-Allow-Origin', 'https://task-img-elinext.herokuapp.com')
+    headers.set('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
+    headers.set('Access-Control-Allow-Credentials', 'true')
+    this.http.get(`https://www.instapaper.com/api/authenticate`,  {
+      headers,
+      params:{
+        redirect_uri: 'https://task-img-elinext.herokuapp.com',
+        client_id: '611123ddcf708e9b6838133b'
+      }
+    }).subscribe((data)=>{
+      this.req = data;
+      console.log(this.req);
+    })
     // this.httpOptions = {headers};
 
 
