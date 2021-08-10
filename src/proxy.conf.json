@@ -3,6 +3,7 @@
     "target": "https://raindrop.io/oauth/authorize",
     "secure": true,
     "logLevel": "debug",
-    "changeOrigin": true
+    "changeOrigin": true,
+    "pathRewrite": {"^/login" : ""}
   }
 }
