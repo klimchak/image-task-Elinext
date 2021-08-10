@@ -32,6 +32,12 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {PageEvent} from '@angular/material/paginator';
 import { DialogLoginPocketComponent } from './dialog-login-pocket/dialog-login-pocket.component';
 import {apikeys} from "./app.apikey";
+import {HttpClientJsonpModule} from "@angular/common/http";
+import { Routes, RouterModule} from "@angular/router";
+
+const appRoutes: Routes = [
+  {path: 'login', component: AppComponent}
+]
 
 @NgModule({
   declarations: [
@@ -66,6 +72,8 @@ import {apikeys} from "./app.apikey";
     FlexLayoutModule,
     AngularWebStorageModule,
     MatPaginatorModule,
+    HttpClientJsonpModule,
+    RouterModule.forRoot(appRoutes)
     // MatListModule,
     // MatGridListModule
   ],

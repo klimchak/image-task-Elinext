@@ -16,6 +16,9 @@ import {first} from 'rxjs/operators';
   styleUrls: ['./dialog-login-pocket.component.css']
 })
 export class DialogLoginPocketComponent implements OnInit {
+  // url = "https://app.raindrop.io/account/login?redirect=https%3A%2F%2Fapi.raindrop.io%2Fv1%2Foauth%2Fauthorize%3Fclient_id%3D611123ddcf708e9b6838133b%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A4200"
+  url = "https://app.raindrop.io/account/login?redirect=https%3A%2F%2Fapi.raindrop.io%2Fv1%2Foauth%2Fauthorize%3Fclient_id%3D611123ddcf708e9b6838133b%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A4200%252Flogin"
+  opif = false;
   loginForm: FormGroup | any;
   loading = false;
   submitted = false;
@@ -56,11 +59,21 @@ export class DialogLoginPocketComponent implements OnInit {
     }
     let base = window.btoa(this.f.username.value + ':' + this.f.password.value);
     const headers = new HttpHeaders().set('Authorization', 'Basic ' + base);
-    headers.set('Access-Control-Allow-Origin', '*')
-    this.http.get(`https://www.instapaper.com/api/authenticate`,  {headers}).subscribe((data)=>{
-      this.req = data;
-      console.log(this.req);
-    })
+    // headers.set('Access-Control-Allow-Origin', '*')
+    // headers.set('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT')
+    // this.http.get(`https://www.instapaper.com/api/authenticate`,  {headers}).subscribe((data)=>{
+    //   this.req = data;
+    //   console.log(this.req);
+    // })
+    // this.httpOptions = {headers};
+
+
+    // this.http.jsonp(`https://raindrop.io/oauth/authorize?redirect_uri=localhost:4200&client_id=611123ddcf708e9b6838133b`, 'callbackName').subscribe((data)=>{
+    //   this.req = data;
+    //   console.log(this.req);
+    // })
+
+
     // // this.loading = true;
     // this.authenticationService.login(this.f.username.value, this.f.password.value)
     //   .pipe(first())
@@ -73,10 +86,13 @@ export class DialogLoginPocketComponent implements OnInit {
     //       this.error = error;
     //       this.loading = false;
     //     });
+
   }
 
 
-
+  openIframe(){
+    window.open(this.url, "_blank");
+  }
 
 
 

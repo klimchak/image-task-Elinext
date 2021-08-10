@@ -72,8 +72,7 @@
               "browserTarget": "image-task-elilink:build:production"
             },
             "development": {
-              "browserTarget": "image-task-elilink:build:development",
-              "proxyConfig": "src/proxy.conf.json"
+              "browserTarget": "image-task-elilink:build:development"
             }
           },
           "defaultConfiguration": "development"

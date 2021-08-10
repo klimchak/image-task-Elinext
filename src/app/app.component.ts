@@ -6,7 +6,10 @@ import {DialogLoginComponent} from "./dialog-login/dialog-login.component";
 import { DataService } from "./app.service";
 import { Subscription } from 'rxjs';
 import {DialogLoginPocketComponent} from "./dialog-login-pocket/dialog-login-pocket.component";
-
+import {HttpClient, HttpHeaders, HttpRequest} from "@angular/common/http";
+import { from } from 'rxjs'
+import { Location } from "@angular/common";
+import { ActivatedRoute} from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -20,10 +23,26 @@ export class AppComponent implements OnInit, OnDestroy {
 
   userPhoto: string | undefined;
 
+
   constructor(
     public dialog: MatDialog,
-    private readonly dataService: DataService
-  ) { }
+    private readonly dataService: DataService,
+    private http: HttpClient,
+    private location: Location,
+    private activateRoute: ActivatedRoute,
+  ) {
+  }
+
+  ngOnInit() {
+    this.subs = this.dataService.photoUrl$.subscribe((value) => this.setPhotoUrl(value));
+
+    this.activateRoute.queryParams.subscribe(params => {
+      this.req = params.code;
+    });
+    const parameters = new URLSearchParams(window.location.search);
+    console.log(parameters.get('code'))
+    console.log(this.req)
+  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogLoginComponent, {
@@ -49,9 +68,52 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
-    this.subs = this.dataService.photoUrl$.subscribe((value) => this.setPhotoUrl(value));
+
+  req: any;
+  getCode(){
+    // this.http.get(`https://raindrop.io/oauth/authorize?redirect_uri=localhost:4200&client_id=611123ddcf708e9b6838133b`).subscribe((data)=>{
+    //   this.req = data;
+    //   console.log(this.req);
+    // })
+    // let base = window.btoa('shpektras@gmai.com' + ':' + ',^wQ25!e7fNSUSH');
+    // const headers = new HttpHeaders().set('Authorization', 'Basic ' + base);
+    // // headers.set('Access-Control-Allow-Origin', '*')
+    // // headers.set('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT')
+    // let body = { username: "shpektras@gmai.com", password: ",^wQ25!e7fNSUSH"};
+
+    let result = from( // wrap the fetch in a from if you need an rxjs Observable
+      fetch(
+        `https://raindrop.io/oauth/authorize?redirect_uri=http://localhost:4200/login&client_id=611123ddcf708e9b6838133b`,
+        {
+          // body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'text',
+          },
+          method: 'GET',
+          mode: 'no-cors',
+          redirect: "follow"
+        }
+      ).finally(()=>{
+        console.log(result)
+      })
+    );
+    result.subscribe((resp) => {
+      console.log(resp)
+      this.req = resp;
+    })
+    console.log(this.req)
+    let url = "https://app.raindrop.io/account/login?redirect=https%3A%2F%2Fapi.raindrop.io%2Fv1%2Foauth%2Fauthorize%3Fclient_id%3D611123ddcf708e9b6838133b%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A4200"
+    // window.open("https://app.raindrop.io/account/login?redirect=https%3A%2F%2Fapi.raindrop.io%2Fv1%2Foauth%2Fauthorize%3Fclient_id%3D611123ddcf708e9b6838133b%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A4200", "_blank");
+
+
+
+
+    // this.http.get(`https://www.instapaper.com/api/authenticate`,  {headers}).subscribe((data)=>{
+    //   this.req = data;
+    //   console.log(this.req);
+    // })
   }
+
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }

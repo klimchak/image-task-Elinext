@@ -1,22 +1,25 @@
 <mat-toolbar color="primary">
   <span>My App</span>
   <span class="spacer"></span>
-  <button mat-icon-button class="icon favorite-icon" aria-label="Icon-button with heart icon" mat-raised-button (click)="openDialogPocket()">
+  <!--  <button mat-icon-button class="icon favorite-icon" aria-label="Icon-button with heart icon" mat-raised-button (click)="openDialogPocket()">-->
+  <button mat-icon-button class="icon favorite-icon" aria-label="Icon-button with heart icon" mat-raised-button
+          (click)="openDialogPocket()">
     <img
       src="https://iconarchive.com/download/i99541/blackvariant/button-ui-requests-3/Pocket.ico"
       alt="logoPocket"
       style="width: 100%;height: 100%;">
   </button>
-  <button mat-icon-button class="icon favorite-icon" aria-label="Icon-button with heart icon" mat-raised-button (click)="openDialog()">
+  <button mat-icon-button class="icon favorite-icon" aria-label="Icon-button with heart icon" mat-raised-button
+          (click)="openDialog()">
     <img
       *ngIf="userPhoto == null"
       src="https://image.similarpng.com/very-thumbnail/2020/12/Illustration-of-Google-icon-on-transparent-background-PNG.png"
       alt="photoUser"
       style="width: 100%;height: 100%;">
-<!--    <mat-icon class="icon" aria-hidden="false" aria-label="User verified icon" *ngIf="userPhoto == null">login</mat-icon>-->
-<!--    <mat-icon class="icon" aria-hidden="false" aria-label="User verified icon" *ngIf="userPhoto != null">-->
-      <img *ngIf="userPhoto != null" src="{{ userPhoto }}" alt="photoUser" style="width: 100%;height: 100%;">
-<!--    </mat-icon>-->
+    <!--    <mat-icon class="icon" aria-hidden="false" aria-label="User verified icon" *ngIf="userPhoto == null">login</mat-icon>-->
+    <!--    <mat-icon class="icon" aria-hidden="false" aria-label="User verified icon" *ngIf="userPhoto != null">-->
+    <img *ngIf="userPhoto != null" src="{{ userPhoto }}" alt="photoUser" style="width: 100%;height: 100%;">
+    <!--    </mat-icon>-->
   </button>
 </mat-toolbar>
 
@@ -46,9 +49,6 @@
 <!--</div>-->
 
 
-
 <mat-toolbar>
-    <span>Copyright</span>
+  <span>Copyright</span>
 </mat-toolbar>
-
-

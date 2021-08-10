@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node server.js",
+    "start": "ng serve --ssl true \n --ssl-cert \"C:\\Users\\klim\\WebstormProjects\\image-task-elilink\\Local.crt\" \n --ssl-key \"C:\\Users\\klim\\WebstormProjects\\image-task-elilink\\Local.key\"",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "heroku-postbuild": "ng build --prod"
@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
     "@cedx/ngx-webstorage": "^6.0.0",
+    "angular-oauth2-oidc": "^12.0.2",
     "angular-web-storage": "^12.0.0",
     "angularx-social-login": "^4.0.1",
     "cors": "^2.8.5",
