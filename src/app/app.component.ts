@@ -83,7 +83,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     let result = from( // wrap the fetch in a from if you need an rxjs Observable
       fetch(
-        `https://raindrop.io/oauth/authorize?redirect_uri=http://localhost:4200/login&client_id=611123ddcf708e9b6838133b`,
+        `https://raindrop.io/oauth/authorize?redirect_uri=https://task-img-elinext.herokuapp.com/login&client_id=611123ddcf708e9b6838133b`,
         {
           // body: JSON.stringify(body),
           headers: {
