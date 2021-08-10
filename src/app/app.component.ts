@@ -24,6 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   userPhoto: string | undefined;
 
+  code: any;
 
   constructor(
     public dialog: MatDialog,
@@ -42,6 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
     const parameters = new URLSearchParams(window.location.search);
     if (parameters.get('code') != null) {
+      this.code = parameters.get('code');
       const headers = new HttpHeaders();
       let body = {
         grant_type: 'authorization_code',
@@ -50,10 +52,11 @@ export class AppComponent implements OnInit, OnDestroy {
         client_secret: 'b341602e-1268-4c7e-b210-70b795f027d9',
         redirect_uri: 'https://task-img-elinext.herokuapp.com'
       };
-      headers.set('Access-Control-Allow-Origin', 'https://task-img-elinext.herokuapp.com/login')
-      headers.set('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
-      headers.set('Access-Control-Allow-Credentials', 'true')
-      headers.set('Content-Type', 'application/json')
+      headers.append('Access-Control-Allow-Origin', 'https://task-img-elinext.herokuapp.com/login')
+      headers.append('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
+      headers.append('Access-Control-Allow-Credentials', 'true')
+      headers.delete('Content-Type');
+      headers.append('Content-Type', 'application/json')
       this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body),{headers}).subscribe((response) => {
         this.req = response;
         console.log('authorization_code', this.req)
@@ -62,6 +65,53 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log(parameters.get('code'))
     console.log(this.req)
   }
+
+  funcRep(){
+    const headers = new HttpHeaders();
+    let body = {
+      grant_type: 'authorization_code',
+      code: this.code,
+      client_id: '611123ddcf708e9b6838133b',
+      client_secret: 'b341602e-1268-4c7e-b210-70b795f027d9',
+      redirect_uri: 'https://task-img-elinext.herokuapp.com'
+    };
+    headers.append('Access-Control-Allow-Origin', 'https://task-img-elinext.herokuapp.com/login')
+    headers.append('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
+    headers.append('Access-Control-Allow-Credentials', 'true')
+    headers.delete('Content-Type');
+    headers.append('Content-Type', 'application/json')
+    // this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body),{headers}).subscribe((response) => {
+    //   this.req = response;
+    //   console.log('authorization_code', this.req)
+    // })
+    let result = from( // wrap the fetch in a from if you need an rxjs Observable
+      fetch(
+        `https://raindrop.io/oauth/access_token`,
+        {
+          body: JSON.stringify(body),
+          headers: {
+            'Access-Control-Allow-Origin': 'https://task-img-elinext.herokuapp.com/login',
+            'Access-Control-Expose-Headers': 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset',
+            'Access-Control-Allow-Credentials': 'true',
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          mode: 'no-cors',
+          redirect: "follow"
+        }
+      ).finally(() => {
+        console.log(result)
+      })
+    );
+    result.subscribe((resp) => {
+      console.log(resp)
+      this.req = resp;
+    })
+
+
+
+  }
+
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogLoginComponent, {
