@@ -56,7 +56,9 @@ export class AppComponent implements OnInit, OnDestroy {
       headers.append('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
       headers.append('Access-Control-Allow-Credentials', 'true')
       headers.delete('Content-Type');
+      headers.delete('Origin');
       headers.append('Content-Type', 'application/json')
+      headers.append('Origin', 'https://api.raindrop.io')
       this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body),{headers}).subscribe((response) => {
         this.req = response;
         console.log('authorization_code', this.req)
@@ -79,7 +81,10 @@ export class AppComponent implements OnInit, OnDestroy {
     headers.append('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
     headers.append('Access-Control-Allow-Credentials', 'true')
     headers.delete('Content-Type');
+    headers.delete('Content-Type');
+    headers.delete('Origin');
     headers.append('Content-Type', 'application/json')
+    headers.append('Origin', 'https://api.raindrop.io')
     // this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body),{headers}).subscribe((response) => {
     //   this.req = response;
     //   console.log('authorization_code', this.req)
