@@ -84,7 +84,7 @@ export class AppComponent implements OnInit, OnDestroy {
       client_secret: 'b341602e-1268-4c7e-b210-70b795f027d9',
       redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
     };
-    this.http.post<any>('https://raindrop.io/oauth/access_token', JSON.stringify(body)).subscribe((response) => {
+    this.http.post<any>('https://task-img-elinext.herokuapp.com/data', JSON.stringify(body)).subscribe((response) => {
       this.req = response;
       console.log('authorization_code', this.req)
     })
