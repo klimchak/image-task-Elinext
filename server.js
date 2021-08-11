@@ -1,8 +1,6 @@
 //Install express server
 const express = require('express');
-import cors from 'cors'
-// const cors = require('cors');
-const path = require('path');
+const cors = require('cors');
 
 const app = express();
 app.use(cors());
