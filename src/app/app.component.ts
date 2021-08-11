@@ -38,17 +38,14 @@ export class AppComponent implements OnInit, OnDestroy {
   dHead?: HttpHeaders;
 
   ngOnInit() {
-    // let body = {
-    //   grant_type: 'authorization_code',
-    //   code: '611123ddcf708e9b6838133b',
-    //   client_id: '611123ddcf708e9b6838133b',
-    //   client_secret: 'b341602e-1268-4c7e-b210-70b795f027d9',
-    //   redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
-    // };
-    // this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body)).subscribe((response) => {
-    //   this.req = response;
-    //   console.log('authorization_code', this.req)
-    // })
+    let body = {
+      consumer_key: '98497-3b66bb26072054e7a7281983',
+      redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
+    };
+    this.http.post('https://getpocket.com/v3/oauth/request', JSON.stringify(body)).subscribe((response) => {
+      this.req = response;
+      console.log('authorization_code', this.req)
+    })
     this.subs = this.dataService.photoUrl$.subscribe((value) => this.setPhotoUrl(value));
 
     this.activateRoute.queryParams.subscribe(params => {
