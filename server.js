@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors());
+app.options('*', cors());
 // Serve only the static files form the dist directory
 app.use(express.static('./dist/image-task-elilink'));
 
