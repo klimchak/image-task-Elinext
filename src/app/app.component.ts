@@ -42,7 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
       consumer_key: '98497-3b66bb26072054e7a7281983',
       redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
     };
-    this.http.post('https://getpocket.com/v3/oauth/request', JSON.stringify(body)).subscribe((response) => {
+    this.http.post('https://task-img-elinext.herokuapp.com/data', JSON.stringify(body)).subscribe((response) => {
       this.req = response;
       console.log('authorization_code', this.req)
     })
