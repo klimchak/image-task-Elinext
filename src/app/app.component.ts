@@ -38,6 +38,17 @@ export class AppComponent implements OnInit, OnDestroy {
   dHead?: HttpHeaders;
 
   ngOnInit() {
+    // let body = {
+    //   grant_type: 'authorization_code',
+    //   code: '611123ddcf708e9b6838133b',
+    //   client_id: '611123ddcf708e9b6838133b',
+    //   client_secret: 'b341602e-1268-4c7e-b210-70b795f027d9',
+    //   redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
+    // };
+    // this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body)).subscribe((response) => {
+    //   this.req = response;
+    //   console.log('authorization_code', this.req)
+    // })
     this.subs = this.dataService.photoUrl$.subscribe((value) => this.setPhotoUrl(value));
 
     this.activateRoute.queryParams.subscribe(params => {
@@ -55,19 +66,17 @@ export class AppComponent implements OnInit, OnDestroy {
         client_secret: 'b341602e-1268-4c7e-b210-70b795f027d9',
         redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
       };
-      let headers = new HttpHeaders()
-        .set('Access-Control-Allow-Origin', '*')
-        .set('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
-        .set('Access-Control-Allow-Credentials', 'true')
-        .delete('Content-Type')
-        .delete('Origin')
-        .set('Content-Type', 'application/json')
-        .set('Origin', 'https://api.raindrop.io')
-        .set('Sec-Fetch-Mode', 'no-cors')
+      // let headers = new HttpHeaders()
+      //   .set('Access-Control-Allow-Origin', '*')
+      //   .set('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
+      //   .set('Access-Control-Allow-Credentials', 'true')
+      //   .delete('Content-Type')
+      //   .delete('Origin')
+      //   .set('Content-Type', 'application/json')
+      //   .set('Origin', 'https://api.raindrop.io')
+      //   .set('Sec-Fetch-Mode', 'no-cors')
 
-      this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body), {
-        headers
-      }).subscribe((response) => {
+      this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body)).subscribe((response) => {
         this.req = response;
         console.log('authorization_code', this.req)
       })
@@ -84,18 +93,16 @@ export class AppComponent implements OnInit, OnDestroy {
       client_secret: 'b341602e-1268-4c7e-b210-70b795f027d9',
       redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
     };
-    let headers = new HttpHeaders();
-    headers = headers.append('Access-Control-Allow-Origin', '*')
-    headers = headers.append('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
-    headers = headers.append('Access-Control-Allow-Credentials', 'true')
-    headers = headers.delete('Content-Type');
-    headers = headers.delete('Origin');
-    headers = headers.set('Content-Type', 'application/json')
-    headers = headers.set('Origin', 'https://api.raindrop.io')
-    headers = headers.set('Sec-Fetch-Mode', 'no-cors')
-    this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body), {
-      headers
-    }).subscribe((response) => {
+    // let headers = new HttpHeaders();
+    // headers = headers.append('Access-Control-Allow-Origin', '*')
+    // headers = headers.append('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
+    // headers = headers.append('Access-Control-Allow-Credentials', 'true')
+    // headers = headers.delete('Content-Type');
+    // headers = headers.delete('Origin');
+    // headers = headers.set('Content-Type', 'application/json')
+    // headers = headers.set('Origin', 'https://api.raindrop.io')
+    // headers = headers.set('Sec-Fetch-Mode', 'no-cors')
+    this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body)).subscribe((response) => {
       this.req = response;
       console.log('authorization_code', this.req)
     })

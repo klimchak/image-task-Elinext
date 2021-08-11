@@ -34,6 +34,8 @@ import { DialogLoginPocketComponent } from './dialog-login-pocket/dialog-login-p
 import {apikeys} from "./app.apikey";
 import {HttpClientJsonpModule} from "@angular/common/http";
 import { Routes, RouterModule} from "@angular/router";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {AppInterceptorService} from "./app.interceptor.service";
 
 const appRoutes: Routes = [
   {path: 'login', component: AppComponent}
@@ -93,7 +95,12 @@ const appRoutes: Routes = [
         ]
       } as SocialAuthServiceConfig,
     },
-    PageEvent
+    PageEvent,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AppInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
