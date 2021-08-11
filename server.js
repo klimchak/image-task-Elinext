@@ -15,11 +15,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/*', (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.sendFile('index.html', {root: 'dist/image-task-elilink/'});
-});
+app.get('/*', (req, res) =>
+  res.sendFile('index.html', {root: 'dist/image-task-elilink/'})
+);
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 8080);
 // server.js
