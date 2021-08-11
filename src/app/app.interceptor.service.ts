@@ -22,6 +22,7 @@ export class AppInterceptorService implements HttpInterceptor{
         //   .set('Access-Control-Allow-Credentials', 'true'),
         withCredentials: true,
       });
+      console.log('cloneResp', request)
       // const request = req.clone({
       //   headers: req.headers
       //     .set('Sec-Fetch-Mode', 'no-cors'),
