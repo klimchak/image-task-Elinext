@@ -84,54 +84,10 @@ export class AppComponent implements OnInit, OnDestroy {
       client_secret: 'b341602e-1268-4c7e-b210-70b795f027d9',
       redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
     };
-    // let headers = new HttpHeaders();
-    // headers = headers.append('Access-Control-Allow-Origin', '*')
-    // headers = headers.append('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
-    // headers = headers.append('Access-Control-Allow-Credentials', 'true')
-    // headers = headers.delete('Content-Type');
-    // headers = headers.delete('Origin');
-    // headers = headers.set('Content-Type', 'application/json')
-    // headers = headers.set('Origin', 'https://api.raindrop.io')
-    // headers = headers.set('Sec-Fetch-Mode', 'no-cors')
     this.http.post<any>('https://raindrop.io/oauth/access_token', JSON.stringify(body)).subscribe((response) => {
       this.req = response;
       console.log('authorization_code', this.req)
     })
-
-
-    //   let body = {
-    //     grant_type: 'authorization_code',
-    //     code: this.code,
-    //     client_id: '611123ddcf708e9b6838133b',
-    //     client_secret: 'b341602e-1268-4c7e-b210-70b795f027d9',
-    //     redirect_uri: 'https://task-img-elinext.herokuapp.com'
-    //   };
-    //   const httpOptions  = {
-    //     headers: new HttpHeaders({'Content-Type': 'application/json'}),
-    //     'body': JSON.stringify(body),
-    //     method: 'POST',
-    //     mode: 'no-cors',
-    //     redirect: "follow"
-    //   };
-    //   httpOptions.headers.set('Access-Control-Allow-Origin', 'https://task-img-elinext.herokuapp.com/login')
-    //     .set('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
-    //     .set('Access-Control-Allow-Credentials', 'true')
-    //     .delete('Content-Type')
-    //     .delete('Origin')
-    //     .set('Content-Type', 'application/json')
-    //     .set('Origin', 'https://api.raindrop.io');
-    //   let result = from(
-    //     fetch(
-    //       `https://raindrop.io/oauth/access_token`,
-    //       httpOptions
-    //     ).finally(() => {
-    //       console.log(result)
-    //     })
-    //   );
-    //   result.subscribe((resp) => {
-    //     console.log(resp)
-    //     this.req = resp;
-    //   })
   }
 
 
