@@ -38,17 +38,15 @@ export class AppComponent implements OnInit, OnDestroy {
   dHead?: HttpHeaders;
 
   ngOnInit() {
-    // let body = {
-    //   grant_type: 'authorization_code',
-    //   code: this.code,
-    //   client_id: '611123ddcf708e9b6838133b',
-    //   client_secret: 'b341602e-1268-4c7e-b210-70b795f027d9',
-    //   redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
-    // };
-    // this.http.post('https://task-img-elinext.herokuapp.com/data', JSON.stringify(body)).subscribe((response) => {
-    //   this.req = response;
-    //   console.log('authorization_code', this.req)
-    // })
+    this.http.get('https://raindrop.io/oauth/authorize', {
+      params:{
+        redirect_uri: 'https://task-img-elinext.herokuapp.com/login',
+        client_id: '611123ddcf708e9b6838133b'
+      }
+    }).subscribe((response) => {
+      this.req = response;
+      console.log('authorization_code', this.req)
+    })
     this.subs = this.dataService.photoUrl$.subscribe((value) => this.setPhotoUrl(value));
 
     this.activateRoute.queryParams.subscribe(params => {
@@ -84,7 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
       client_secret: 'b341602e-1268-4c7e-b210-70b795f027d9',
       redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
     };
-    this.http.post<any>('https://task-img-elinext.herokuapp.com/data', JSON.stringify(body)).subscribe((response) => {
+    this.http.post<any>('https://raindrop.io/oauth/access_token', JSON.stringify(body)).subscribe((response) => {
       this.req = response;
       console.log('authorization_code', this.req)
     })
