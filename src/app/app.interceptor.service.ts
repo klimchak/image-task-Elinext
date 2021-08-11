@@ -16,10 +16,11 @@ export class AppInterceptorService implements HttpInterceptor{
     }
     else {
       const request = req.clone({
-        // headers: req.headers
-        //   .set('Access-Control-Allow-Origin', 'https://task-img-elinext.herokuapp.com/')
-        //   .set('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
-        //   .set('Access-Control-Allow-Credentials', 'true'),
+        headers: req.headers
+          .set('Access-Control-Allow-Origin', 'https://task-img-elinext.herokuapp.com/')
+          .set('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
+          .set('Access-Control-Allow-Credentials', 'true')
+          .set('Content-Type', 'application/json; charset=utf-8'),
         withCredentials: true,
       });
       console.log('cloneResp', request)
