@@ -42,10 +42,29 @@ export class AppComponent implements OnInit, OnDestroy {
       consumer_key: '98497-3b66bb26072054e7a7281983',
       redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
     };
-    this.http.post('https://getpocket.com/v3/oauth/request', JSON.stringify(body)).subscribe((response) => {
-      this.req = response;
-      console.log('authorization_code', this.req)
-    })
+
+    var xhr = new XMLHttpRequest();
+    var url = "https://getpocket.com/v3/oauth/request";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("X-Accept", "application/json");
+    xhr.onreadystatechange = function () {
+      // if (xhr.readyState === 4 && xhr.status === 200) {
+        var json = JSON.parse(xhr.responseText);
+        console.log('json', json);
+      // }
+    };
+    var data = JSON.stringify(body);
+    xhr.send(data);
+
+
+
+
+
+    // this.http.post('https://getpocket.com/v3/oauth/request', JSON.stringify(body)).subscribe((response) => {
+    //   this.req = response;
+    //   console.log('authorization_code', this.req)
+    // })
     this.subs = this.dataService.photoUrl$.subscribe((value) => this.setPhotoUrl(value));
 
     this.activateRoute.queryParams.subscribe(params => {

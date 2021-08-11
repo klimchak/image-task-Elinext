@@ -10,11 +10,7 @@ export class AppInterceptorService implements HttpInterceptor{
     //   return ;
     // }
     console.log('iiiiiii', '\n', req, '\n', req.method)
-    if (req.method == 'OPTIONS'){
-      console.log('EMPTY',req, req.method)
-      return EMPTY;
-    }
-    else {
+
       const request = req.clone({
         body: req.body,
         headers: req.headers
@@ -43,7 +39,7 @@ export class AppInterceptorService implements HttpInterceptor{
       //   withCredentials: true,
       // });
       return next.handle(request)
-    }
+
 
   }
 }
