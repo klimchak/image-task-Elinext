@@ -59,27 +59,18 @@ export class AppComponent implements OnInit, OnDestroy {
       this.code = parameters.get('code');
       console.log(this.code)
       // this.funcRep();
-      let body = {
-        grant_type: 'authorization_code',
-        code: parameters.get('code'),
-        client_id: '611123ddcf708e9b6838133b',
-        client_secret: 'b341602e-1268-4c7e-b210-70b795f027d9',
-        redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
-      };
-      // let headers = new HttpHeaders()
-      //   .set('Access-Control-Allow-Origin', '*')
-      //   .set('Access-Control-Expose-Headers', 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
-      //   .set('Access-Control-Allow-Credentials', 'true')
-      //   .delete('Content-Type')
-      //   .delete('Origin')
-      //   .set('Content-Type', 'application/json')
-      //   .set('Origin', 'https://api.raindrop.io')
-      //   .set('Sec-Fetch-Mode', 'no-cors')
+      // let body = {
+      //   grant_type: 'authorization_code',
+      //   code: parameters.get('code'),
+      //   client_id: '611123ddcf708e9b6838133b',
+      //   client_secret: 'b341602e-1268-4c7e-b210-70b795f027d9',
+      //   redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
+      // };
 
-      this.http.post('https://raindrop.io/oauth/access_token', body).subscribe((response) => {
-        this.req = response;
-        console.log('authorization_code', this.req)
-      })
+      // this.http.post('https://raindrop.io/oauth/access_token', body).subscribe((response) => {
+      //   this.req = response;
+      //   console.log('authorization_code', this.req)
+      // })
     }
     console.log(parameters.get('code'))
     console.log(this.req)
@@ -102,7 +93,7 @@ export class AppComponent implements OnInit, OnDestroy {
     // headers = headers.set('Content-Type', 'application/json')
     // headers = headers.set('Origin', 'https://api.raindrop.io')
     // headers = headers.set('Sec-Fetch-Mode', 'no-cors')
-    this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body)).subscribe((response) => {
+    this.http.post<any>('https://raindrop.io/oauth/access_token', body).subscribe((response) => {
       this.req = response;
       console.log('authorization_code', this.req)
     })
