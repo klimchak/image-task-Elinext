@@ -76,7 +76,7 @@ export class AppComponent implements OnInit, OnDestroy {
       //   .set('Origin', 'https://api.raindrop.io')
       //   .set('Sec-Fetch-Mode', 'no-cors')
 
-      this.http.post('https://raindrop.io/oauth/access_token', JSON.stringify(body)).subscribe((response) => {
+      this.http.post('https://raindrop.io/oauth/access_token', body).subscribe((response) => {
         this.req = response;
         console.log('authorization_code', this.req)
       })
