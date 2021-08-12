@@ -37,6 +37,7 @@ export class DialogLoginRaindropComponent implements OnInit {
       }
     }).subscribe((response) => {
       this.req = response;
+      console.log(Object.keys(this.req))
       console.log('bookmarksbookmarks', response)
     });
 
