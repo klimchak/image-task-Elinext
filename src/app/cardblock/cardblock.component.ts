@@ -71,18 +71,30 @@ export class CardblockComponent implements OnInit {
       },
       withCredentials: true
     }).subscribe((response) => {
-      // this.req = response;
+      this.req = response;
       console.log('raindrop.io', response)
     });
 
-    this.httpWithoutInterceptor.get('https://api.raindrop.io/rest/v1/collections', {
+    this.httpWithoutInterceptor.get('https://api.raindrop.io/rest/v1/raindrop/', {
+      headers: {
+        'Authorization': 'Bearer 65f8e71c-ecd5-4743-828d-a79718168070'
+      },
+      params:{
+        id: this.req.items._id
+      },
+      withCredentials: true
+    }).subscribe((response) => {
+      // this.req = response;
+      console.log('raindrop.io!!!!!', this.req.items._id, response)
+    });
+    this.httpWithoutInterceptor.get('https://api.raindrop.io/rest/v1/raindrop/'+this.req.items._id, {
       headers: {
         'Authorization': 'Bearer 65f8e71c-ecd5-4743-828d-a79718168070'
       },
       withCredentials: true
     }).subscribe((response) => {
       // this.req = response;
-      console.log('raindrop.io', response)
+      console.log('!!!!raindrop.io!!!!!', this.req.items._id, response)
     });
     this.removeBookmark = true;
   }
