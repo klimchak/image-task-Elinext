@@ -43,15 +43,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-    httpWithoutInterceptor.post('https://getpocket.com/v3/oauth/request',
-      {
-        consumer_key: '611123ddcf708e9b6838133b',
-        redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
-      },
-      { headers:{
-      'Host':'getpocket.com',
-      'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
-      'X-Accept':'application/x-www-form-urlencoded'
+    httpWithoutInterceptor.get('https://api.raindrop.io/rest/v1/collections',{
+      headers:{
+      'Authorization':'Bearer 88296e43-c4fe-4881-8a98-cdb8a8a6e2a6'
       }
       }).subscribe((response) => {
       this.req = response;
