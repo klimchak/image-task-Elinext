@@ -47,6 +47,11 @@ export class AppComponent implements OnInit, OnDestroy {
       params:{
         redirect_uri: 'https://task-img-elinext.herokuapp.com/login',
         client_id: '611123ddcf708e9b6838133b'
+      },
+      headers: {
+        'Access-Control-Allow-Origin':'https://task-img-elinext.herokuapp.com',
+        'Access-Control-Expose-Headers': 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset',
+        'Access-Control-Allow-Credentials': 'true'
       }
     }).subscribe((response) => {
       this.req = response;
