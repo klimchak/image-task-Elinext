@@ -11,6 +11,7 @@ import {HttpBackend, HttpClient} from "@angular/common/http";
 export class DialogLoginRaindropComponent implements OnInit {
   public loginToRaindrop = this.dataService.loginToRaindrop;
   req: any;
+  err: any;
   constructor(
     public dialogRef: MatDialogRef<DialogLoginRaindropComponent>,
     private readonly dataService: DataService,
@@ -39,10 +40,15 @@ export class DialogLoginRaindropComponent implements OnInit {
       this.req = response;
       console.log(Object.keys(this.req))
       console.log('bookmarksbookmarks', response)
+    },
+    (error) => {
+      this.err = error;
+      console.error('error caught in component', '\n', this.err, '\n', Object.keys(this.err) )
+      //throw error;   //You can also throw the error to a global error handler
     });
 
 
-    const winHtml = this.req.error.text;
+    const winHtml = this.err.error.text;
 
     const winUrl = URL.createObjectURL(
       new Blob([winHtml], {type: "text/html"})
