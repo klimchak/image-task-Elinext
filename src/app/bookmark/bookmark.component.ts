@@ -59,14 +59,14 @@ export class BookmarkComponent implements OnInit, OnChanges {
 
   getPhotosRaindrop() {
     let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-    httpWithoutInterceptor.get('https://api.raindrop.io/rest/v1/collections', {
-      headers: {
-        'Authorization': 'Bearer 65f8e71c-ecd5-4743-828d-a79718168070'
-      },
-      withCredentials: true
+    httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/bookmarks', {
+      params: {
+        'devkey': 'J5kMhhP3NnUTqEZHwg54yci8lq6vztLV',
+        'key': 'bfK0xUXMP0G6KpwWjBJoAjRnGFhXOeoP'
+      }
     }).subscribe((response) => {
       // this.req = response;
-      console.log('raindrop.io', response)
+      console.log('bookmarksbookmarks', response)
     });
   }
 }

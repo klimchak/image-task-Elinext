@@ -1,6 +1,7 @@
 //Install express server
 const express = require('express');
 const cors = require('cors');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 app.use(cors());
@@ -14,13 +15,13 @@ app.use(express.static('./dist/image-task-elilink'));
 //   next();
 // });
 
-app.get('/*', (req, res) =>{
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Expose-Headers", "ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+app.use('/bookmarks', createProxyMiddleware({ target: 'http://devapi.saved.io/bookmarks', changeOrigin: true }));
+
+
+
+app.get('/*', (req, res) =>
   res.sendFile('index.html', {root: 'dist/image-task-elilink/'})
-});
+);
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 8080);
 // server.js
