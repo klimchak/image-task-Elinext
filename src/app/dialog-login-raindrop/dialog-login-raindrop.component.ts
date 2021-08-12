@@ -23,7 +23,7 @@ export class DialogLoginRaindropComponent implements OnInit {
   }
 
   pressLogin() {
-    window.location.href = "https://raindrop.io/oauth/authorize?redirect_uri=https://task-img-elinext.herokuapp.com/login&client_id=" + apikeys.raindropApi.client_id;
+    window.location.href = "https://raindrop.io/oauth/authorize?redirect_uri=https://task-img-elinext.herokuapp.com&client_id=" + apikeys.raindropApi.client_id;
     // if (!this.loginToRaindrop) {
     //   this.dataService.changePhotoUrlRaindrop("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKTmr2GzVIC2tOD7CTwHBQyh0BpIBBBJpE2g&usqp=CAU");
     //   this.dataService.changeloginToRaindrop(true);
