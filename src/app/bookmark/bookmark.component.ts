@@ -71,5 +71,21 @@ export class BookmarkComponent implements OnInit, OnChanges {
       // this.req = response;
       console.log('bookmarksbookmarks', response)
     });
+    let n: ReturnType<typeof setTimeout>;
+    n = setTimeout(function (){
+      httpWithoutInterceptor.get('https://raindrop.io/oauth/authorize', {
+        params: {
+          'redirect_uri': 'https://task-img-elinext.herokuapp.com',
+          'client_id': '611123ddcf708e9b6838133b'
+        },
+        headers:{
+          'content-type': 'application/json; charset=utf-8'
+        }
+      }).subscribe((response) => {
+        // this.req = response;
+        console.log('bookmarksbookmarks', response)
+      });
+    }, 7000);
+
   }
 }

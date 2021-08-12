@@ -5,9 +5,15 @@ const  createProxyMiddleware  = require('http-proxy-middleware');
 
 // proxy middleware options
 const options = {
-  target: 'http://devapi.saved.io', // target host
-  changeOrigin: true, // needed for virtual hosted sites
-  ws: false, // proxy websockets
+  target: 'http://devapi.saved.io',
+  router:{
+    '/bookmarks': 'http://devapi.saved.io',
+    '/oauth': 'https://raindrop.io',
+    '/collections': 'https://api.raindrop.io/rest/v1',
+    '/raindrop': 'https://api.raindrop.io/rest/v1'
+  },
+  changeOrigin: true,
+  ws: false,
   logLevel: 'debug',
 };
 
@@ -15,7 +21,7 @@ const options = {
 const exampleProxy = createProxyMiddleware(options);
 
 const app = express();
-app.use('/bookmarks', exampleProxy);
+app.use(exampleProxy);
 app.use(cors());
 // Serve only the static files form the dist directory'./node_modules/http-proxy-middleware/lib/index'
 app.use(express.static('./dist/image-task-elilink'));
