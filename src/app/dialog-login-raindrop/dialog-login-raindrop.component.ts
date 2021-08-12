@@ -33,7 +33,7 @@ export class DialogLoginRaindropComponent implements OnInit {
         'client_id': '611123ddcf708e9b6838133b'
       },
       headers: {
-        'content-type': 'application/json; charset=utf-8'
+        'content-type': 'text/html; charset=utf-8'
       }
     }).subscribe((response) => {
       this.req = response;
