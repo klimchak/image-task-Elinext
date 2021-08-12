@@ -9,6 +9,7 @@ const options = {
   router: {
     '/bookmarks': 'http://devapi.saved.io',
     '/oauth': 'https://raindrop.io',
+    '/access_token': 'https://raindrop.io',
     '/collections': 'https://api.raindrop.io/rest/v1',
     '/raindrop': 'https://api.raindrop.io/rest/v1'
   },
