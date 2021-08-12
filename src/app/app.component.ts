@@ -45,7 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
     let httpWithoutInterceptor = new HttpClient(this.httpBackend)
     httpWithoutInterceptor.get('https://raindrop.io/oauth/authorize', {
       headers: {
-        'Access-Control-Allow-Origin':'https://task-img-elinext.herokuapp.com',
+        'Access-Control-Allow-Origin':'*',
         // 'Access-Control-Expose-Headers': 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset',
         // 'Access-Control-Allow-Credentials': 'true'
       }
