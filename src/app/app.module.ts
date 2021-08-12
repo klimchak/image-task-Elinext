@@ -31,6 +31,11 @@ import {apikeys} from "./app.apikey";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AppInterceptorService} from "./app.interceptor.service";
 import {DialogLoginRaindropComponent} from './dialog-login-raindrop/dialog-login-raindrop.component';
+import {RouterModule, Routes} from "@angular/router";
+
+const appRoutes: Routes = [
+  {path: '/login', component: AppComponent}
+]
 
 @NgModule({
   declarations: [
@@ -44,6 +49,7 @@ import {DialogLoginRaindropComponent} from './dialog-login-raindrop/dialog-login
   imports: [
     BrowserModule,
     HttpClientModule,
+    RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
     LayoutModule,
     MatToolbarModule,
