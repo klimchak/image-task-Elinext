@@ -8,15 +8,7 @@ const options = {
   target: 'http://devapi.saved.io/bookmarks', // target host
   changeOrigin: true, // needed for virtual hosted sites
   ws: false, // proxy websockets
-  // pathRewrite: {
-  //   '^/api/old-path': '/api/new-path', // rewrite path
-  //   '^/api/remove/path': '/path', // remove base path
-  // },
-  // router: {
-  //   // when request.headers.host == 'dev.localhost:3000',
-  //   // override target 'http://www.example.org' to 'http://localhost:8000'
-  //   'dev.localhost:3000': 'http://localhost:8000',
-  // },
+  logLevel: 'debug',
 };
 
 
@@ -37,6 +29,5 @@ app.get('/*', (req, res) =>
 );
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 8080)
-
 
 /* server configuration here */

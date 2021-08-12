@@ -63,6 +63,9 @@ export class BookmarkComponent implements OnInit, OnChanges {
       params: {
         'devkey': 'J5kMhhP3NnUTqEZHwg54yci8lq6vztLV',
         'key': 'bfK0xUXMP0G6KpwWjBJoAjRnGFhXOeoP'
+      },
+      headers:{
+        'content-type': 'application/json; charset=utf-8'
       }
     }).subscribe((response) => {
       // this.req = response;
