@@ -8,8 +8,8 @@ const options = {
   target: 'http://devapi.saved.io',
   router: {
     '/bookmarks': 'http://devapi.saved.io',
-    '/oauth': 'https://raindrop.io',
-    '/access_token': 'https://raindrop.io',
+    '/oauth': 'https://raindrop.io/oauth',
+    '/access_token': 'https://raindrop.io/oauth',
     '/collections': 'https://api.raindrop.io/rest/v1',
     '/raindrop': 'https://api.raindrop.io/rest/v1'
   },
