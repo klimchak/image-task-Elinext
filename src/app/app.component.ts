@@ -36,8 +36,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.router.url == '/login') {
-      this.code = new URL(window.location.toString()).searchParams.getAll('code');
+    console.log('this.router.url', this.router.config[0].path)
+    if (this.router.config[0].path == 'login') {
+      this.code = new URL(window.location.toString()).searchParams.getAll('code')[0];
       let body = {
         grant_type: apikeys.raindropApi.grant_type,
         code: this.code,
@@ -45,6 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
         client_secret: apikeys.raindropApi.client_secret,
         redirect_uri: apikeys.raindropApi.redirect_uri
       }
+      console.log('body', body)
       let httpWithoutInterceptor = new HttpClient(this.httpBackend);
       httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/access_token', JSON.stringify(body), {
         headers: {

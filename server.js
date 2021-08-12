@@ -1,12 +1,12 @@
 //Install express server
 const express = require('express');
 const cors = require('cors');
-const  createProxyMiddleware  = require('http-proxy-middleware');
+const createProxyMiddleware = require('http-proxy-middleware');
 
 // proxy middleware options
 const options = {
   target: 'http://devapi.saved.io',
-  router:{
+  router: {
     '/bookmarks': 'http://devapi.saved.io',
     '/oauth': 'https://raindrop.io',
     '/collections': 'https://api.raindrop.io/rest/v1',
@@ -15,6 +15,7 @@ const options = {
   changeOrigin: true,
   ws: false,
   logLevel: 'debug',
+  cookiePathRewrite: {"*": ""}
 };
 
 
@@ -25,9 +26,6 @@ app.use('/bookmarks', exampleProxy);
 app.use(cors());
 // Serve only the static files form the dist directory'./node_modules/http-proxy-middleware/lib/index'
 app.use(express.static('./dist/image-task-elilink'));
-
-
-
 
 
 app.get('/*', (req, res) =>

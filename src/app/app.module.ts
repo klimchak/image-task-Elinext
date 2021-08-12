@@ -34,7 +34,7 @@ import {DialogLoginRaindropComponent} from './dialog-login-raindrop/dialog-login
 import {RouterModule, Routes} from "@angular/router";
 
 const appRoutes: Routes = [
-  {path: '/login', component: AppComponent}
+  {path: 'login', component: AppComponent}
 ]
 
 @NgModule({
