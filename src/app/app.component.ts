@@ -42,30 +42,20 @@ export class AppComponent implements OnInit, OnDestroy {
   dHead?: HttpHeaders;
 
   ngOnInit() {
-    let httpWithoutInterceptor = new HttpClient(this.httpBackend)
-    httpWithoutInterceptor.get('https://raindrop.io/oauth/authorize', {
-      headers: {
-        'Access-Control-Allow-Origin':'*',
-        // 'Access-Control-Expose-Headers': 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset',
-        // 'Access-Control-Allow-Credentials': 'true'
-      }
-    }).subscribe((response) => {
-      this.req = response;
-      console.log('authorization_code', this.req)
-    });
-    httpWithoutInterceptor.get('https://raindrop.io/oauth/authorize', {
-      params:{
-        redirect_uri: 'https://task-img-elinext.herokuapp.com/login',
-        client_id: '611123ddcf708e9b6838133b'
+    let httpWithoutInterceptor = new HttpClient(this.httpBackend);
+    httpWithoutInterceptor.post('https://getpocket.com/v3/oauth/request',
+      {
+        consumer_key: '611123ddcf708e9b6838133b',
+        redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
       },
-      headers: {
-        'Access-Control-Allow-Origin':'https://task-img-elinext.herokuapp.com',
-        // 'Access-Control-Expose-Headers': 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset',
-        // 'Access-Control-Allow-Credentials': 'true'
+      { headers:{
+      'Host':'getpocket.com',
+      'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
+      'X-Accept':'application/x-www-form-urlencoded'
       }
-    }).subscribe((response) => {
+      }).subscribe((response) => {
       this.req = response;
-      console.log('authorization_code', this.req)
+      console.log('getpocket.com', this.req)
     });
 
     this.subs = this.dataService.photoUrl$.subscribe((value) => this.setPhotoUrl(value));
