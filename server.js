@@ -5,7 +5,7 @@ const  createProxyMiddleware  = require('http-proxy-middleware');
 
 // proxy middleware options
 const options = {
-  target: 'http://devapi.saved.io/bookmarks', // target host
+  target: 'http://devapi.saved.io', // target host
   changeOrigin: true, // needed for virtual hosted sites
   ws: false, // proxy websockets
   logLevel: 'debug',
