@@ -4,7 +4,6 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors());
-app.options('*', cors());
 // Serve only the static files form the dist directory
 app.use(express.static('./dist/image-task-elilink'));
 
@@ -15,9 +14,11 @@ app.use(express.static('./dist/image-task-elilink'));
 //   next();
 // });
 
-app.get('/*', (req, res) =>
+app.get('/*', (req, res) =>{
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.sendFile('index.html', {root: 'dist/image-task-elilink/'})
-);
+});
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 8080);
 // server.js

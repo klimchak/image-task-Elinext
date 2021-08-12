@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {PageEvent} from '@angular/material/paginator';
 import {apikeys} from "../app.apikey";
+import {DataService} from "../app.service";
 
 @Component({
   selector: 'app-search',
@@ -10,6 +11,7 @@ import {apikeys} from "../app.apikey";
 })
 
 export class SearchComponent implements OnInit {
+  @Input() loginToRaindrop: any;
   length: number | undefined;
   pageSize: number = 12;
   pageSizeOptions: number[] = [5, 10, 25, 100];
@@ -17,7 +19,17 @@ export class SearchComponent implements OnInit {
   response: any = null;
   searchMessage: string = "";
 
-  constructor(private http: HttpClient, public pageEvent: PageEvent) {
+  constructor(
+    private http: HttpClient,
+    public pageEvent: PageEvent,
+    private readonly dataService: DataService) {
+  }
+
+  ngOnInit(): void {
+    this.dataService.loginToRaindrop$.subscribe((value) => {
+      this.loginToRaindrop = value;
+    });
+    console.log('search', this.loginToRaindrop)
   }
 
   getNextPage(event: any): void {
@@ -45,9 +57,7 @@ export class SearchComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
 
-  }
 
 
 }

@@ -10,11 +10,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
-// import { MatGridListModule } from '@angular/material/grid-list';
-import {FooterComponent} from './footer/footer.component';
 import {SearchComponent} from './search/search.component';
 import {CardblockComponent} from './cardblock/cardblock.component';
-import {PaginationComponent} from './pagination/pagination.component';
 import {MatInputModule} from "@angular/material/input";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatChipsModule} from "@angular/material/chips";
@@ -30,27 +27,19 @@ import {MatDividerModule} from "@angular/material/divider";
 import {AngularWebStorageModule} from 'angular-web-storage';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {PageEvent} from '@angular/material/paginator';
-import { DialogLoginPocketComponent } from './dialog-login-pocket/dialog-login-pocket.component';
 import {apikeys} from "./app.apikey";
-import {HttpClientJsonpModule} from "@angular/common/http";
-import { Routes, RouterModule} from "@angular/router";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AppInterceptorService} from "./app.interceptor.service";
-
-const appRoutes: Routes = [
-  {path: 'login', component: AppComponent}
-]
+import {DialogLoginRaindropComponent} from './dialog-login-raindrop/dialog-login-raindrop.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent,
     SearchComponent,
     CardblockComponent,
-    PaginationComponent,
     BookmarkComponent,
     DialogLoginComponent,
-    DialogLoginPocketComponent
+    DialogLoginRaindropComponent
   ],
   imports: [
     BrowserModule,
@@ -74,12 +63,7 @@ const appRoutes: Routes = [
     FlexLayoutModule,
     AngularWebStorageModule,
     MatPaginatorModule,
-    HttpClientJsonpModule,
-    RouterModule.forRoot(appRoutes)
-    // MatListModule,
-    // MatGridListModule
   ],
-  // providers: [SearchService],
   providers: [
     {
       provide: 'SocialAuthServiceConfig',

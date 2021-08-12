@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {LocalStorageService, SessionStorageService, LocalStorage, SessionStorage} from 'angular-web-storage';
+import {HttpBackend, HttpClient} from '@angular/common/http';
+import {LocalStorageService} from 'angular-web-storage';
 import {apikeys} from "../app.apikey";
+import {DataService} from "../app.service";
 
 @Component({
   selector: 'app-cardblock',
@@ -14,18 +15,26 @@ export class CardblockComponent implements OnInit {
   @Input() idImage: string = "";
   @Input() secret: string = "";
   @Input() bookmarkPage: boolean = false;
+  @Input() loginToRaindrop: any;
   urlImage: string | undefined;
   tags: string[] | undefined;
   response: any;
   ind: number | undefined;
   removeBookmark: boolean = false;
+  httpWithoutInterceptor = new HttpClient(this.httpBackend);
+  req: any;
 
   constructor(
     private http: HttpClient,
-    private local: LocalStorageService) {
+    private local: LocalStorageService,
+    private httpBackend: HttpBackend,
+    private readonly dataService: DataService) {
   }
 
   ngOnInit(): void {
+    this.dataService.loginToRaindrop$.subscribe((value) => {
+      this.loginToRaindrop = value;
+    });
     this.http.get('https://www.flickr.com/services/rest/', {
       params: {
         method: 'flickr.photos.getInfo',
@@ -37,15 +46,35 @@ export class CardblockComponent implements OnInit {
       },
     }).subscribe((response) => {
       this.response = response;
-      if (response && this.get()){
+      if (response && this.get()) {
         this.removeBookmark = true;
       }
     })
   }
 
+  setRaindrop() {
+    this.httpWithoutInterceptor.post('https://api.raindrop.io/rest/v1/raindrop', {
+      link: "https://live.staticflickr.com/" + this.response.photo.server + "/" + this.response.photo.id + "_" + this.response.photo.secret + ".jpg"
+    }, {
+      headers: {
+        'Authorization': 'Bearer 65f8e71c-ecd5-4743-828d-a79718168070'
+      },
+      withCredentials: true
+    }).subscribe((response) => {
+      this.req = response;
+      console.log('getpocket.com', this.req)
+    });
+    this.removeBookmark = true;
+  }
+
   set() {
     this.local.set(this.response.photo.id, JSON.stringify(this.response));
     this.removeBookmark = true;
+  }
+
+  removeRaindrop() {
+    this.local.remove(this.response.photo.id);
+    this.removeBookmark = false;
   }
 
   remove() {
@@ -58,8 +87,26 @@ export class CardblockComponent implements OnInit {
     return value != null;
   }
 
-  clear() {
-    this.local.clear();
-  }
 
 }
+
+// let httpWithoutInterceptor = new HttpClient(this.httpBackend);
+//
+// httpWithoutInterceptor.post('https://api.raindrop.io/rest/v1/raindrop', {
+//   link: "https://www.youtube.com/watch?v=GgGhluXCqx0"
+// },{
+//   headers: {
+//     'Authorization': 'Bearer 88296e43-c4fe-4881-8a98-cdb8a8a6e2a6'
+//   }
+// }).subscribe((response) => {
+//   this.req = response;
+//   console.log('getpocket.com', this.req)
+// });
+// httpWithoutInterceptor.get('https://api.raindrop.io/rest/v1/collections', {
+//   headers: {
+//     'Authorization': 'Bearer 88296e43-c4fe-4881-8a98-cdb8a8a6e2a6'
+//   }
+// }).subscribe((response) => {
+//   this.req = response;
+//   console.log('getpocket.com', this.req)
+// });

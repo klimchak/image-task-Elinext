@@ -1,0 +1,9 @@
+.body-div-login{
+  height: calc(50vh - 98px);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  font-size: 2rem;
+  color: lightgray;
+}

@@ -1,17 +1,14 @@
 <mat-toolbar color="primary">
   <span>My App</span>
   <span class="spacer"></span>
-  <!--  <button mat-icon-button class="icon favorite-icon" aria-label="Icon-button with heart icon" mat-raised-button (click)="openDialogPocket()">-->
   <button mat-icon-button class="icon favorite-icon" aria-label="Icon-button with heart icon" mat-raised-button
-          (click)="funcRep()">
-        <mat-icon class="icon" aria-hidden="false" aria-label="User verified icon">login</mat-icon>
-  </button>
-  <button mat-icon-button class="icon favorite-icon" aria-label="Icon-button with heart icon" mat-raised-button
-          (click)="openDialogPocket()">
+          (click)="openDialogRaindrop()">
     <img
-      src="https://iconarchive.com/download/i99541/blackvariant/button-ui-requests-3/Pocket.ico"
+      *ngIf="userPhotoRaindrop == null"
+      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAA8FBMVEX///8ZiOAxaf8s1O0NtOIxU/8yTv8Lt+EiifEkY/+UrP+S5vQt1e0KsuEAf94aheAXi94Yid8Aft4A0ewxZ/8xVP8xYP8jYv8xWP8YlOESXP8TpuL4/P7U5fjN4vdrqugegOYqZvUgfOgRreIky+rr+v0dw+fV3v/w9/2axO96suqDt+tWoeZipufj7/twrem61vQWm+EoavOetP9qjv/G0v9x3/Ioa/NRff/f5v+47vgVoOIfxui9y/+n6vaLpf9d3PDR9PqkyvCx0fJLm+UWluElce8jdux4l/4mcPCyxP9fh//n7f/E8fmpu/+Cnf+p6EfwAAAKXElEQVR4nO2daVfbRhSGsWRKVbAlGWGBMCTg0hjMDgEamhAI2QP5//+mM1psLSNpZu7Vknbec3KSwyee8951JE0WFpSUlJSUlJSUlJSUlJSUlJSU/l8aTSaTY/Jn1PQvgq7J9sP06NHumGafyuzY1uPRdP/0+L+AOjndP+wM+iZRJy76AwK7cfKw9Stjbk83iGNJtE4atG8e7m81/ZvKaHR60immi3EO7IPtpn9hQZ0e0XQTELHy4Ndx8nhqiuFFkNbDL5GT24cDCbwI8uC46d+/TFuPMvbFGV+0mnHrcADBCxgHJ61lPD6C+Tdj7E9bmY+jqXz+ZRjND03jZHXK2fs41X9sWaiOjuAJmNJgv2mouLZxDQxkbrTHxoM+Ph9F7D80TRZoYlVgYKD+i6bhqLYr4yMyreYj9QG9xCQRzaaXjmk1KRhTv9nWeFQ5YMNt47DKHJypP/2PAzaIWBdgY4hHtQESxCZy8UUNRWauQf3jzX6tgASx7qbxodpGz0I8rRVwq3ZAkot1TjeT+vkoYo0z6mONZXQu057UBVj9MJqD+FgT4HYDSRgiHtRDaDcFSFKxloJ60kgShhrUUG2ai1FfNaSi1ShgDRPqfpMx6iNWHKeTZmO0U33LaLTMBKr2FHWroV6fkFnlaFPfWl+gKvt+KyystCm2wkJi4mFVgMeNF9JQ/apeTGlBIQ1UlYmTdmQh1aAaExsfZ+YyjyohbHBryqiS2W27PUFKTKziFPxFe4KUyMQHHLUKsIpt/7RNQVpJw2hXkBIT0efvlgF2TOwlqlWVlAp9E25Ruw+FHabNHOQXCfkljUnrADsm7gtTrUtDKlTCh/Z5iDybtq0bUuH2i6ZpWDJPEAFHbTm/SMhCJDxuY6FBPTht2dgdCvPdhfZNNFSY3yxM20mIuOgn3mEzA83+VTGHTWRRhX+Tv6JfBPE8KppKCY+9cXa7Oe6FGo83bz9uVMVJkeyXu5+uneHQW19fW/eGxs71p12TcnZQi6nl09kfb8dLRN2kyE96m2cWNqRt2f3PO+u/ES0mRH6wpn162bFsxMMam+CdjbtptgRmb3MDD5K4t3u+nmZLYK5pnwd4hJ2zccY6FiWBROGzXp4v5tPNKb+8wuEbLffK8ULI8RnYSNv+PCzH8zX0zi/gbX9veXW1xwlIGXu3HQij3fm6xsm3uGhojuv9/AHju1rVdV2AkDB2b6V9tO2vHOE591AjMkCMy5RPkJD6+FEK0bY+8/s3I6SMd5JfnT7pAaAoIc1Hie+9rAFv/qUINc013krw7b0P+SQICeOmIKJtfRXkixFqmncpXHLezPh0XRyQhqqQjXZf1MAkoWa4r8UAr2KAUoSE8Ywf0doVxksREhvvBPj2VuKAK3KEApFqXYsbmCHUhjfckXof5yOEvA0/gzjmi1DbkQIk/TApw/mbD/BNEpAQSpSaQD2OZ+O26UnxZQk1x+NKxjSgvvKXNGG3W/pCqt1fkwRcdNKEJBk52sa7NKC+8g+AsAwRAMgi1Lxvwg4Swj8hhN3CQLVNecBFBmC5i09ZQF0XGb2zKspF21yXB1xjEmpe4U51zwKUGmriiPlNw5YtMlTrbELNK6ioe0w++XYRapyHaGkAwFxCx8jviytsQh1STImWbtmIEqNoXMMcQs24yQO8YscosJhSRObxhr0LAsy2w5mGOQMco4yiFFMqVrWBlFEqVrOIUpFZUPfyAHXZ2TsmRirCkjC3lAZyWXv/+3xAwNwWKrtoQGM0t9AEqfhdIEYxErHLiFMYX0GhyYnTUT4fETwRu6lVyjqHEhakoa/02c1VIaHsihjTUmJAtV8CYzRnZotlYqqeFpUZHbhehEoUG8uAAhamoR+nPwQsxOgXpCkilpmyNCQyvghYiBKmcROtIRSwNA1TJpZYiBOmcxMRsrCwG2ZNLLVQh+4XSRMtB2xhaZBSE+cT+HI5IXS/8E2cPaAGW8gRpKScXswIyx1EafpRT7SvwYClldSXEwEyF/sMIhyw2wvTEDhyL/IFKQnT6OitYCKNEWLUmo9IraKs3YcyLsOBjcdCHaXW+GFq7YABPT5CzZ2UztzIJnZ9QjAgV52hGr7la4Z4JtKWiBCkfHVGm7VEXkAME29NjEqaf36RQaSAOSeI1ZhImj58YuO2MDxZzB7j5wpuImn68HbPb6HmPoukIUZPJIkITkMBC4NEzDskZRHCl6jbzicoIW8hpXLO+bthgAg+ktq0od1QxEK/IwoUGiooYc+GFhoRC/1SwzWUzk0ED+DQMza+iXTu4euFd0IWguN0qQNLQ47NN0n4vLAsRgiN0yVgsxCLUVJM70SaRWAirJ4CCXlH7jnhF77VKYEI6vtLv0MIRWOUtItLkXYYIUJSEUYoGqOE8EaCEPQoCkQoWEd9nXNvFnETAdUGQijW6yPJEEKqDYBQPAkDQpkoBTR+AKF4ElLtyBHKI8oTygFq15KE0j1DmtCVAyS1VLgfwlyUJZQpoz7hpfBMA0SUJJQF1Iyf4nMpDFGOUBpQM/4QOabJIErkohShPKDmfhPcD8GIMoQAQG34muvZYT6i8IgqQShZRQN5P0peMymVKKI4ocDZIUPOSOisjSXBQBUmBALeiJ2XsiSYi6KEkpNMJOOO/9ETEqIgIRBQc99yvqaAhyhGCAXUPP+OF2AiirV+EcI1MKATvC0sP9XMEPn3RQFCOCCdaAQfr8ER+QklF96Eoi8TwIACiNyEckcWSTk70QtDGIiruIQYgFGQooSpj8hjIychCmDs3T1wNfURuSY4PkIcQGf+sje06QsgchEKn92zNYy9640ByIfIQwjZlhKKvV8KWIOTjKWIHIRYgP5bCpGAK5QAYjkhmoPOwkIFJpYilhKC9t24hs8JQqRM1Evn8DJC2DoYk6MlAZHKaTliCSEaoJb9rFv2ZJiBWLRqFBPCZ+1IjA+fwGsiH2IhIR5g+nuSYDpFRMyfwwsIEbalmdJlBjtOCxDzCTEBc76TRYzTfMRcQox1cE6Y860zXj2liGKEqID512MgpiIZUpnbVA4hzjIRAV7kAaKmYg4imxAV0L3MB0TaFGeIjAmOSYgKmP81flBtEAl11lMNFiEu4HXJ1Wa4iNk5nEGItO8GcrTSq5QqRswSom1LASDHBXx7mLmYmcMzhKiARrmDVKP3iE0jjZgmRAV0uW/7yrsCBAExRYi271J5hW0iKbSV30eMrxpJQrx1UCtu9FndIxImhtQEISagYQjeSDvCjNQYYpwQcZnQvC/iN3y+wSOMIcYIEQFdTeZ6T1QbZw9u5oSIJxbSV7TG7zBFQOzFCfH2Xcf7DrlK+B6NMVw1QkI0QMP7Dr3zGo0xWDUCQqx91/UuMe70phde40ASRJ8QB9DwtAvYVdcxPV3pKE9Rl3qUEGFbclxPu0O6kj3S/fLKKtjLlSVCCAR0DNfzbi6Q8QLt3b+7er8aSpLxr93fDDm57nDoeZ5z8/P5lWxz4OV8enrzbllW0z8kdfH87fWrv6v8f8eVlJSUlJSUlJSUlJSUlJSUlJSU/t/6F7PF42Qba1YdAAAAAElFTkSuQmCC"
       alt="logoPocket"
       style="width: 100%;height: 100%;">
+    <img *ngIf="loginToRaindrop" src="{{ userPhotoRaindrop }}" alt="photoUser" style="width: 100%;height: 100%;">
   </button>
   <button mat-icon-button class="icon favorite-icon" aria-label="Icon-button with heart icon" mat-raised-button
           (click)="openDialog()">
@@ -20,10 +17,7 @@
       src="https://image.similarpng.com/very-thumbnail/2020/12/Illustration-of-Google-icon-on-transparent-background-PNG.png"
       alt="photoUser"
       style="width: 100%;height: 100%;">
-    <!--    <mat-icon class="icon" aria-hidden="false" aria-label="User verified icon" *ngIf="userPhoto == null">login</mat-icon>-->
-    <!--    <mat-icon class="icon" aria-hidden="false" aria-label="User verified icon" *ngIf="userPhoto != null">-->
     <img *ngIf="userPhoto != null" src="{{ userPhoto }}" alt="photoUser" style="width: 100%;height: 100%;">
-    <!--    </mat-icon>-->
   </button>
 </mat-toolbar>
 
@@ -42,16 +36,11 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <app-search *ngIf="containerSearch"></app-search>
-    <app-bookmark *ngIf="containerBookmark"></app-bookmark>
+    <app-search [loginToRaindrop]="loginToRaindrop" *ngIf="containerSearch"></app-search>
+    <app-bookmark [loginToRaindrop]="loginToRaindrop" *ngIf="containerBookmark"></app-bookmark>
   </mat-sidenav-content>
 
 </mat-sidenav-container>
-
-<!--<div *ngIf="openDialogLogin">-->
-<!--  <app-dialog-login></app-dialog-login>-->
-<!--</div>-->
-
 
 <mat-toolbar>
   <span>Copyright</span>

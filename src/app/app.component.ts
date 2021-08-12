@@ -1,19 +1,9 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {DialogLoginComponent} from "./dialog-login/dialog-login.component";
-
-import {DataService} from "./app.service";
 import {Subscription} from 'rxjs';
-import {DialogLoginPocketComponent} from "./dialog-login-pocket/dialog-login-pocket.component";
-import {HttpBackend, HttpClient, HttpHeaders, HttpRequest} from "@angular/common/http";
-import {from} from 'rxjs'
-import {Location} from "@angular/common";
-import {ActivatedRoute} from '@angular/router';
-
-
-import {Observable, throwError, of} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {DialogLoginRaindropComponent} from "./dialog-login-raindrop/dialog-login-raindrop.component";
+import {DataService} from "./app.service";
 
 @Component({
   selector: 'app-root',
@@ -22,167 +12,54 @@ import {catchError} from 'rxjs/operators';
 })
 export class AppComponent implements OnInit, OnDestroy {
   private subs: Subscription = new Subscription;
-  openDialogLogin: boolean = false;
-  animal: string | undefined;
+  loginToRaindrop: boolean = false;
+  userPhotoRaindrop: string | undefined;
   name: string | undefined;
-
   userPhoto: string | undefined;
-
-  code: any;
+  title = 'ggg'
 
   constructor(
     public dialog: MatDialog,
-    private readonly dataService: DataService,
-    private http: HttpClient,
-    private httpBackend: HttpBackend,
-    private location: Location,
-    private activateRoute: ActivatedRoute
+    private readonly dataService: DataService
   ) {
   }
 
-  dHead?: HttpHeaders;
-
   ngOnInit() {
-    let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-
-    httpWithoutInterceptor.post('https://api.raindrop.io/rest/v1/raindrop', {
-      link: "https://www.youtube.com/watch?v=GgGhluXCqx0"
-    },{
-      headers: {
-        'Authorization': 'Bearer 88296e43-c4fe-4881-8a98-cdb8a8a6e2a6'
-      }
-    }).subscribe((response) => {
-      this.req = response;
-      console.log('getpocket.com', this.req)
+    this.dataService.loginToRaindrop$.subscribe((value) => {
+      this.loginToRaindrop = value;
     });
-    httpWithoutInterceptor.get('https://api.raindrop.io/rest/v1/collections', {
-      headers: {
-        'Authorization': 'Bearer 88296e43-c4fe-4881-8a98-cdb8a8a6e2a6'
-      }
-    }).subscribe((response) => {
-      this.req = response;
-      console.log('getpocket.com', this.req)
+    this.dataService.photoUrl$.subscribe((value) => {
+      this.userPhoto = value;
     });
-
-    this.subs = this.dataService.photoUrl$.subscribe((value) => this.setPhotoUrl(value));
-
-    this.activateRoute.queryParams.subscribe(params => {
-      this.req = params.code;
+    this.dataService.photoUrlRaindrop$.subscribe((value) => {
+      this.userPhotoRaindrop = value;
     });
-    const parameters = new URLSearchParams(window.location.search);
-    if (parameters.get('code') != null) {
-      this.code = parameters.get('code');
-      console.log(this.code)
-      // this.funcRep();
-      // let body = {
-      //   grant_type: 'authorization_code',
-      //   code: parameters.get('code'),
-      //   client_id: '611123ddcf708e9b6838133b',
-      //   client_secret: 'b341602e-1268-4c7e-b210-70b795f027d9',
-      //   redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
-      // };
-
-      // this.http.post('https://raindrop.io/oauth/access_token', body).subscribe((response) => {
-      //   this.req = response;
-      //   console.log('authorization_code', this.req)
-      // })
-    }
-    console.log(parameters.get('code'))
-    console.log(this.req)
   }
-
-  funcRep() {
-    let body = {
-      grant_type: 'authorization_code',
-      code: this.code,
-      client_id: '611123ddcf708e9b6838133b',
-      client_secret: 'b341602e-1268-4c7e-b210-70b795f027d9',
-      redirect_uri: 'https://task-img-elinext.herokuapp.com/login'
-    };
-    this.http.post<any>('https://raindrop.io/oauth/access_token', JSON.stringify(body)).subscribe((response) => {
-      this.req = response;
-      console.log('authorization_code', this.req)
-    })
-  }
-
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogLoginComponent, {
-      width: '350px',
-      data: {name: this.name, animal: this.animal}
+      width: '350px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
     });
   }
 
-  openDialogPocket(): void {
-    const dialogRef = this.dialog.open(DialogLoginPocketComponent, {
-      width: '400px',
-      // data: {name: this.name, animal: this.animal}
+  openDialogRaindrop(): void {
+    const dialogRef = this.dialog.open(DialogLoginRaindropComponent, {
+      width: '400px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
     });
-  }
-
-
-  req: any;
-
-  getCode() {
-    // this.http.get(`https://raindrop.io/oauth/authorize?redirect_uri=localhost:4200&client_id=611123ddcf708e9b6838133b`).subscribe((data)=>{
-    //   this.req = data;
-    //   console.log(this.req);
-    // })
-    // let base = window.btoa('shpektras@gmai.com' + ':' + ',^wQ25!e7fNSUSH');
-    // const headers = new HttpHeaders().set('Authorization', 'Basic ' + base);
-    // // headers.set('Access-Control-Allow-Origin', '*')
-    // // headers.set('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT')
-    // let body = { username: "shpektras@gmai.com", password: ",^wQ25!e7fNSUSH"};
-
-    let result = from( // wrap the fetch in a from if you need an rxjs Observable
-      fetch(
-        `https://raindrop.io/oauth/authorize?redirect_uri=https://task-img-elinext.herokuapp.com/login&client_id=611123ddcf708e9b6838133b`,
-        {
-          // body: JSON.stringify(body),
-          headers: {
-            'Content-Type': 'text',
-          },
-          method: 'GET',
-          mode: 'no-cors',
-          redirect: "follow"
-        }
-      ).finally(() => {
-        console.log(result)
-      })
-    );
-    result.subscribe((resp) => {
-      console.log(resp)
-      this.req = resp;
-    })
-    console.log(this.req)
-    let url = "https://app.raindrop.io/account/login?redirect=https%3A%2F%2Fapi.raindrop.io%2Fv1%2Foauth%2Fauthorize%3Fclient_id%3D611123ddcf708e9b6838133b%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A4200"
-    // window.open("https://app.raindrop.io/account/login?redirect=https%3A%2F%2Fapi.raindrop.io%2Fv1%2Foauth%2Fauthorize%3Fclient_id%3D611123ddcf708e9b6838133b%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A4200", "_blank");
-
-
-    // this.http.get(`https://www.instapaper.com/api/authenticate`,  {headers}).subscribe((data)=>{
-    //   this.req = data;
-    //   console.log(this.req);
-    // })
   }
 
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
 
-  setPhotoUrl(data: string) {
-    console.log(data)
-    this.userPhoto = data;
-  }
 
   // логика на странице
   containerSearch: boolean = true;

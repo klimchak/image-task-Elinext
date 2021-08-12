@@ -2,9 +2,13 @@
   <img mat-card-image
        src="{{ 'https://live.staticflickr.com/' + response.photo.server + '/' + response.photo.id + '_' + response.photo.secret + '.jpg' }}"
        alt="{{ response.photo.title._content }}">
-  <mat-card-actions>
+  <mat-card-actions *ngIf="!loginToRaindrop">
     <button mat-raised-button (click)="set()" *ngIf="!bookmarkPage">Add bookmark</button>
     <button mat-raised-button *ngIf="removeBookmark" (click)="remove()">Remove Bookmark</button>
+  </mat-card-actions>
+  <mat-card-actions *ngIf="loginToRaindrop">
+    <button mat-raised-button (click)="setRaindrop()" *ngIf="!bookmarkPage">Add to Raindrop</button>
+    <button mat-raised-button *ngIf="removeBookmark" (click)="removeRaindrop()">Remove Bookmark</button>
   </mat-card-actions>
   <mat-card-footer>
     <mat-chip-list aria-label="Tags">
