@@ -21,7 +21,7 @@ const options = {
 const exampleProxy = createProxyMiddleware(options);
 
 const app = express();
-app.use(exampleProxy);
+app.use('/bookmarks', exampleProxy);
 app.use(cors());
 // Serve only the static files form the dist directory'./node_modules/http-proxy-middleware/lib/index'
 app.use(express.static('./dist/image-task-elilink'));
