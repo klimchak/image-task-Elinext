@@ -6,11 +6,14 @@ import {DialogLoginComponent} from "./dialog-login/dialog-login.component";
 import {DataService} from "./app.service";
 import {Subscription} from 'rxjs';
 import {DialogLoginPocketComponent} from "./dialog-login-pocket/dialog-login-pocket.component";
-import {HttpClient, HttpHeaders, HttpRequest} from "@angular/common/http";
+import {HttpBackend, HttpClient, HttpHeaders, HttpRequest} from "@angular/common/http";
 import {from} from 'rxjs'
 import {Location} from "@angular/common";
 import {ActivatedRoute} from '@angular/router';
 
+
+import { Observable, throwError, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -30,6 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private readonly dataService: DataService,
     private http: HttpClient,
+    private httpBackend: HttpBackend,
     private location: Location,
     private activateRoute: ActivatedRoute
   ) {
@@ -38,7 +42,8 @@ export class AppComponent implements OnInit, OnDestroy {
   dHead?: HttpHeaders;
 
   ngOnInit() {
-    this.http.get('https://raindrop.io/oauth/authorize', {
+    let httpWithoutInterceptor = new HttpClient(this.httpBackend)
+    httpWithoutInterceptor.get('https://raindrop.io/oauth/authorize', {
       params:{
         redirect_uri: 'https://task-img-elinext.herokuapp.com/login',
         client_id: '611123ddcf708e9b6838133b'
@@ -46,7 +51,8 @@ export class AppComponent implements OnInit, OnDestroy {
     }).subscribe((response) => {
       this.req = response;
       console.log('authorization_code', this.req)
-    })
+    });
+
     this.subs = this.dataService.photoUrl$.subscribe((value) => this.setPhotoUrl(value));
 
     this.activateRoute.queryParams.subscribe(params => {

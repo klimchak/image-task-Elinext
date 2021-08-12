@@ -27,6 +27,7 @@ export class AppInterceptorService implements HttpInterceptor {
     //     .set('TE', ' trailers'),
     //   withCredentials: true,
     // });
+
     const request = req.clone({
       headers: req.headers
         .set('Access-Control-Allow-Origin','https://task-img-elinext.herokuapp.com')
@@ -39,4 +40,5 @@ export class AppInterceptorService implements HttpInterceptor {
 
 
   }
+
 }
