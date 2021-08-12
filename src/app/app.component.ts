@@ -6,7 +6,6 @@ import {DialogLoginRaindropComponent} from "./dialog-login-raindrop/dialog-login
 import {DataService} from "./app.service";
 import {HttpBackend, HttpClient} from "@angular/common/http";
 import {apikeys} from "./app.apikey";
-import {Router} from '@angular/router';
 import {LocalStorageService} from "angular-web-storage";
 
 @Component({
@@ -21,24 +20,21 @@ export class AppComponent implements OnInit, OnDestroy {
   name: string | undefined;
   userPhoto: string | undefined;
   title = 'ggg'
-  code: any;
+  code: string | undefined;
   req: any;
-  private sub: any;
 
   constructor(
     public dialog: MatDialog,
     private readonly dataService: DataService,
     private httpClient: HttpClient,
     private httpBackend: HttpBackend,
-    private router: Router,
     private local: LocalStorageService
   ) {
   }
 
   ngOnInit() {
-    console.log('this.router.url', this.router.config[0].path)
-    if (this.router.config[0].path == 'login') {
-      this.code = new URL(window.location.toString()).searchParams.getAll('code')[0];
+    this.code = new URL(window.location.toString()).searchParams.getAll('code')[0];
+    if (this.code != undefined) {
       let body = {
         grant_type: apikeys.raindropApi.grant_type,
         code: this.code,
