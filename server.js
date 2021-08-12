@@ -16,6 +16,8 @@ app.use(express.static('./dist/image-task-elilink'));
 
 app.get('/*', (req, res) =>{
   res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Expose-Headers", "ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset");
+  res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.sendFile('index.html', {root: 'dist/image-task-elilink/'})
 });
