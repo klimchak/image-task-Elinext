@@ -46,7 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
         redirect_uri: apikeys.raindropApi.redirect_uri
       }
       let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-      httpWithoutInterceptor.post('https://raindrop.io/oauth/access_token', JSON.stringify(body), {
+      httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/access_token', JSON.stringify(body), {
         headers: {
           'content-type': 'application/json; charset=utf-8'
         }
