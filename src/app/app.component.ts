@@ -50,7 +50,7 @@ export class AppComponent implements OnInit, OnDestroy {
       },
       headers: {
         'Access-Control-Allow-Origin':'https://task-img-elinext.herokuapp.com',
-        'Access-Control-Expose-Headers': 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset',
+        // 'Access-Control-Expose-Headers': 'ETag, Content-Type, Accept, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset',
         'Access-Control-Allow-Credentials': 'true'
       }
     }).subscribe((response) => {
