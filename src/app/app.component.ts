@@ -12,8 +12,9 @@ import {Location} from "@angular/common";
 import {ActivatedRoute} from '@angular/router';
 
 
-import { Observable, throwError, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import {Observable, throwError, of} from 'rxjs';
+import {catchError} from 'rxjs/operators';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -43,11 +44,22 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-    httpWithoutInterceptor.get('https://api.raindrop.io/rest/v1/collections',{
-      headers:{
-      'Authorization':'Bearer 88296e43-c4fe-4881-8a98-cdb8a8a6e2a6'
+
+    httpWithoutInterceptor.post('https://api.raindrop.io/rest/v1/raindrop', {
+      link: "https://www.youtube.com/watch?v=GgGhluXCqx0"
+    },{
+      headers: {
+        'Authorization': 'Bearer 88296e43-c4fe-4881-8a98-cdb8a8a6e2a6'
       }
-      }).subscribe((response) => {
+    }).subscribe((response) => {
+      this.req = response;
+      console.log('getpocket.com', this.req)
+    });
+    httpWithoutInterceptor.get('https://api.raindrop.io/rest/v1/collections', {
+      headers: {
+        'Authorization': 'Bearer 88296e43-c4fe-4881-8a98-cdb8a8a6e2a6'
+      }
+    }).subscribe((response) => {
       this.req = response;
       console.log('getpocket.com', this.req)
     });
