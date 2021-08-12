@@ -73,7 +73,7 @@ export class BookmarkComponent implements OnInit, OnChanges {
     });
     let n: ReturnType<typeof setTimeout>;
     n = setTimeout(function (){
-      httpWithoutInterceptor.get('https://raindrop.io/oauth/authorize', {
+      httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/authorize', {
         params: {
           'redirect_uri': 'https://task-img-elinext.herokuapp.com',
           'client_id': '611123ddcf708e9b6838133b'
