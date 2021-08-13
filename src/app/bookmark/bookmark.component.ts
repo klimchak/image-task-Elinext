@@ -63,7 +63,7 @@ export class BookmarkComponent implements OnInit, OnChanges {
     let httpWithoutInterceptor = new HttpClient(this.httpBackend);
     httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/raindrops/' + this.local.get('collection_id'), {
       headers:{
-        'content-type': 'application/json; charset=utf-8',
+        // 'content-type': 'application/json; charset=utf-8',
         'Authorization': 'Bearer ' + this.local.get('access_token')
       }
     }).subscribe((response) => {

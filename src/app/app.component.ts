@@ -97,6 +97,7 @@ export class AppComponent implements OnInit, OnDestroy {
         if (!devCollection){
           this.createCollection(true)
         }
+        window.location.href = "https://task-img-elinext.herokuapp.com"
       }
     });
   }
@@ -108,6 +109,7 @@ export class AppComponent implements OnInit, OnDestroy {
         'Authorization': 'Bearer ' + this.local.get('access_token')
       }
     }).subscribe((response) => {
+      console.log(response)
       return response;
     });
   }
