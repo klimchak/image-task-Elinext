@@ -26,7 +26,7 @@ const optionsAccessToken = {
   cookiePathRewrite: {"*": ""}
 };
 const optionsCollectionsAndRaindrop = {
-  target: 'https://raindrop.io/oauth',
+  target: 'https://api.raindrop.io/rest/v1',
   changeOrigin: true,
   ws: false,
   logLevel: 'debug',
@@ -43,6 +43,7 @@ app.use('/bookmarks', exampleProxy);
 app.use('/access_token', proxyAccessToken);
 app.use('/collections', proxyCollectionsAndRaindrop);
 app.use('/raindrop', proxyCollectionsAndRaindrop);
+app.use('/user', proxyCollectionsAndRaindrop);
 app.use(cors());
 // Serve only the static files form the dist directory'./node_modules/http-proxy-middleware/lib/index'
 app.use(express.static('./dist/image-task-elilink'));

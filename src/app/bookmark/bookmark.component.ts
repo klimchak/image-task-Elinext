@@ -17,7 +17,8 @@ export class BookmarkComponent implements OnInit, OnChanges {
     private localStorage: LocalStorageService,
     private readonly dataService: DataService,
     private httpClient: HttpClient,
-    private httpBackend: HttpBackend
+    private httpBackend: HttpBackend,
+    private local: LocalStorageService
   ) {
   }
 
@@ -59,33 +60,27 @@ export class BookmarkComponent implements OnInit, OnChanges {
 
   getPhotosRaindrop() {
     let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-    httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/bookmarks', {
-      params: {
-        'devkey': 'J5kMhhP3NnUTqEZHwg54yci8lq6vztLV',
-        'key': 'bfK0xUXMP0G6KpwWjBJoAjRnGFhXOeoP'
-      },
+    httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/collections', {
       headers:{
-        'content-type': 'application/json; charset=utf-8'
+        'content-type': 'application/json; charset=utf-8',
+        'Authorization': 'Bearer ' + this.local.get('access_token')
       }
     }).subscribe((response) => {
       // this.req = response;
       console.log('bookmarksbookmarks', response)
     });
-    // let n: ReturnType<typeof setTimeout>;
-    // n = setTimeout(function (){
-    //   httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/authorize', {
-    //     params: {
-    //       'redirect_uri': 'https://task-img-elinext.herokuapp.com',
-    //       'client_id': '611123ddcf708e9b6838133b'
-    //     },
-    //     headers:{
-    //       'content-type': 'application/json; charset=utf-8'
-    //     }
-    //   }).subscribe((response) => {
-    //     // this.req = response;
-    //     console.log('bookmarksbookmarks', response)
-    //   });
-    // }, 7000);
+    // httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/bookmarks', {
+    //   params: {
+    //     'devkey': 'J5kMhhP3NnUTqEZHwg54yci8lq6vztLV',
+    //     'key': 'bfK0xUXMP0G6KpwWjBJoAjRnGFhXOeoP'
+    //   },
+    //   headers:{
+    //     'content-type': 'application/json; charset=utf-8'
+    //   }
+    // }).subscribe((response) => {
+    //   // this.req = response;
+    //   console.log('bookmarksbookmarks', response)
+    // });
 
   }
 }

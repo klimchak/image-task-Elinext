@@ -28,7 +28,7 @@ export class DialogLoginRaindropComponent implements OnInit {
     });
     if (this.local.get('access_token') && this.userData.lenght > 0) {
       let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-      httpWithoutInterceptor.get('https://api.raindrop.io/rest/v1/collections', {
+      httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/user', {
         headers: {
           'content-type': 'application/json; charset=utf-8',
           'Authorization': 'Bearer ' + this.local.get('access_token')

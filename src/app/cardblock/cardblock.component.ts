@@ -53,11 +53,11 @@ export class CardblockComponent implements OnInit {
   }
 
   setRaindrop() {
-    this.httpWithoutInterceptor.post('https://api.raindrop.io/rest/v1/raindrop', {
+    this.httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/raindrop', {
       link: "https://live.staticflickr.com/" + this.response.photo.server + "/" + this.response.photo.id + "_" + this.response.photo.secret + ".jpg"
     }, {
       headers: {
-        'Authorization': 'Bearer 65f8e71c-ecd5-4743-828d-a79718168070'
+        'Authorization': 'Bearer ' + this.local.get('access_token')
       },
       withCredentials: true
     }).subscribe((response) => {
@@ -65,7 +65,7 @@ export class CardblockComponent implements OnInit {
       console.log('getpocket.com', this.req)
     });
     let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-    httpWithoutInterceptor.get('https://api.raindrop.io/rest/v1/collections', {
+    httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/collections', {
       headers: {
         'Authorization': 'Bearer 65f8e71c-ecd5-4743-828d-a79718168070'
       },
@@ -73,28 +73,6 @@ export class CardblockComponent implements OnInit {
     }).subscribe((response) => {
       this.req = response;
       console.log('raindrop.io', response)
-    });
-
-    this.httpWithoutInterceptor.get('https://api.raindrop.io/rest/v1/raindrop/', {
-      headers: {
-        'Authorization': 'Bearer 65f8e71c-ecd5-4743-828d-a79718168070'
-      },
-      params:{
-        id: this.req.items._id
-      },
-      withCredentials: true
-    }).subscribe((response) => {
-      // this.req = response;
-      console.log('raindrop.io!!!!!', this.req.items._id, response)
-    });
-    this.httpWithoutInterceptor.get('https://api.raindrop.io/rest/v1/raindrop/'+this.req.items._id, {
-      headers: {
-        'Authorization': 'Bearer 65f8e71c-ecd5-4743-828d-a79718168070'
-      },
-      withCredentials: true
-    }).subscribe((response) => {
-      // this.req = response;
-      console.log('!!!!raindrop.io!!!!!', this.req.items._id, response)
     });
     this.removeBookmark = true;
   }
