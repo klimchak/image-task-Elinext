@@ -48,13 +48,13 @@ export class DialogLoginRaindropComponent implements OnInit {
     this.local.remove('access_token');
     this.local.remove('refresh_token');
     this.local.remove('token_type');
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
     this.loginToRaindrop = false;
     this.dataService.changePhotoUrlRaindrop(null);
     this.dataService.changeloginToRaindrop(false);
     this.dataService.loginToRaindrop = false;
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

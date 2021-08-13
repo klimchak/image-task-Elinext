@@ -39,7 +39,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.code = new URL(window.location.toString()).searchParams.getAll('code')[0];
     if (this.code != undefined && !this.local.get('access_token')) {
       this.getAcceessToket();
-      window.location.href = "https://task-img-elinext.herokuapp.com";
     }
     if (this.local.get('access_token')) {
       this.loginToRaindrop = true;
@@ -73,7 +72,6 @@ export class AppComponent implements OnInit, OnDestroy {
       client_secret: apikeys.raindropApi.client_secret,
       redirect_uri: apikeys.raindropApi.redirect_uri
     }
-    console.log('body', body)
     let httpWithoutInterceptor = new HttpClient(this.httpBackend);
     httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/access_token', JSON.stringify(body), {
       headers: {
@@ -84,7 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.local.set('access_token', this.req.access_token);
       this.local.set('refresh_token', this.req.refresh_token);
       this.local.set('token_type', this.req.token_type);
-      console.log('bookmarksbookmarks', response)
+      window.location.href = "https://task-img-elinext.herokuapp.com";
     });
   }
 
