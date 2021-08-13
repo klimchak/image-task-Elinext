@@ -34,29 +34,21 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.code = new URL(window.location.toString()).searchParams.getAll('code')[0];
-    if (this.code != undefined) {
-      let body = {
-        grant_type: apikeys.raindropApi.grant_type,
-        code: this.code,
-        client_id: apikeys.raindropApi.client_id,
-        client_secret: apikeys.raindropApi.client_secret,
-        redirect_uri: apikeys.raindropApi.redirect_uri
-      }
-      console.log('body', body)
-      let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-      httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/access_token', JSON.stringify(body), {
-        headers: {
-          'content-type': 'application/json; charset=utf-8'
-        }
-      }).subscribe((response) => {
-        this.req = response;
-        this.local.set('access_token', this.req.access_token);
-        this.local.set('refresh_token', this.req.refresh_token);
-        this.local.set('token_type', this.req.token_type);
-        console.log('bookmarksbookmarks', response)
-      });
+    if (this.code != undefined && !this.local.get('access_token')) {
+      this.getAcceessToket();
     }
-
+    if (this.local.get('access_token')) {
+      this.loginToRaindrop = true;
+      this.dataService.changePhotoUrlRaindrop("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKTmr2GzVIC2tOD7CTwHBQyh0BpIBBBJpE2g&usqp=CAU");
+      this.dataService.changeloginToRaindrop(true);
+      this.dataService.loginToRaindrop = true;
+    }
+    if (!this.local.get('access_token')){
+      this.loginToRaindrop = false;
+      this.dataService.changePhotoUrlRaindrop(null);
+      this.dataService.changeloginToRaindrop(false);
+      this.dataService.loginToRaindrop = false;
+    }
 
     // this.dataService.loginToRaindrop$.subscribe((value) => {
     //   this.loginToRaindrop = value;
@@ -68,6 +60,30 @@ export class AppComponent implements OnInit, OnDestroy {
     //   this.userPhotoRaindrop = value;
     // });
   }
+
+  getAcceessToket(): void {
+    let body = {
+      grant_type: apikeys.raindropApi.grant_type,
+      code: this.code,
+      client_id: apikeys.raindropApi.client_id,
+      client_secret: apikeys.raindropApi.client_secret,
+      redirect_uri: apikeys.raindropApi.redirect_uri
+    }
+    console.log('body', body)
+    let httpWithoutInterceptor = new HttpClient(this.httpBackend);
+    httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/access_token', JSON.stringify(body), {
+      headers: {
+        'content-type': 'application/json; charset=utf-8'
+      }
+    }).subscribe((response) => {
+      this.req = response;
+      this.local.set('access_token', this.req.access_token);
+      this.local.set('refresh_token', this.req.refresh_token);
+      this.local.set('token_type', this.req.token_type);
+      console.log('bookmarksbookmarks', response)
+    });
+  }
+
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogLoginComponent, {
