@@ -82,10 +82,52 @@ export class AppComponent implements OnInit, OnDestroy {
       this.local.set('access_token', this.req.access_token);
       this.local.set('refresh_token', this.req.refresh_token);
       this.local.set('token_type', this.req.token_type);
-      window.location.href = "https://task-img-elinext.herokuapp.com";
+      let collection = this.getCollection();
+      if (collection.item.length == 0){
+        this.createCollection(true)
+      }else {
+        let devCollection = false;
+        for (let i = 0; i < collection.items; i++){
+          if (collection.items[i].title == 'task-image-elinext'){
+            this.local.set('collection_id', collection.items[i].title._id);
+            devCollection = true;
+            break;
+          }
+        }
+        if (!devCollection){
+          this.createCollection(true)
+        }
+      }
     });
   }
 
+  getCollection(): any{
+    let httpWithoutInterceptor = new HttpClient(this.httpBackend);
+    httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/collection', {
+      headers: {
+        'Authorization': 'Bearer ' + this.local.get('access_token')
+      }
+    }).subscribe((response) => {
+      return response;
+    });
+  }
+
+  createCollection(redirect: boolean){
+    let httpWithoutInterceptor = new HttpClient(this.httpBackend);
+    let body = {
+      title: 'task-image-elinext'
+    }
+    httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/collection', JSON.stringify(body),{
+      headers: {
+        'Authorization': 'Bearer ' + this.local.get('access_token'),
+        'content-type': 'application/json; charset=utf-8'
+      }
+    }).subscribe((response) => {
+      this.req = response;
+      this.local.set('collection_id', this.req.item.title._id);
+      redirect? window.location.href = "https://task-img-elinext.herokuapp.com": null;
+    });
+  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogLoginComponent, {

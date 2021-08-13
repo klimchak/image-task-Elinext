@@ -10,6 +10,7 @@ import {HttpBackend, HttpClient} from "@angular/common/http";
 })
 export class BookmarkComponent implements OnInit, OnChanges {
   dataStorage = new Array();
+  dataStorageRaindrop: any;
   dataNotFound: boolean = true;
   @Input() loginToRaindrop: any;
 
@@ -60,14 +61,14 @@ export class BookmarkComponent implements OnInit, OnChanges {
 
   getPhotosRaindrop() {
     let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-    httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/collections', {
+    httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/raindrops/' + this.local.get('collection_id'), {
       headers:{
         'content-type': 'application/json; charset=utf-8',
         'Authorization': 'Bearer ' + this.local.get('access_token')
       }
     }).subscribe((response) => {
-      // this.req = response;
-      console.log('bookmarksbookmarks', response)
+      this.dataStorageRaindrop = response;
+      console.log('this.dataStorageRaindrop', this.dataStorageRaindrop)
     });
     // httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/bookmarks', {
     //   params: {

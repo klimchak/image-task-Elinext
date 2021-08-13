@@ -54,7 +54,8 @@ export class CardblockComponent implements OnInit {
 
   setRaindrop() {
     this.httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/raindrop', {
-      link: "https://live.staticflickr.com/" + this.response.photo.server + "/" + this.response.photo.id + "_" + this.response.photo.secret + ".jpg"
+      link: "https://live.staticflickr.com/" + this.response.photo.server + "/" + this.response.photo.id + "_" + this.response.photo.secret + ".jpg",
+      collection: this.local.get('collection_id')
     }, {
       headers: {
         'Authorization': 'Bearer ' + this.local.get('access_token')
@@ -63,16 +64,6 @@ export class CardblockComponent implements OnInit {
     }).subscribe((response) => {
       this.req = response;
       console.log('getpocket.com', this.req)
-    });
-    let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-    httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/collections', {
-      headers: {
-        'Authorization': 'Bearer 65f8e71c-ecd5-4743-828d-a79718168070'
-      },
-      withCredentials: true
-    }).subscribe((response) => {
-      this.req = response;
-      console.log('raindrop.io', response)
     });
     this.removeBookmark = true;
   }
@@ -83,8 +74,18 @@ export class CardblockComponent implements OnInit {
   }
 
   removeRaindrop() {
-    this.local.remove(this.response.photo.id);
-    this.removeBookmark = false;
+    this.httpWithoutInterceptor.delete('https://task-img-elinext.herokuapp.com/raindrop/' + this.response.item._id, {
+      headers: {
+        'Authorization': 'Bearer ' + this.local.get('access_token')
+      },
+      withCredentials: true
+    }).subscribe((response) => {
+      this.req = response;
+      if(this.req.result){
+        this.removeBookmark = false;
+      }
+      console.log('getpocket.com', this.req)
+    });
   }
 
   remove() {

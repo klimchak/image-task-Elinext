@@ -30,7 +30,7 @@ export class DialogLoginRaindropComponent implements OnInit {
       let httpWithoutInterceptor = new HttpClient(this.httpBackend);
       httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/user', {
         headers: {
-          'content-type': 'application/json; charset=utf-8',
+          // 'content-type': 'application/json; charset=utf-8',
           'Authorization': 'Bearer ' + this.local.get('access_token')
         }
       }).subscribe((response) => {
