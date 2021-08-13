@@ -33,9 +33,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.dataService.photoUrlRaindrop$.subscribe((value) => {
+      this.userPhotoRaindrop = value;
+    });
     this.code = new URL(window.location.toString()).searchParams.getAll('code')[0];
     if (this.code != undefined && !this.local.get('access_token')) {
       this.getAcceessToket();
+      window.location.href = "https://task-img-elinext.herokuapp.com";
     }
     if (this.local.get('access_token')) {
       this.loginToRaindrop = true;

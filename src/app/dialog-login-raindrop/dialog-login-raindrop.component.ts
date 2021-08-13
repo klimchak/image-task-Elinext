@@ -26,7 +26,7 @@ export class DialogLoginRaindropComponent implements OnInit {
     this.dataService.loginToRaindrop$.subscribe((value) => {
       this.loginToRaindrop = value;
     });
-    if (this.local.get('access_token') && this.userData.lenght > 0) {
+    if (this.local.get('access_token')) {
       let httpWithoutInterceptor = new HttpClient(this.httpBackend);
       httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/user', {
         headers: {
