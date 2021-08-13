@@ -45,6 +45,9 @@ export class AppComponent implements OnInit, OnDestroy {
       this.dataService.changePhotoUrlRaindrop("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKTmr2GzVIC2tOD7CTwHBQyh0BpIBBBJpE2g&usqp=CAU");
       this.dataService.changeloginToRaindrop(true);
       this.dataService.loginToRaindrop = true;
+      if (!this.local.get('collection_id')){
+        this.createCollection(false);
+      }
     }
     if (!this.local.get('access_token')){
       this.loginToRaindrop = false;
@@ -82,14 +85,15 @@ export class AppComponent implements OnInit, OnDestroy {
       this.local.set('access_token', this.req.access_token);
       this.local.set('refresh_token', this.req.refresh_token);
       this.local.set('token_type', this.req.token_type);
-      let collection = this.getCollection();
-      if (collection.item.length == 0){
+      this.req = this.getCollection();
+      console.log(this.req);
+      if (this.req.item.length == 0){
         this.createCollection(true)
       }else {
         let devCollection = false;
-        for (let i = 0; i < collection.items; i++){
-          if (collection.items[i].title == 'task-image-elinext'){
-            this.local.set('collection_id', collection.items[i].title._id);
+        for (let i = 0; i < this.req.items; i++){
+          if (this.req.items[i].title == 'task-image-elinext'){
+            this.local.set('collection_id', this.req.items[i].title._id);
             devCollection = true;
             break;
           }
@@ -97,7 +101,7 @@ export class AppComponent implements OnInit, OnDestroy {
         if (!devCollection){
           this.createCollection(true)
         }
-        window.location.href = "https://task-img-elinext.herokuapp.com"
+        window.location.href = "https://task-img-elinext.herokuapp.com/"
       }
     });
   }
