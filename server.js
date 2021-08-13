@@ -41,8 +41,10 @@ const proxyCollectionsAndRaindrop = createProxyMiddleware(optionsCollectionsAndR
 const app = express();
 app.use('/bookmarks', exampleProxy);
 app.use('/access_token', proxyAccessToken);
+app.use('/collection', proxyCollectionsAndRaindrop);
 app.use('/collections', proxyCollectionsAndRaindrop);
 app.use('/raindrop', proxyCollectionsAndRaindrop);
+app.use('/raindrops', proxyCollectionsAndRaindrop);
 app.use('/user', proxyCollectionsAndRaindrop);
 app.use(cors());
 // Serve only the static files form the dist directory'./node_modules/http-proxy-middleware/lib/index'

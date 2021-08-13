@@ -108,7 +108,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   getCollection(): any{
     let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-    httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/collection', {
+    httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/collections', {
       headers: {
         'Authorization': 'Bearer ' + this.local.get('access_token')
       }
