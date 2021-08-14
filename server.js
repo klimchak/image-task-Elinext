@@ -29,12 +29,12 @@ const optionsCollectionsAndRaindrop = {
 
 const exampleProxy = createProxyMiddleware(options);
 const proxyAccessToken = createProxyMiddleware(optionsAccessToken);
-const proxyCollection = createProxyMiddleware(optionsAccessToken);
-const proxyCollections = createProxyMiddleware(optionsAccessToken);
-const proxyChildrens = createProxyMiddleware(optionsAccessToken);
-const proxyRaindrop = createProxyMiddleware(optionsAccessToken);
-const proxyRaindrops = createProxyMiddleware(optionsAccessToken);
-const proxyUser = createProxyMiddleware(optionsAccessToken);
+const proxyCollection = createProxyMiddleware(optionsCollectionsAndRaindrop);
+const proxyCollections = createProxyMiddleware(optionsCollectionsAndRaindrop);
+const proxyChildrens = createProxyMiddleware(optionsCollectionsAndRaindrop);
+const proxyRaindrop = createProxyMiddleware(optionsCollectionsAndRaindrop);
+const proxyRaindrops = createProxyMiddleware(optionsCollectionsAndRaindrop);
+const proxyUser = createProxyMiddleware(optionsCollectionsAndRaindrop);
 // const proxyCollectionsAndRaindrop = createProxyMiddleware(optionsCollectionsAndRaindrop);
 
 const app = express();

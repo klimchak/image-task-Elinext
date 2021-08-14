@@ -1,6 +1,6 @@
 <div mat-dialog-content class="body-div-login">
   <button mat-raised-button type="button" (click)="pressLogin()" *ngIf="!loginToRaindrop">Test login</button>
-  <div *ngIf="loginToRaindrop">
+  <div *ngIf="loginToRaindrop" class="mat-body">
     <p>Full user name: {{userData.user.fullName}}</p>
     <p>Email: {{userData.user.email}}</p>
     <button mat-raised-button type="button" (click)="pressLogout()">Logout</button>
