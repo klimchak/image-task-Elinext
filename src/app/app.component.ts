@@ -36,11 +36,16 @@ export class AppComponent implements OnInit, OnDestroy {
     this.dataService.photoUrlRaindrop$.subscribe((value) => {
       this.userPhotoRaindrop = value;
     });
-    this.code = new URL(window.location.toString()).searchParams.getAll('code')[0];
-    if (this.code != undefined && !this.local.get('access_token')) {
-      this.getAcceessToket();
+    this.dataService.loginToRaindrop$.subscribe((value) => {
+      this.loginToRaindrop = value;
+    });
+    if (this.local.get('access_token') == null){
+      this.code = new URL(window.location.toString()).searchParams.getAll('code')[0];
+      if (this.code != undefined) {
+        this.getAcceessToket();
+      }
     }
-    if (this.local.get('access_token') == null) {
+    if (this.local.get('access_token') != null) {
       this.loginToRaindrop = true;
       this.dataService.changePhotoUrlRaindrop("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKTmr2GzVIC2tOD7CTwHBQyh0BpIBBBJpE2g&usqp=CAU");
       this.dataService.changeloginToRaindrop(true);
@@ -49,7 +54,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.getCollection();
       }
     }
-    if (this.local.get('access_token') != null) {
+    if (this.local.get('access_token') == null) {
       this.loginToRaindrop = false;
       this.dataService.changePhotoUrlRaindrop(null);
       this.dataService.changeloginToRaindrop(false);
