@@ -6,13 +6,6 @@ const createProxyMiddleware = require('http-proxy-middleware');
 // proxy middleware options
 const options = {
   target: 'http://devapi.saved.io',
-  router: {
-    '/bookmarks': 'http://devapi.saved.io',
-    '/oauth': 'https://raindrop.io/oauth',
-    '/access_token': 'https://raindrop.io/oauth',
-    '/collections': 'https://api.raindrop.io/rest/v1',
-    '/raindrop': 'https://api.raindrop.io/rest/v1'
-  },
   changeOrigin: true,
   ws: false,
   logLevel: 'debug',
@@ -43,6 +36,7 @@ app.use('/bookmarks', exampleProxy);
 app.use('/access_token', proxyAccessToken);
 app.use('/collection', proxyCollectionsAndRaindrop);
 app.use('/collections', proxyCollectionsAndRaindrop);
+app.use('/collections/childrens', proxyCollectionsAndRaindrop);
 app.use('/raindrop', proxyCollectionsAndRaindrop);
 app.use('/raindrops', proxyCollectionsAndRaindrop);
 app.use('/user', proxyCollectionsAndRaindrop);
