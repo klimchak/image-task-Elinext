@@ -52,8 +52,8 @@ export class AppComponent implements OnInit, OnDestroy {
           this.dataService.getCollection().subscribe((response) =>{
             this.collectionData = response;
             console.log('this.local.get(\'collection_id\') == null', this.local.get('collection_id') == null);
-            console.log('this.collectionData.item.length', this.collectionData.item.length);
-            if (this.collectionData.item.length == 0) {
+            console.log('this.collectionData.item.length', this.collectionData.items.length);
+            if (this.collectionData.items.length == 0) {
               this.dataService.createCollection().subscribe((response) => {
                 this.req = response;
                 this.local.set('collection_id', this.req.item.title._id);
