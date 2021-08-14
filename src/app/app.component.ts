@@ -53,7 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
             this.collectionData = response;
             console.log('this.local.get(\'collection_id\') == null', this.local.get('collection_id') == null);
             console.log('this.collectionData.item.length', this.collectionData.items.length);
-            this.getIdCollection(this.collectionData);
+            this.getIdCollection();
           });
 
         });
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit, OnDestroy {
           this.collectionData = response;
           console.log('this.local.get(\'collection_id\') == null', this.local.get('collection_id') == null);
           console.log('this.collectionData.item.length', this.collectionData.items.length);
-          this.getIdCollection(this.collectionData);
+          this.getIdCollection();
         });
       }
     }
@@ -91,8 +91,8 @@ export class AppComponent implements OnInit, OnDestroy {
     // });
   }
 
-  getIdCollection(dataCollection: any): void{
-    if (dataCollection.items.length == 0) {
+  getIdCollection(): void{
+    if (this.collectionData.items.length == 0) {
       this.dataService.createCollection().subscribe((response) => {
         this.req = response;
         this.local.set('collection_id', this.req.item._id);
@@ -101,10 +101,10 @@ export class AppComponent implements OnInit, OnDestroy {
       })
     } else {
       let devCollection = false;
-      for (let i = 0; i < dataCollection.items; i++) {
-        console.log('this.req.items[i].title == \'task-image-elinext\'', dataCollection.items[i].title, dataCollection.items[i].title == 'task-image-elinext')
-        if (dataCollection.items[i].title == 'task-image-elinext') {
-          this.local.set('collection_id', dataCollection.items[i]._id);
+      for (let i = 0; i < this.collectionData.items; i++) {
+        console.log('this.req.items[i].title == \'task-image-elinext\'', this.collectionData.items[i].title, this.collectionData.items[i].title == 'task-image-elinext')
+        if (this.collectionData.items[i].title == 'task-image-elinext') {
+          this.local.set('collection_id', this.collectionData.items[i]._id);
           devCollection = true;
           break;
         }
