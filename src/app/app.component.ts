@@ -46,7 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.dataService.changeloginToRaindrop(true);
       this.dataService.loginToRaindrop = true;
       if (!this.local.get('collection_id')){
-        this.createCollection(false);
+        this.getCollection();
       }
     }
     if (!this.local.get('access_token')){
@@ -92,6 +92,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }else {
         let devCollection = false;
         for (let i = 0; i < this.req.items; i++){
+          console.log('this.req.items[i].title == \'task-image-elinext\'',this.req.items[i].title , this.req.items[i].title == 'task-image-elinext')
           if (this.req.items[i].title == 'task-image-elinext'){
             this.local.set('collection_id', this.req.items[i].title._id);
             devCollection = true;
