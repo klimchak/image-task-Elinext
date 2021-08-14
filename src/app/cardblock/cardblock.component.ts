@@ -18,7 +18,7 @@ export class CardblockComponent implements OnInit {
   @Input() loginToRaindrop: any;
   @Input() mapIdRaindrop: any;
   @Input() urlImageRaindrop: any;
-  @Input() tags: {} | undefined;
+  @Input() tags: {} = [];
   response: any;
   removeBookmark: boolean = false;
   req: any;
