@@ -42,7 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.local.get('access_token') == null){
       this.code = new URL(window.location.toString()).searchParams.getAll('code')[0];
       if (this.code != undefined) {
-        this.getAcceessToket();
+        this.getAccessToken();
       }
     }
     if (this.local.get('access_token') != null) {
@@ -72,7 +72,7 @@ export class AppComponent implements OnInit, OnDestroy {
     // });
   }
 
-  getAcceessToket(): void {
+  getAccessToken(): void {
     let body = {
       grant_type: apikeys.raindropApi.grant_type,
       code: this.code,
@@ -120,8 +120,9 @@ export class AppComponent implements OnInit, OnDestroy {
         'Authorization': 'Bearer ' + this.local.get('access_token')
       }
     }).subscribe((response) => {
+      let data: any = response;
       console.log('getCollection', response)
-      return response;
+      return data;
     });
   }
 
