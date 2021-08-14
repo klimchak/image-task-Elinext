@@ -1,7 +1,6 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {LocalStorageService} from "angular-web-storage";
 import {DataService} from "../app.service";
-import {HttpBackend, HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-bookmark',
@@ -16,10 +15,7 @@ export class BookmarkComponent implements OnInit, OnChanges {
   @Input() mapIdRaindrop = new Map<string, string>();
   constructor(
     private localStorage: LocalStorageService,
-    private readonly dataService: DataService,
-    private httpClient: HttpClient,
-    private httpBackend: HttpBackend,
-    private local: LocalStorageService
+    private readonly dataService: DataService
   ) {
   }
 
