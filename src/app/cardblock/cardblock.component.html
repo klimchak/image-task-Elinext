@@ -14,7 +14,7 @@
     <button mat-raised-button *ngIf="removeBookmark" (click)="removeRaindrop()">Remove Bookmark</button>
   </mat-card-actions>
   <mat-card-footer>
-    <mat-chip-list aria-label="Tags" *ngIf="!loginToRaindrop">
+    <mat-chip-list aria-label="Tags" *ngIf="(!loginToRaindrop && bookmarkPage) || (!loginToRaindrop && !bookmarkPage)">
       <mat-chip class="tag" disabled *ngIf="response.photo.tags.tag.length == 0; else elseBlock">
         No tags
       </mat-chip>
@@ -24,11 +24,11 @@
         </mat-chip>
       </ng-template>
     </mat-chip-list>
-    <mat-chip-list aria-label="Tags" *ngIf="loginToRaindrop">
-      <mat-chip class="tag" disabled *ngIf="tags[1].tags.tag.length == 0; else elseBlock">
+    <mat-chip-list aria-label="Tags" *ngIf="loginToRaindrop && bookmarkPage">
+      <mat-chip class="tag" disabled *ngIf="tags.tag.length == 0; else elseBlock">
         No tags
       </mat-chip>
-      <ng-template #elseBlock ngFor let-tag [ngForOf]="tags[1].tags.tag" let-i="index">
+      <ng-template #elseBlock ngFor let-tag [ngForOf]="tags.tag" let-i="index">
         <mat-chip class="tag" *ngIf="i <= 5">
           {{tag.raw.length > 8 ? tag.raw.slice(0, 8) + '...': tag.raw}}
         </mat-chip>

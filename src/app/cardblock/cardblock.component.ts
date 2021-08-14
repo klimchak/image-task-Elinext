@@ -65,8 +65,8 @@ export class CardblockComponent implements OnInit {
 
   setRaindrop() {
     let tags = [];
-    tags.push({server: this.response.photo.server, secret: this.response.photo.secret});
-    tags.push({tags: this.response.photo.tags});
+    // tags.push({server: this.response.photo.server, secret: this.response.photo.secret});
+    tags.push({tags: this.response.photo.tags.tag});
     let link = "https://live.staticflickr.com/" + this.response.photo.server + "/" + this.response.photo.id + "_" + this.response.photo.secret + ".jpg";
     this.dataService.saveToRaindrop(link, this.response.photo.id, tags).subscribe((response) => {
       this.req = response;
