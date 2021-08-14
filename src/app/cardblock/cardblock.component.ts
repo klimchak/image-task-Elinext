@@ -55,7 +55,8 @@ export class CardblockComponent implements OnInit {
           this.removeBookmark = true;
         }
       });
-    }else {
+    }
+    if (this.bookmarkPage && this.loginToRaindrop){
       if(this.mapIdRaindrop.get(this.idImage)){
         console.log('this.mapIdRaindrop.get(this.idImage)', this.mapIdRaindrop.get(this.idImage))
         this.idInRaindrop = this.mapIdRaindrop.get(this.idImage);
