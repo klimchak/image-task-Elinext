@@ -13,7 +13,7 @@ export class BookmarkComponent implements OnInit, OnChanges {
   dataStorageRaindrop: any;
   dataNotFound: boolean = true;
   @Input() loginToRaindrop: any;
-  @Input() mapIdRaindrop: any;
+  @Input() mapIdRaindrop = new Map<string, string>();
   constructor(
     private localStorage: LocalStorageService,
     private readonly dataService: DataService,
@@ -22,8 +22,6 @@ export class BookmarkComponent implements OnInit, OnChanges {
     private local: LocalStorageService
   ) {
   }
-
-
 
   ngOnInit(): void {
     this.dataService.mapIdPhotos$.subscribe((value) => {
@@ -63,28 +61,10 @@ export class BookmarkComponent implements OnInit, OnChanges {
   }
 
   getPhotosRaindrop() {
-    let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-    httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/raindrops/' + this.local.get('collection_id'), {
-      headers:{
-        // 'content-type': 'application/json; charset=utf-8',
-        'Authorization': 'Bearer ' + this.local.get('access_token')
-      }
-    }).subscribe((response) => {
+    this.dataService.getBookmarksFromRaindrop().subscribe((response) => {
       this.dataStorageRaindrop = response;
+      this.dataStorage = this.dataStorageRaindrop.items;
       console.log('this.dataStorageRaindrop', this.dataStorageRaindrop)
     });
-    // httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/bookmarks', {
-    //   params: {
-    //     'devkey': 'J5kMhhP3NnUTqEZHwg54yci8lq6vztLV',
-    //     'key': 'bfK0xUXMP0G6KpwWjBJoAjRnGFhXOeoP'
-    //   },
-    //   headers:{
-    //     'content-type': 'application/json; charset=utf-8'
-    //   }
-    // }).subscribe((response) => {
-    //   // this.req = response;
-    //   console.log('bookmarksbookmarks', response)
-    // });
-
   }
 }

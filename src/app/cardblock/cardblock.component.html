@@ -1,7 +1,10 @@
 <mat-card *ngIf="(response && !bookmarkPage) || (bookmarkPage && get()) ">
-  <img mat-card-image
+  <img mat-card-image *ngIf="!loginToRaindrop"
        src="{{ 'https://live.staticflickr.com/' + response.photo.server + '/' + response.photo.id + '_' + response.photo.secret + '.jpg' }}"
        alt="{{ response.photo.title._content }}">
+  <img mat-card-image *ngIf="loginToRaindrop"
+       src="{{ urlImageRaindrop }}"
+       alt="{{ response.photo.id }}">
   <mat-card-actions *ngIf="!loginToRaindrop">
     <button mat-raised-button (click)="set()" *ngIf="!bookmarkPage">Add bookmark</button>
     <button mat-raised-button *ngIf="removeBookmark" (click)="remove()">Remove Bookmark</button>

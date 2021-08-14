@@ -9,12 +9,13 @@
     fxLayoutGap="grid"
     *ngIf="dataStorage.length != 0; else elseBlock" >
     <div
-      *ngFor="let ph of dataStorage; index as i"
+      *ngFor="let ph of dataStorage"
       fxFlex.xl="25%"
       fxFlex.lg="33%"
       fxFlex.md="50%"
       fxFlex.xs="100%">
-      <app-cardblock [bookmarkPage]="true" [idImage]="ph.id"  [secret]="ph.secret"></app-cardblock>
+      <app-cardblock *ngIf="!loginToRaindrop" [bookmarkPage]="true" [idImage]="ph.id"  [secret]="ph.secret"></app-cardblock>
+      <app-cardblock *ngIf="loginToRaindrop" [bookmarkPage]="true" [idImage]="ph.title" [urlImageRaindrop]="ph.link"></app-cardblock>
     </div>
   </div>
   <ng-template #elseBlock>

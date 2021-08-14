@@ -107,6 +107,14 @@ export class DataService {
         'Authorization': 'Bearer ' + this.local.get('access_token')
       },
       withCredentials: true
-    })
+    });
+  }
+
+  public getBookmarksFromRaindrop(): Observable<any> {
+    return this.httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/raindrops/' + this.local.get('collection_id'), {
+      headers:{
+        'Authorization': 'Bearer ' + this.local.get('access_token')
+      }
+    });
   }
 }
