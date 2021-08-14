@@ -16,7 +16,7 @@ export class CardblockComponent implements OnInit {
   @Input() secret: string = "";
   @Input() bookmarkPage: boolean = false;
   @Input() loginToRaindrop: any;
-  @Input() mapIdRaindrop: any;
+  @Input() mapIdRaindrop = new Map<string, string>();
   @Input() urlImageRaindrop: any;
   @Input() tags: any;
   response: any;

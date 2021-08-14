@@ -14,7 +14,7 @@
     <button mat-raised-button *ngIf="removeBookmark" (click)="removeRaindrop()">Remove Bookmark</button>
   </mat-card-actions>
   <mat-card-footer>
-    <mat-chip-list aria-label="Tags" *ngIf="(!loginToRaindrop && bookmarkPage) || (!loginToRaindrop && !bookmarkPage)">
+    <mat-chip-list aria-label="Tags" *ngIf="(!loginToRaindrop && bookmarkPage) || (!loginToRaindrop && !bookmarkPage)|| (loginToRaindrop && !bookmarkPage)">
       <mat-chip class="tag" disabled *ngIf="response.photo.tags.tag.length == 0; else elseBlock">
         No tags
       </mat-chip>
