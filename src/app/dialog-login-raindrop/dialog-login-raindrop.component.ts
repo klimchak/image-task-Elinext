@@ -32,7 +32,7 @@ export class DialogLoginRaindropComponent implements OnInit {
   }
 
   pressLogin() {
-    window.location.href = "https://raindrop.io/oauth/authorize?redirect_uri=https://task-img-elinext.herokuapp.com&client_id=" + apikeys.raindropApi.client_id;
+    window.location.href = "https://raindrop.io/oauth/authorize?redirect_uri=" + apikeys.raindropApi.redirect_uri + "&client_id=" + apikeys.raindropApi.client_id;
   }
 
   pressLogout() {

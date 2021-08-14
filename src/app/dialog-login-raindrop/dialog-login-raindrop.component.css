@@ -1,6 +1,18 @@
 .body-div-login{
+  height: calc(50vh - 98px);
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: lightgray;
+  text-align: center;
+}
+span{
+  font-weight: bold;
+}
+.body-div-login-actions{
+  display: flex;
+  justify-content: center;
   align-items: center;
   font-size: 1rem;
   color: lightgray;

@@ -36,16 +36,7 @@ export class CardblockComponent implements OnInit {
       this.loginToRaindrop = value;
     });
     if ((!this.loginToRaindrop && this.bookmarkPage) || (!this.loginToRaindrop && !this.bookmarkPage) || (this.loginToRaindrop && !this.bookmarkPage)) {
-      this.http.get('https://www.flickr.com/services/rest/', {
-        params: {
-          method: 'flickr.photos.getInfo',
-          api_key: apikeys.flick,
-          photo_id: this.idImage,
-          secret: this.secret,
-          format: 'json',
-          nojsoncallback: '1'
-        },
-      }).subscribe((response) => {
+      this.dataService.getFlickrPhotoInfo(this.idImage, this.secret).subscribe((response) => {
         this.response = response;
         if (this.response && this.getLocal() && !this.loginToRaindrop) {
           this.removeBookmark = true;

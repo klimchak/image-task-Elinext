@@ -16,6 +16,9 @@ export class DataService {
 
   }
 
+  private userActivity: any;
+  private userInactive: Subject<any> = new Subject();
+
   private httpWithoutInterceptor = new HttpClient(this.httpBackend);
 
   public photoUrl$ = new Subject<any>();
@@ -61,6 +64,32 @@ export class DataService {
       headers: {
         'Authorization': 'Bearer ' + this.local.get('access_token')
       }
+    });
+  }
+
+  public getFlickrPhoto(text: string, per_page: number, page: number): Observable<any> {
+    return this.httpWithoutInterceptor.get('https://www.flickr.com/services/rest/', {
+      params: {
+        method: 'flickr.photos.search',
+        api_key: apikeys.flick,
+        text: text,
+        format: 'json',
+        nojsoncallback: '1',
+        per_page: per_page,
+        page: page
+      },
+    });
+  }
+  public getFlickrPhotoInfo(photo_id: string, secret: string): Observable<any> {
+    return this.httpWithoutInterceptor.get('https://www.flickr.com/services/rest/', {
+      params: {
+        method: 'flickr.photos.getInfo',
+        api_key: apikeys.flick,
+        photo_id: photo_id,
+        secret: secret,
+        format: 'json',
+        nojsoncallback: '1'
+      },
     });
   }
 

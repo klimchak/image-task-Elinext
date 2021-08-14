@@ -1,3 +1,10 @@
+<div class="logout-timer" *ngIf="timeOutOff">
+  <div class="logout-timer-info">
+    <h2>You have logged out due to inaction.</h2>
+    <mat-divider></mat-divider>
+    <button mat-button (click)="redirectAfterLogOut()">Close</button>
+  </div>
+</div>
 <mat-toolbar color="primary">
   <span>{{title}}</span>
   <span class="spacer"></span>
@@ -9,15 +16,6 @@
       alt="logoPocket"
       style="width: 100%;height: 100%;">
     <img *ngIf="loginToRaindrop" src="{{ userPhotoRaindrop }}" alt="photoUser" style="width: 100%;height: 100%;">
-  </button>
-  <button mat-icon-button class="icon favorite-icon" aria-label="Icon-button with heart icon" mat-raised-button
-          (click)="openDialog()">
-    <img
-      *ngIf="userPhoto == null"
-      src="https://image.similarpng.com/very-thumbnail/2020/12/Illustration-of-Google-icon-on-transparent-background-PNG.png"
-      alt="photoUser"
-      style="width: 100%;height: 100%;">
-    <img *ngIf="userPhoto != null" src="{{ userPhoto }}" alt="photoUser" style="width: 100%;height: 100%;">
   </button>
 </mat-toolbar>
 

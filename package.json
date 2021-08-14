@@ -1,9 +1,9 @@
 {
-  "name": "image-task-elilink",
+  "name": "image-task-elinext",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node server.js",
+    "start": "ng serve --ssl true \n --ssl-cert \"C:\\Users\\klim\\WebstormProjects\\image-task-elilink\\Local.crt\" \n --ssl-key \"C:\\Users\\klim\\WebstormProjects\\image-task-elilink\\Local.key\"",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "heroku-postbuild": "ng build --prod"
@@ -26,16 +26,17 @@
     "@cedx/ngx-webstorage": "^6.0.0",
     "@types/cors": "^2.8.12",
     "angular-auth-oidc-client": "12.0.2",
+    "angular-user-idle": "^2.2.6",
     "angular-web-storage": "^12.0.0",
     "angularx-social-login": "^4.0.1",
     "cors": "^2.8.5",
     "evernote": "^2.0.5",
     "express": "^4.17.1",
+    "http-proxy-middleware": "^0.19.1",
     "passport-oauth2": "^1.6.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "typescript": "~4.3.5",
-    "http-proxy-middleware": "^0.19.1",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

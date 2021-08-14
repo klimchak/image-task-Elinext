@@ -18,17 +18,13 @@ import {MatChipsModule} from "@angular/material/chips";
 import {FormsModule} from "@angular/forms";
 import {BookmarkComponent} from './bookmark/bookmark.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {ReactiveFormsModule} from '@angular/forms';
-import {SocialLoginModule, SocialAuthServiceConfig} from 'angularx-social-login';
-import {GoogleLoginProvider} from 'angularx-social-login';
-import {DialogLoginComponent} from './dialog-login/dialog-login.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatDividerModule} from "@angular/material/divider";
 import {AngularWebStorageModule} from 'angular-web-storage';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {PageEvent} from '@angular/material/paginator';
-import {apikeys} from "./app.apikey";
 import {DialogLoginRaindropComponent} from './dialog-login-raindrop/dialog-login-raindrop.component';
+import {UserIdleModule} from "angular-user-idle";
 
 @NgModule({
   declarations: [
@@ -36,7 +32,6 @@ import {DialogLoginRaindropComponent} from './dialog-login-raindrop/dialog-login
     SearchComponent,
     CardblockComponent,
     BookmarkComponent,
-    DialogLoginComponent,
     DialogLoginRaindropComponent
   ],
   imports: [
@@ -53,30 +48,15 @@ import {DialogLoginRaindropComponent} from './dialog-login-raindrop/dialog-login
     MatInputModule,
     MatGridListModule,
     MatChipsModule,
-    ReactiveFormsModule,
     FormsModule,
-    SocialLoginModule,
     MatDialogModule,
     MatDividerModule,
     FlexLayoutModule,
     AngularWebStorageModule,
     MatPaginatorModule,
+    UserIdleModule.forRoot({idle: 30, timeout: 10, ping: 120})
   ],
   providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: true,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              apikeys.google
-            )
-          }
-        ]
-      } as SocialAuthServiceConfig,
-    },
     PageEvent
   ],
   bootstrap: [AppComponent]

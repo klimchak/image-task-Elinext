@@ -4,9 +4,38 @@ mat-sidenav {
   padding: 16px;
   text-align: center;
 }
+
 .spacer {
   flex: 1 1 auto;
 }
-button{
+
+button {
   margin-right: 15px;
 }
+
+.logout-timer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  background: rgba(73, 73, 73, 0.83);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 2000;
+}
+
+.logout-timer-info > h2, .logout-timer-info > button {
+  margin: 30px 50px 30px 50px;
+  font-size: 2rem;
+}
+
+.logout-timer-info > button {
+  background-color: #2d2d2d;
+  padding: 10px;
+}
+
+

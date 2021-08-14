@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {PageEvent} from '@angular/material/paginator';
-import {apikeys} from "../app.apikey";
 import {DataService} from "../app.service";
 
 @Component({
@@ -37,17 +36,7 @@ export class SearchComponent implements OnInit {
 
   searchImage(event: any, pageNumber = 1, pageSize = 12) {
     event != null? event.preventDefault(): null;
-    this.http.get('https://www.flickr.com/services/rest/', {
-      params: {
-        method: 'flickr.photos.search',
-        api_key: apikeys.flick,
-        text: this.searchMessage,
-        format: 'json',
-        nojsoncallback: '1',
-        per_page: pageSize,
-        page: pageNumber
-      },
-    }).subscribe((response) => {
+    this.dataService.getFlickrPhoto(this.searchMessage, pageSize, pageNumber).subscribe((response) => {
       this.response = response;
       this.length = this.response.photos.pages;
     })

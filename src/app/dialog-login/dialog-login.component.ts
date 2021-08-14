@@ -81,18 +81,18 @@ export class DialogLoginComponent implements OnInit{
     this.timeLeft = 60;
   }
 
-  @HostListener('document:visibilitychange', ['$event'])
-  beforeunloadHandler(event: any): void {
-    if (document.hidden) {
-      this.startTimer();
-    } else {
-      this.pauseTimer();
-    }
+  // @HostListener('document:visibilitychange', ['$event'])
+  // beforeunloadHandler(event: any): void {
+  //   if (document.hidden) {
+  //     this.startTimer();
+  //   } else {
+  //     this.pauseTimer();
+  //   }
+  //
+  //   console.log(event)
+  // }
 
-    console.log(event)
-  }
-
-  @HostListener('mouseleave', ['$event'])
+  @HostListener('onmousemove', ['$event'])
   mouseleaveHandler(event: any): void {
     console.log(event)
   }

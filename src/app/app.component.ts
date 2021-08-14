@@ -1,12 +1,12 @@
-import {Component, OnInit, OnDestroy, OnChanges} from '@angular/core';
+import {Component, OnInit, OnDestroy, OnChanges, HostListener} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {DialogLoginComponent} from "./dialog-login/dialog-login.component";
 import {Subscription} from 'rxjs';
 import {DialogLoginRaindropComponent} from "./dialog-login-raindrop/dialog-login-raindrop.component";
 import {DataService} from "./app.service";
 import {HttpBackend, HttpClient} from "@angular/common/http";
-import {apikeys} from "./app.apikey";
 import {LocalStorageService} from "angular-web-storage";
+import {UserIdleService} from 'angular-user-idle';
+import {apikeys} from "./app.apikey";
 
 @Component({
   selector: 'app-root',
@@ -27,17 +27,36 @@ export class AppComponent implements OnInit, OnDestroy {
   mapIdPhotos = new Map<string, string>();
   containerSearch: boolean = true;
   containerBookmark: boolean = false;
+  apiKeys = apikeys;
+  timeOutOff: boolean = false;
+  watchIsStart: boolean = false;
 
   constructor(
     public dialog: MatDialog,
     private readonly dataService: DataService,
     private httpClient: HttpClient,
     private httpBackend: HttpBackend,
-    private local: LocalStorageService
+    private local: LocalStorageService,
+    private userIdle: UserIdleService
   ) {
   }
 
   ngOnInit() {
+    //Start watching for user inactivity.
+    this.userIdle.startWatching();
+    // Start watch when time is up.
+    this.userIdle.onTimeout().subscribe(() => {
+      this.local.remove('access_token');
+      this.local.remove('refresh_token');
+      this.local.remove('token_type');
+      this.local.remove('collection_id');
+      this.loginToRaindrop = false;
+      this.dataService.changePhotoUrlRaindrop(null);
+      this.dataService.changeloginToRaindrop(false);
+      this.dataService.loginToRaindrop = false;
+      this.timeOutOff = true;
+    });
+
     this.dataService.photoUrlRaindrop$.subscribe((value) => {
       this.userPhotoRaindrop = value;
     });
@@ -80,6 +99,26 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  stop() {
+    this.userIdle.stopTimer();
+  }
+
+  stopWatching() {
+    this.userIdle.stopWatching();
+  }
+
+  startWatching() {
+    this.userIdle.startWatching();
+  }
+
+  restart() {
+    this.userIdle.resetTimer();
+  }
+
+  redirectAfterLogOut() {
+    window.location.href = this.apiKeys.raindropApi.redirect_uri;
+  }
+
   getIdCollection(redirect: boolean): void {
     let devCollection = false;
     console.log('this.collectionData.items.length', this.collectionData.items)
@@ -104,16 +143,9 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       });
       redirect ? window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue" : null;
+      // Start watching when user idle is starting.
+      this.userIdle.onTimerStart().subscribe(count => console.log(count));
     }
-  }
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogLoginComponent, {
-      width: '350px'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
   }
 
   openDialogRaindrop(): void {
@@ -137,5 +169,17 @@ export class AppComponent implements OnInit, OnDestroy {
   setScreenBookmark() {
     this.containerSearch = false;
     this.containerBookmark = true;
+  }
+
+  @HostListener('document:visibilitychange', ['$event'])
+  beforeunloadHandler(event: any): void {
+    if (this.watchIsStart) {
+      document.hidden ? this.stopWatching() : this.startWatching();
+    }
+  }
+
+  @HostListener('window:mousemove', ['$event'])
+  mouseleaveHandler(event: any): void {
+    this.restart();
   }
 }

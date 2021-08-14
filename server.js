@@ -48,11 +48,11 @@ app.use('/raindrops', proxyRaindrops);
 app.use('/user', proxyUser);
 app.use(cors());
 // Serve only the static files form the dist directory'./node_modules/http-proxy-middleware/lib/index'
-app.use(express.static('./dist/image-task-elilink'));
+app.use(express.static('./dist/image-task-elinext'));
 
 
 app.get('/*', (req, res) =>
-  res.sendFile('index.html', {root: 'dist/image-task-elilink/'})
+  res.sendFile('index.html', {root: 'dist/image-task-elinext/'})
 );
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 8080)
