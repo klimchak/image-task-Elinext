@@ -47,7 +47,7 @@ export class CardblockComponent implements OnInit {
         },
       }).subscribe((response) => {
         this.response = response;
-        if (this.response && this.getLocal()) {
+        if (this.response && this.getLocal() && !this.loginToRaindrop) {
           this.removeBookmark = true;
         }
       });
