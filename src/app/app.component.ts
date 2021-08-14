@@ -121,7 +121,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   getIdCollection(redirect: boolean): void {
     let devCollection = false;
-    console.log('this.collectionData.items.length', this.collectionData.items)
     for (let i = 0; i < this.collectionData.items.length; i++) {
       if (this.collectionData.items[i].title == 'taskImageElinext') {
         this.local.set('collection_id', this.collectionData.items[i]._id);
@@ -173,7 +172,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   @HostListener('document:visibilitychange', ['$event'])
   beforeunloadHandler(event: any): void {
-    if (this.watchIsStart) {
+    if (this.watchIsStart && this.loginToRaindrop) {
       document.hidden ? this.stopWatching() : this.startWatching();
     }
   }

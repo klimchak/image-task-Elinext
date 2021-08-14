@@ -12,6 +12,7 @@ import {LocalStorageService} from "angular-web-storage";
 export class DialogLoginRaindropComponent implements OnInit {
   public loginToRaindrop = this.dataService.loginToRaindrop;
   userData: any;
+  apiKey = apikeys;
 
   constructor(
     public dialogRef: MatDialogRef<DialogLoginRaindropComponent>,
@@ -44,6 +45,7 @@ export class DialogLoginRaindropComponent implements OnInit {
     this.dataService.changePhotoUrlRaindrop(null);
     this.dataService.changeloginToRaindrop(false);
     this.dataService.loginToRaindrop = false;
+    window.location.href = this.apiKey.raindropApi.redirect_uri;
   }
 
   onNoClick(): void {
