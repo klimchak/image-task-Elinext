@@ -102,8 +102,7 @@ export class AppComponent implements OnInit, OnDestroy {
     } else {
       let devCollection = false;
       for (let i = 0; i < this.collectionData.items; i++) {
-        console.log('this.req.items[i].title == \'task-image-elinext\'', this.collectionData.items[i].title, this.collectionData.items[i].title == 'task-image-elinext')
-        if (this.collectionData.items[i].title == 'task-image-elinext') {
+        if (this.collectionData.items[i].title === 'task-image-elinext') {
           this.local.set('collection_id', this.collectionData.items[i]._id);
           devCollection = true;
           break;
