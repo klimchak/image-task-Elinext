@@ -39,7 +39,7 @@ export class CardblockComponent implements OnInit {
     this.dataService.loginToRaindrop$.subscribe((value) => {
       this.loginToRaindrop = value;
     });
-    if (!this.loginToRaindrop){
+    if (!this.loginToRaindrop || !this.bookmarkPage){
       this.http.get('https://www.flickr.com/services/rest/', {
         params: {
           method: 'flickr.photos.getInfo',
@@ -51,19 +51,17 @@ export class CardblockComponent implements OnInit {
         },
       }).subscribe((response) => {
         this.response = response;
-        if(!this.loginToRaindrop){
-          if (response && this.get()) {
-            this.removeBookmark = true;
-          }
-        }else {
-          console.log('this.mapIdRaindrop.get(this.idImage)', this.mapIdRaindrop.get(this.idImage))
-          if(this.mapIdRaindrop.get(this.idImage)){
-            console.log('this.mapIdRaindrop.get(this.idImage)', this.mapIdRaindrop.get(this.idImage))
-            this.removeBookmark = true;
-          }
+        if (response && this.get()) {
+          this.removeBookmark = true;
         }
       });
+    }else {
+      if(this.mapIdRaindrop.get(this.idImage)){
+        console.log('this.mapIdRaindrop.get(this.idImage)', this.mapIdRaindrop.get(this.idImage))
+        this.removeBookmark = true;
+      }
     }
+
 
   }
 
