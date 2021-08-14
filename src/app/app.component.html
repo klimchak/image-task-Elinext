@@ -36,8 +36,8 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <app-search [loginToRaindrop]="loginToRaindrop" *ngIf="containerSearch"></app-search>
-    <app-bookmark [loginToRaindrop]="loginToRaindrop" *ngIf="containerBookmark"></app-bookmark>
+    <app-search [mapIdRaindrop]="mapIdPhotos" [loginToRaindrop]="loginToRaindrop" *ngIf="containerSearch"></app-search>
+    <app-bookmark [mapIdRaindrop]="mapIdPhotos" [loginToRaindrop]="loginToRaindrop" *ngIf="containerBookmark"></app-bookmark>
   </mat-sidenav-content>
 
 </mat-sidenav-container>

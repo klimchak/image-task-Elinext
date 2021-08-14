@@ -12,6 +12,7 @@ import {DataService} from "../app.service";
 
 export class SearchComponent implements OnInit {
   @Input() loginToRaindrop: any;
+  @Input() mapIdRaindrop: any;
   length: number | undefined;
   pageSize: number = 12;
   pageSizeOptions: number[] = [5, 10, 25, 100];

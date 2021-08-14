@@ -13,7 +13,7 @@ export class BookmarkComponent implements OnInit, OnChanges {
   dataStorageRaindrop: any;
   dataNotFound: boolean = true;
   @Input() loginToRaindrop: any;
-
+  @Input() mapIdRaindrop: any;
   constructor(
     private localStorage: LocalStorageService,
     private readonly dataService: DataService,
