@@ -15,7 +15,7 @@
       fxFlex.md="50%"
       fxFlex.xs="100%">
       <app-cardblock *ngIf="!loginToRaindrop" [bookmarkPage]="true" [idImage]="ph.id"  [secret]="ph.secret"></app-cardblock>
-      <app-cardblock *ngIf="loginToRaindrop" [bookmarkPage]="true" [idImage]="ph.title" [urlImageRaindrop]="ph.link"></app-cardblock>
+      <app-cardblock *ngIf="loginToRaindrop" [bookmarkPage]="true" [idImage]="ph.title" [tags]="tagsRaindrop" [urlImageRaindrop]="ph.link"></app-cardblock>
     </div>
   </div>
   <ng-template #elseBlock>
