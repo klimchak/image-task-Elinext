@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {HttpBackend, HttpClient} from "@angular/common/http";
 import {apikeys} from "./app.apikey";
@@ -15,6 +15,7 @@ export class DataService {
   ) {
 
   }
+
   private httpWithoutInterceptor = new HttpClient(this.httpBackend);
 
   public photoUrl$ = new Subject<any>();
@@ -28,15 +29,18 @@ export class DataService {
     this.photoUrl$.next(photoUrl);
     this.photoUrl = photoUrl;
   }
+
   public changePhotoUrlRaindrop(photoUrl: any) {
     this.photoUrlRaindrop$.next(photoUrl);
     this.photoUrlRaindrop = photoUrl;
   }
+
   public changeloginToRaindrop(boolLogin: any) {
     this.loginToRaindrop$.next(boolLogin);
     this.loginToRaindrop = boolLogin;
   }
-  public getLoginToRaindrop(){
+
+  public getLoginToRaindrop() {
     return this.loginToRaindrop;
   }
 
@@ -75,4 +79,25 @@ export class DataService {
     });
   }
 
+  public saveToRaindrop(link: string): Observable<any> {
+    return this.httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/raindrop', {
+      link: link,
+      collection: {
+        "title": "task-image-elinext",
+        "$id": this.local.get('collection_id')
+      }
+    }, {
+      headers: {'Authorization': 'Bearer ' + this.local.get('access_token')},
+      withCredentials: true
+    });
+  }
+
+  public removeFromRaindrop(idBookmark: string): Observable<any> {
+    return this.httpWithoutInterceptor.delete('https://task-img-elinext.herokuapp.com/raindrop/' + idBookmark, {
+      headers: {
+        'Authorization': 'Bearer ' + this.local.get('access_token')
+      },
+      withCredentials: true
+    })
+  }
 }

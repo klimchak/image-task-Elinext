@@ -23,7 +23,7 @@ export class CardblockComponent implements OnInit {
   removeBookmark: boolean = false;
   httpWithoutInterceptor = new HttpClient(this.httpBackend);
   req: any;
-
+  idInRaindrop: any;
   constructor(
     private http: HttpClient,
     private local: LocalStorageService,
@@ -53,22 +53,28 @@ export class CardblockComponent implements OnInit {
   }
 
   setRaindrop() {
-    this.httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/raindrop', {
-      link: "https://live.staticflickr.com/" + this.response.photo.server + "/" + this.response.photo.id + "_" + this.response.photo.secret + ".jpg",
-      collection: {
-        "title": "task-image-elinext",
-        "$id": this.local.get('collection_id')
-      },
-      title: this.response.photo.title._content
-    }, {
-      headers: {
-        'Authorization': 'Bearer ' + this.local.get('access_token')
-      },
-      withCredentials: true
-    }).subscribe((response) => {
+    let link = "https://live.staticflickr.com/" + this.response.photo.server + "/" + this.response.photo.id + "_" + this.response.photo.secret + ".jpg";
+    this.dataService.saveToRaindrop(link).subscribe((response) => {
       this.req = response;
-      console.log('getpocket.com', this.req)
+      this.idInRaindrop = this.req.item._id;
+      console.log('save link to raindrop', response)
     });
+    // this.httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/raindrop', {
+    //   link: "https://live.staticflickr.com/" + this.response.photo.server + "/" + this.response.photo.id + "_" + this.response.photo.secret + ".jpg",
+    //   collection: {
+    //     "title": "task-image-elinext",
+    //     "$id": this.local.get('collection_id')
+    //   },
+    //   title: this.response.photo.title._content
+    // }, {
+    //   headers: {
+    //     'Authorization': 'Bearer ' + this.local.get('access_token')
+    //   },
+    //   withCredentials: true
+    // }).subscribe((response) => {
+    //   this.req = response;
+    //   console.log('getpocket.com', this.req)
+    // });
     this.removeBookmark = true;
   }
 
@@ -78,18 +84,25 @@ export class CardblockComponent implements OnInit {
   }
 
   removeRaindrop() {
-    this.httpWithoutInterceptor.delete('https://task-img-elinext.herokuapp.com/raindrop/' + this.response.item._id, {
-      headers: {
-        'Authorization': 'Bearer ' + this.local.get('access_token')
-      },
-      withCredentials: true
-    }).subscribe((response) => {
+    this.dataService.removeFromRaindrop(this.idInRaindrop).subscribe((response) => {
       this.req = response;
       if (this.req.result) {
         this.removeBookmark = false;
       }
       console.log('getpocket.com', this.req)
     });
+    // this.httpWithoutInterceptor.delete('https://task-img-elinext.herokuapp.com/raindrop/' + this.response.item._id, {
+    //   headers: {
+    //     'Authorization': 'Bearer ' + this.local.get('access_token')
+    //   },
+    //   withCredentials: true
+    // }).subscribe((response) => {
+    //   this.req = response;
+    //   if (this.req.result) {
+    //     this.removeBookmark = false;
+    //   }
+    //   console.log('getpocket.com', this.req)
+    // });
   }
 
   remove() {
