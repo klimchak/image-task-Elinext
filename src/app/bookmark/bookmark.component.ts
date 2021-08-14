@@ -9,7 +9,7 @@ import {DataService} from "../app.service";
 })
 export class BookmarkComponent implements OnInit, OnChanges {
   dataStorage = new Array();
-  dataStorageRaindrop: any;
+  tagsRaindrop: any;
   dataNotFound: boolean = true;
   @Input() loginToRaindrop: any;
   @Input() mapIdRaindrop = new Map<string, string>();
@@ -58,9 +58,10 @@ export class BookmarkComponent implements OnInit, OnChanges {
 
   getPhotosRaindrop() {
     this.dataService.getBookmarksFromRaindrop().subscribe((response) => {
-      this.dataStorageRaindrop = response;
-      this.dataStorage = this.dataStorageRaindrop.items;
-      console.log('this.dataStorageRaindrop', this.dataStorageRaindrop)
+      // this.dataStorageRaindrop = response;
+      this.dataStorage = response.items;
+      this.tagsRaindrop = response.tags;
+      console.log('this.dataStorageRaindrop', this.dataStorage)
     });
   }
 }

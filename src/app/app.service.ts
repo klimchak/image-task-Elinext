@@ -88,10 +88,11 @@ export class DataService {
     });
   }
 
-  public saveToRaindrop(link: string, idPhoto: string): Observable<any> {
+  public saveToRaindrop(link: string, idPhoto: string, tags:{} = []): Observable<any> {
     return this.httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/raindrop', {
       link: link,
       title: idPhoto,
+      tags: tags,
       collection: {
         "$id": this.local.get('collection_id')
       }

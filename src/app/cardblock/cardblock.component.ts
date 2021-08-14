@@ -18,11 +18,9 @@ export class CardblockComponent implements OnInit {
   @Input() loginToRaindrop: any;
   @Input() mapIdRaindrop: any;
   @Input() urlImageRaindrop: any;
-  tags: string[] | undefined;
+  @Input() tags: {} | undefined;
   response: any;
-  ind: number | undefined;
   removeBookmark: boolean = false;
-  httpWithoutInterceptor = new HttpClient(this.httpBackend);
   req: any;
   idInRaindrop: any;
   constructor(
@@ -63,13 +61,14 @@ export class CardblockComponent implements OnInit {
         this.removeBookmark = true;
       }
     }
-
-
   }
 
   setRaindrop() {
+    let tags = [];
+    tags.push({server: this.response.photo.server, secret: this.response.photo.secret});
+    tags.push({tags: this.response.photo.tags});
     let link = "https://live.staticflickr.com/" + this.response.photo.server + "/" + this.response.photo.id + "_" + this.response.photo.secret + ".jpg";
-    this.dataService.saveToRaindrop(link, this.response.photo.id).subscribe((response) => {
+    this.dataService.saveToRaindrop(link, this.response.photo.id, tags).subscribe((response) => {
       this.req = response;
       this.idInRaindrop = this.req.item._id;
       this.mapIdRaindrop.set(this.response.photo.id, this.req.item._id);
