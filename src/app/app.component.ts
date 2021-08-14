@@ -53,25 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
             this.collectionData = response;
             console.log('this.local.get(\'collection_id\') == null', this.local.get('collection_id') == null);
             console.log('this.collectionData.item.length', this.collectionData.items.length);
-            if (this.collectionData.items.length == 0) {
-              this.dataService.createCollection().subscribe((response) => {
-                this.req = response;
-                this.local.set('collection_id', this.req.item._id);
-                console.log('collection_id', this.local.get('collection_id'));
-                window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
-              })
-            } else {
-              let devCollection = this.getIdCollection(this.collectionData);
-              if (!devCollection) {
-                this.dataService.createCollection().subscribe((response) => {
-                  this.req = response;
-                  this.local.set('collection_id', this.req.item._id);
-                  console.log('createCollection', this.req);
-                  console.log('collection_id', this.local.get('collection_id'));
-                  window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
-                });
-              }
-            }
+            this.getIdCollection(this.collectionData);
           });
 
         });
@@ -83,7 +65,12 @@ export class AppComponent implements OnInit, OnDestroy {
       this.dataService.changeloginToRaindrop(true);
       this.dataService.loginToRaindrop = true;
       if (this.local.get('collection_id') == null) {
-        this.dataService.getCollection();
+        this.dataService.getCollection().subscribe((response) =>{
+          this.collectionData = response;
+          console.log('this.local.get(\'collection_id\') == null', this.local.get('collection_id') == null);
+          console.log('this.collectionData.item.length', this.collectionData.items.length);
+          this.getIdCollection(this.collectionData);
+        });
       }
     }
     if (this.local.get('access_token') == null) {
@@ -104,17 +91,48 @@ export class AppComponent implements OnInit, OnDestroy {
     // });
   }
 
-  getIdCollection(dataCollection: any): boolean{
-    let interimBool = false;
-    for (let i = 0; i < this.collectionData.items; i++) {
-      console.log('this.req.items[i].title == \'task-image-elinext\'', this.collectionData.items[i].title, this.collectionData.items[i].title == 'task-image-elinext')
-      if (this.collectionData.items[i].title == 'task-image-elinext') {
-        this.local.set('collection_id', this.collectionData.items[i]._id);
-        interimBool = true;
-        break;
+  getIdCollection(dataCollection: any): void{
+    if (dataCollection.items.length == 0) {
+      this.dataService.createCollection().subscribe((response) => {
+        this.req = response;
+        this.local.set('collection_id', this.req.item._id);
+        console.log('collection_id', this.local.get('collection_id'));
+        window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
+      })
+    } else {
+      let devCollection = false;
+      for (let i = 0; i < dataCollection.items; i++) {
+        console.log('this.req.items[i].title == \'task-image-elinext\'', dataCollection.items[i].title, dataCollection.items[i].title == 'task-image-elinext')
+        if (dataCollection.items[i].title == 'task-image-elinext') {
+          this.local.set('collection_id', dataCollection.items[i]._id);
+          devCollection = true;
+          break;
+        }
+      }
+      if (!devCollection) {
+        this.dataService.createCollection().subscribe((response) => {
+          this.req = response;
+          this.local.set('collection_id', this.req.item._id);
+          console.log('createCollection', this.req);
+          console.log('collection_id', this.local.get('collection_id'));
+          window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
+        });
       }
     }
-    return interimBool;
+    //
+    //
+    //
+    //
+    // let interimBool = false;
+    // for (let i = 0; i < this.collectionData.items; i++) {
+    //   console.log('this.req.items[i].title == \'task-image-elinext\'', this.collectionData.items[i].title, this.collectionData.items[i].title == 'task-image-elinext')
+    //   if (this.collectionData.items[i].title == 'task-image-elinext') {
+    //     this.local.set('collection_id', this.collectionData.items[i]._id);
+    //     interimBool = true;
+    //     break;
+    //   }
+    // }
+    // return interimBool;
   }
 
 
