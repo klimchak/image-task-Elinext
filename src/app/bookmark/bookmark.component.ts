@@ -26,6 +26,9 @@ export class BookmarkComponent implements OnInit, OnChanges {
 
 
   ngOnInit(): void {
+    this.dataService.mapIdPhotos$.subscribe((value) => {
+      this.mapIdRaindrop = value;
+    });
     this.dataService.loginToRaindrop$.subscribe((value) => {
       this.loginToRaindrop = value;
     });

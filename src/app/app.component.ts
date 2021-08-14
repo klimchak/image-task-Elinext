@@ -24,7 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
   req: any;
   accessData: any;
   collectionData: any;
-  mapIdPhotos = new Map();
+  mapIdPhotos = new Map<string, string>();
 
   constructor(
     public dialog: MatDialog,
@@ -36,6 +36,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.dataService.mapIdPhotos$.subscribe((value) => {
+      this.mapIdPhotos = value;
+    });
     this.dataService.photoUrlRaindrop$.subscribe((value) => {
       this.userPhotoRaindrop = value;
     });

@@ -24,6 +24,15 @@ export class DataService {
   public photoUrl = '';
   public photoUrlRaindrop = '';
   public loginToRaindrop = false;
+  public mapIdPhotos$ = new Subject<Map<string, string>>();
+
+  public addIdMapIdPhotos() {
+    this.mapIdPhotos$.next();
+  }
+
+  // public removeIdMapIdPhotos() {
+  //   this.mapIdPhotos.delete();
+  // }
 
   public changePhotoUrl(photoUrl: any) {
     this.photoUrl$.next(photoUrl);

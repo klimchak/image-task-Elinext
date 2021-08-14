@@ -27,6 +27,9 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dataService.mapIdPhotos$.subscribe((value) => {
+      this.mapIdRaindrop = value;
+    });
     this.dataService.loginToRaindrop$.subscribe((value) => {
       this.loginToRaindrop = value;
     });
