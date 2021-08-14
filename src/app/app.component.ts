@@ -111,6 +111,8 @@ export class AppComponent implements OnInit, OnDestroy {
         console.log('collection_id', this.local.get('collection_id'));
         window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
       });
+    }else {
+      window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
     }
 
 
