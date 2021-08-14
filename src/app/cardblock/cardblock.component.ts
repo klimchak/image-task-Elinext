@@ -58,6 +58,7 @@ export class CardblockComponent implements OnInit {
     }else {
       if(this.mapIdRaindrop.get(this.idImage)){
         console.log('this.mapIdRaindrop.get(this.idImage)', this.mapIdRaindrop.get(this.idImage))
+        this.idInRaindrop = this.mapIdRaindrop.get(this.idImage);
         this.removeBookmark = true;
       }
     }
@@ -85,7 +86,7 @@ export class CardblockComponent implements OnInit {
     this.dataService.removeFromRaindrop(this.idInRaindrop).subscribe((response) => {
       this.req = response;
       if (this.req.result) {
-        this.mapIdRaindrop.delete(this.response.photo.id);
+        this.mapIdRaindrop.delete(this.idImage);
         this.removeBookmark = false;
       }
       console.log('removeRaindrop', this.req)
