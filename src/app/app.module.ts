@@ -54,7 +54,7 @@ import {UserIdleModule} from "angular-user-idle";
     FlexLayoutModule,
     AngularWebStorageModule,
     MatPaginatorModule,
-    UserIdleModule.forRoot({idle: 30, timeout: 10, ping: 120})
+    UserIdleModule.forRoot({idle: 60, timeout: 60, ping: 120})
   ],
   providers: [
     PageEvent
