@@ -36,9 +36,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.dataService.mapIdPhotos$.subscribe((value) => {
-      this.mapIdPhotos = value;
-    });
+    // this.dataService.mapIdPhotos$.subscribe((value) => {
+    //   this.mapIdPhotos = value;
+    // });
     this.dataService.photoUrlRaindrop$.subscribe((value) => {
       this.userPhotoRaindrop = value;
     });
@@ -55,11 +55,8 @@ export class AppComponent implements OnInit, OnDestroy {
           this.local.set('token_type', this.accessData.token_type);
           this.dataService.getCollection().subscribe((response) => {
             this.collectionData = response;
-            console.log('this.local.get(\'collection_id\') == null', this.local.get('collection_id') == null);
-            console.log('this.collectionData.item.length', this.collectionData.items.length);
-            this.getIdCollection();
+            this.getIdCollection(true);
           });
-
         });
       }
     }
@@ -68,14 +65,13 @@ export class AppComponent implements OnInit, OnDestroy {
       this.dataService.changePhotoUrlRaindrop("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKTmr2GzVIC2tOD7CTwHBQyh0BpIBBBJpE2g&usqp=CAU");
       this.dataService.changeloginToRaindrop(true);
       this.dataService.loginToRaindrop = true;
-      if (this.local.get('collection_id') == null) {
+      // if (this.local.get('collection_id') == null) {
         this.dataService.getCollection().subscribe((response) => {
           this.collectionData = response;
-          console.log('this.local.get(\'collection_id\') == null', this.local.get('collection_id') == null);
-          console.log('this.collectionData.item.length', this.collectionData.items.length);
-          this.getIdCollection();
+          this.getIdCollection(false);
         });
-      }
+      // }
+      // this.getIdCollection(false);
     }
     if (this.local.get('access_token') == null) {
       this.loginToRaindrop = false;
@@ -85,13 +81,11 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  getIdCollection(): void {
+  getIdCollection(redirect: boolean): void {
     let devCollection = false;
-    console.log('this.collectionData.items.length', this.collectionData.items.length)
-    console.log('this.collectionData.items', this.collectionData.items)
+    console.log('this.collectionData.items.length', this.collectionData.items)
     for (let i = 0; i < this.collectionData.items.length; i++) {
-      console.log('this.collectionData.items[i].title', this.collectionData.items[i].title)
-      if (this.collectionData.items[i].title === 'taskImageElinext') {
+      if (this.collectionData.items[i].title == 'taskImageElinext') {
         this.local.set('collection_id', this.collectionData.items[i]._id);
         devCollection = true;
         break;
@@ -101,15 +95,19 @@ export class AppComponent implements OnInit, OnDestroy {
       this.dataService.createCollection().subscribe((response) => {
         this.req = response;
         this.local.set('collection_id', this.req.item._id);
-        console.log('createCollection', this.req);
-        console.log('collection_id', this.local.get('collection_id'));
         window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
       });
     }else {
-      for (let i = 0; i < this.collectionData.items.length; i++){
-        this.mapIdPhotos.set(this.collectionData.items[i].title, this.collectionData.items[i]._id)
-      }
-      window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
+      this.dataService.getBookmarksFromRaindrop().subscribe((response) => {
+        // this.dataStorageRaindrop = response;
+        this.req = response;
+        for (let i = 0; i < this.req.items.length; i++){
+          this.dataService.mapIdPhotos$.set(this.req.items[i].title, this.req.items[i]._id)
+        }
+      });
+
+      console.log('firsf!!', this.dataService.mapIdPhotos$)
+      redirect? window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue": null;
     }
   }
 

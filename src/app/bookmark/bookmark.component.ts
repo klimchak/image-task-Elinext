@@ -9,10 +9,10 @@ import {DataService} from "../app.service";
 })
 export class BookmarkComponent implements OnInit, OnChanges {
   dataStorage = new Array();
-  tagsRaindrop: any;
   dataNotFound: boolean = true;
+  req: any;
   @Input() loginToRaindrop: any;
-  @Input() mapIdRaindrop = new Map<string, string>();
+  @Input() mapIdRaindrop: Map<string, string> | undefined;
   constructor(
     private localStorage: LocalStorageService,
     private readonly dataService: DataService
@@ -20,9 +20,9 @@ export class BookmarkComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.dataService.mapIdPhotos$.subscribe((value) => {
-      this.mapIdRaindrop = value;
-    });
+    // this.dataService.mapIdPhotos$.subscribe((value) => {
+    //   this.mapIdRaindrop = value;
+    // });
     this.dataService.loginToRaindrop$.subscribe((value) => {
       this.loginToRaindrop = value;
     });
@@ -59,8 +59,8 @@ export class BookmarkComponent implements OnInit, OnChanges {
   getPhotosRaindrop() {
     this.dataService.getBookmarksFromRaindrop().subscribe((response) => {
       // this.dataStorageRaindrop = response;
-      this.dataStorage = response.items;
-      this.tagsRaindrop = response.tags;
+      this.req = response;
+      this.dataStorage = this.req.items;
       console.log('this.dataStorageRaindrop', this.dataStorage)
     });
   }

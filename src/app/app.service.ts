@@ -24,11 +24,11 @@ export class DataService {
   public photoUrl = '';
   public photoUrlRaindrop = '';
   public loginToRaindrop = false;
-  public mapIdPhotos$ = new Subject<Map<string, string>>();
+  public mapIdPhotos$ = new Map<string, string>();
 
-  public addIdMapIdPhotos() {
-    this.mapIdPhotos$.next();
-  }
+  // public addIdMapIdPhotos(data: any) {
+  //   this.mapIdPhotos$.next(data);
+  // }
 
   // public removeIdMapIdPhotos() {
   //   this.mapIdPhotos.delete();
@@ -88,7 +88,7 @@ export class DataService {
     });
   }
 
-  public saveToRaindrop(link: string, idPhoto: string, tags:{} = []): Observable<any> {
+  public saveToRaindrop(link: string, idPhoto: string, tags: string[]): Observable<any> {
     return this.httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/raindrop', {
       link: link,
       title: idPhoto,

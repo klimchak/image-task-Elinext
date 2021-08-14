@@ -16,7 +16,7 @@ export class CardblockComponent implements OnInit {
   @Input() secret: string = "";
   @Input() bookmarkPage: boolean = false;
   @Input() loginToRaindrop: any;
-  @Input() mapIdRaindrop = new Map<string, string>();
+  @Input() mapIdRaindrop: Map<string, string> | undefined;
   @Input() urlImageRaindrop: any;
   @Input() tags: any;
   response: any;
@@ -31,13 +31,14 @@ export class CardblockComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataService.mapIdPhotos$.subscribe((value) => {
-      this.mapIdRaindrop = value;
-    });
+    // this.dataService.mapIdPhotos$.subscribe((value) => {
+    //   this.mapIdRaindrop = value;
+    // });
     this.dataService.loginToRaindrop$.subscribe((value) => {
       this.loginToRaindrop = value;
     });
-    if (!this.bookmarkPage || (this.bookmarkPage && !this.loginToRaindrop)){
+    console.log(this.mapIdRaindrop)
+    if ((!this.loginToRaindrop && this.bookmarkPage) || (!this.loginToRaindrop && !this.bookmarkPage) || (this.loginToRaindrop && !this.bookmarkPage)){
       this.http.get('https://www.flickr.com/services/rest/', {
         params: {
           method: 'flickr.photos.getInfo',
@@ -49,15 +50,15 @@ export class CardblockComponent implements OnInit {
         },
       }).subscribe((response) => {
         this.response = response;
-        if (response && this.get()) {
+        if (this.response && this.getLocal()) {
           this.removeBookmark = true;
         }
       });
     }
-    if (this.bookmarkPage && this.loginToRaindrop){
-      if(this.mapIdRaindrop.get(this.idImage)){
-        console.log('this.mapIdRaindrop.get(this.idImage)', this.mapIdRaindrop.get(this.idImage))
-        this.idInRaindrop = this.mapIdRaindrop.get(this.idImage);
+    if ((this.loginToRaindrop && this.bookmarkPage) || (this.loginToRaindrop && !this.bookmarkPage)){
+      if(this.dataService.mapIdPhotos$.get(this.idImage)){
+        console.log('this.mapIdRaindrop.get(this.idImage)', this.dataService.mapIdPhotos$.get(this.idImage))
+        this.idInRaindrop = this.dataService.mapIdPhotos$.get(this.idImage);
         this.removeBookmark = true;
       }
     }
@@ -65,20 +66,21 @@ export class CardblockComponent implements OnInit {
 
   setRaindrop() {
     let tags = [];
-    // tags.push({server: this.response.photo.server, secret: this.response.photo.secret});
-    tags.push({tags: this.response.photo.tags.tag});
+    for (let i = 0; i < this.response.photo.tags.tag.length; i++){
+      tags.push(this.response.photo.tags.tag[i].raw);
+    }
     let link = "https://live.staticflickr.com/" + this.response.photo.server + "/" + this.response.photo.id + "_" + this.response.photo.secret + ".jpg";
     this.dataService.saveToRaindrop(link, this.response.photo.id, tags).subscribe((response) => {
       this.req = response;
       this.idInRaindrop = this.req.item._id;
-      this.mapIdRaindrop.set(this.response.photo.id, this.req.item._id);
+      this.dataService.mapIdPhotos$.set(this.response.photo.id, this.req.item._id);
       console.log('save link to raindrop', response)
     });
     this.removeBookmark = true;
   }
 
   set() {
-    this.local.set(this.response.photo.id, JSON.stringify(this.response));
+    this.local.set(this.idImage, JSON.stringify(this.response));
     this.removeBookmark = true;
   }
 
@@ -86,7 +88,7 @@ export class CardblockComponent implements OnInit {
     this.dataService.removeFromRaindrop(this.idInRaindrop).subscribe((response) => {
       this.req = response;
       if (this.req.result) {
-        this.mapIdRaindrop.delete(this.idImage);
+        this.dataService.mapIdPhotos$.delete(this.idImage);
         this.removeBookmark = false;
       }
       console.log('removeRaindrop', this.req)
@@ -94,12 +96,18 @@ export class CardblockComponent implements OnInit {
   }
 
   remove() {
-    this.local.remove(this.response.photo.id);
+    this.local.remove(this.idImage);
+    // this.urlImageRaindrop = null;
     this.removeBookmark = false;
   }
 
-  get() {
-    let value = this.local.get(this.response.photo.id);
+  getLocal() {
+    let value = this.local.get(this.idImage);
+    return value != null;
+  }
+
+  getMap(){
+    let value = this.dataService.mapIdPhotos$.get(this.idImage)
     return value != null;
   }
 

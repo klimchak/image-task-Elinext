@@ -12,7 +12,7 @@ import {DataService} from "../app.service";
 
 export class SearchComponent implements OnInit {
   @Input() loginToRaindrop: any;
-  @Input() mapIdRaindrop: any;
+  @Input() mapIdRaindrop: Map<string, string> | undefined;
   length: number | undefined;
   pageSize: number = 12;
   pageSizeOptions: number[] = [5, 10, 25, 100];
@@ -27,9 +27,9 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataService.mapIdPhotos$.subscribe((value) => {
-      this.mapIdRaindrop = value;
-    });
+    // this.dataService.mapIdPhotos$.subscribe((value) => {
+    //   this.mapIdRaindrop = value;
+    // });
     this.dataService.loginToRaindrop$.subscribe((value) => {
       this.loginToRaindrop = value;
     });
