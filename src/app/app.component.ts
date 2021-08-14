@@ -56,8 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
             if (this.collectionData.items.length == 0) {
               this.dataService.createCollection().subscribe((response) => {
                 this.req = response;
-                this.local.set('collection_id', this.req.item.title._id);
-                console.log('createCollection', this.req);
+                this.local.set('collection_id', this.req.item._id);
                 console.log('collection_id', this.local.get('collection_id'));
                 window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
               })
@@ -66,7 +65,7 @@ export class AppComponent implements OnInit, OnDestroy {
               if (!devCollection) {
                 this.dataService.createCollection().subscribe((response) => {
                   this.req = response;
-                  this.local.set('collection_id', this.req.item.title._id);
+                  this.local.set('collection_id', this.req.item._id);
                   console.log('createCollection', this.req);
                   console.log('collection_id', this.local.get('collection_id'));
                   window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
@@ -110,7 +109,7 @@ export class AppComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.collectionData.items; i++) {
       console.log('this.req.items[i].title == \'task-image-elinext\'', this.collectionData.items[i].title, this.collectionData.items[i].title == 'task-image-elinext')
       if (this.collectionData.items[i].title == 'task-image-elinext') {
-        this.local.set('collection_id', this.collectionData.items[i].title._id);
+        this.local.set('collection_id', this.collectionData.items[i]._id);
         interimBool = true;
         break;
       }
