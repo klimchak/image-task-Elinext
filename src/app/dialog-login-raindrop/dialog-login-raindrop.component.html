@@ -1,9 +1,9 @@
-<div mat-dialog-content class="body-div-login" *ngIf="userData">
+<div mat-dialog-content class="body-div-login">
   <div *ngIf="!loginToRaindrop" class="mat-body">
     <h3>Hi! To save bookmarks in the Raindrop.io cloud, click the Login button</h3>
     <button mat-raised-button type="button" (click)="pressLogin()" *ngIf="!loginToRaindrop">Login</button>
   </div>
-  <div *ngIf="loginToRaindrop" class="mat-body">
+  <div *ngIf="loginToRaindrop && userData" class="mat-body">
     <h3>Hi, <span>{{userData.user.fullName}}</span></h3>
     <p>You are logged into the <span>Raindrop.io</span> service</p>
     <p>Email used for registration: <span>{{userData.user.email}}</span></p>
