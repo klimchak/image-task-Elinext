@@ -22,6 +22,8 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'ggg'
   code: string | undefined;
   req: any;
+  accessData: any;
+  collectionData: any;
 
   constructor(
     public dialog: MatDialog,
@@ -39,10 +41,40 @@ export class AppComponent implements OnInit, OnDestroy {
     this.dataService.loginToRaindrop$.subscribe((value) => {
       this.loginToRaindrop = value;
     });
-    if (this.local.get('access_token') == null){
+    if (this.local.get('access_token') == null) {
       this.code = new URL(window.location.toString()).searchParams.getAll('code')[0];
       if (this.code != undefined) {
-        this.getAccessToken();
+        this.dataService.getAccessToken(this.code).subscribe((response) => {
+          this.accessData = response;
+          this.local.set('access_token', this.accessData.access_token);
+          this.local.set('refresh_token', this.accessData.refresh_token);
+          this.local.set('token_type', this.accessData.token_type);
+          this.dataService.getCollection().subscribe((response) =>{
+            this.collectionData = response;
+          });
+          console.log('this.local.get(\'collection_id\') == null', this.local.get('collection_id') == null);
+          console.log('this.collectionData.item.length', this.collectionData.item.length);
+          if (this.collectionData.item.length == 0) {
+            this.dataService.createCollection().subscribe((response) => {
+              this.req = response;
+              this.local.set('collection_id', this.req.item.title._id);
+              console.log('createCollection', this.req)
+              console.log('collection_id', this.local.get('collection_id'))
+              window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
+            })
+          } else {
+            let devCollection = this.getIdCollection(this.collectionData);
+            if (!devCollection) {
+              this.dataService.createCollection().subscribe((response) => {
+                this.req = response;
+                this.local.set('collection_id', this.req.item.title._id);
+                console.log('createCollection', this.req)
+                console.log('collection_id', this.local.get('collection_id'));
+                window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
+              });
+            }
+          }
+        });
       }
     }
     if (this.local.get('access_token') != null) {
@@ -51,7 +83,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.dataService.changeloginToRaindrop(true);
       this.dataService.loginToRaindrop = true;
       if (this.local.get('collection_id') == null) {
-        this.getCollection();
+        this.dataService.getCollection();
       }
     }
     if (this.local.get('access_token') == null) {
@@ -72,78 +104,92 @@ export class AppComponent implements OnInit, OnDestroy {
     // });
   }
 
-  getAccessToken(): void {
-    let body = {
-      grant_type: apikeys.raindropApi.grant_type,
-      code: this.code,
-      client_id: apikeys.raindropApi.client_id,
-      client_secret: apikeys.raindropApi.client_secret,
-      redirect_uri: apikeys.raindropApi.redirect_uri
+  getIdCollection(dataCollection: any): boolean{
+    let interimBool = false;
+    for (let i = 0; i < this.collectionData.items; i++) {
+      console.log('this.req.items[i].title == \'task-image-elinext\'', this.collectionData.items[i].title, this.collectionData.items[i].title == 'task-image-elinext')
+      if (this.collectionData.items[i].title == 'task-image-elinext') {
+        this.local.set('collection_id', this.collectionData.items[i].title._id);
+        interimBool = true;
+        break;
+      }
     }
-    let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-    httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/access_token', JSON.stringify(body), {
-      headers: {
-        'content-type': 'application/json; charset=utf-8'
-      }
-    }).subscribe((response) => {
-      this.req = response;
-      this.local.set('access_token', this.req.access_token);
-      this.local.set('refresh_token', this.req.refresh_token);
-      this.local.set('token_type', this.req.token_type);
-      this.req = this.getCollection();
-      console.log('this.local.get(\'collection_id\') == null', this.local.get('collection_id') == null);
-      console.log('this.req.item.length', this.local.get('collection_id') == null);
-      if (this.req.item.length == 0) {
-        this.createCollection(true)
-      } else {
-        let devCollection = false;
-        for (let i = 0; i < this.req.items; i++) {
-          console.log('this.req.items[i].title == \'task-image-elinext\'', this.req.items[i].title, this.req.items[i].title == 'task-image-elinext')
-          if (this.req.items[i].title == 'task-image-elinext') {
-            this.local.set('collection_id', this.req.items[i].title._id);
-            devCollection = true;
-            break;
-          }
-        }
-        if (!devCollection) {
-          this.createCollection(true)
-        }
-        window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue"
-      }
-    });
+    return interimBool;
   }
 
-  getCollection(): any {
-    let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-    httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/collections', {
-      headers: {
-        'Authorization': 'Bearer ' + this.local.get('access_token')
-      }
-    }).subscribe((response) => {
-      let data: any = response;
-      console.log('getCollection', response)
-      return data;
-    });
-  }
 
-  createCollection(redirect: boolean) {
-    let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-    let body = {
-      title: 'task-image-elinext'
-    }
-    httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/collection', JSON.stringify(body), {
-      headers: {
-        'Authorization': 'Bearer ' + this.local.get('access_token'),
-        'content-type': 'application/json; charset=utf-8'
-      }
-    }).subscribe((response) => {
-      this.req = response;
-      this.local.set('collection_id', this.req.item.title._id);
-      console.log('createCollection', this.req)
-      console.log('collection_id', this.local.get('collection_id'))
-      redirect ? window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue" : null;
-    });
-  }
+  // getAccessToken(): void {
+  //   let body = {
+  //     grant_type: apikeys.raindropApi.grant_type,
+  //     code: this.code,
+  //     client_id: apikeys.raindropApi.client_id,
+  //     client_secret: apikeys.raindropApi.client_secret,
+  //     redirect_uri: apikeys.raindropApi.redirect_uri
+  //   }
+  //   let httpWithoutInterceptor = new HttpClient(this.httpBackend);
+  //   httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/access_token', JSON.stringify(body), {
+  //     headers: {
+  //       'content-type': 'application/json; charset=utf-8'
+  //     }
+  //   }).subscribe((response) => {
+  //     this.req = response;
+  //     this.local.set('access_token', this.req.access_token);
+  //     this.local.set('refresh_token', this.req.refresh_token);
+  //     this.local.set('token_type', this.req.token_type);
+  //     this.req = this.getCollection();
+  //     console.log('this.local.get(\'collection_id\') == null', this.local.get('collection_id') == null);
+  //     console.log('this.req.item.length', this.local.get('collection_id') == null);
+  //     if (this.req.item.length == 0) {
+  //       this.createCollection(true)
+  //     } else {
+  //       let devCollection = false;
+  //       for (let i = 0; i < this.req.items; i++) {
+  //         console.log('this.req.items[i].title == \'task-image-elinext\'', this.req.items[i].title, this.req.items[i].title == 'task-image-elinext')
+  //         if (this.req.items[i].title == 'task-image-elinext') {
+  //           this.local.set('collection_id', this.req.items[i].title._id);
+  //           devCollection = true;
+  //           break;
+  //         }
+  //       }
+  //       if (!devCollection) {
+  //         this.createCollection(true)
+  //       }
+  //       window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue"
+  //     }
+  //   });
+  // }
+  //
+  // getCollection(): any {
+  //   let httpWithoutInterceptor = new HttpClient(this.httpBackend);
+  //   httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/collections', {
+  //     headers: {
+  //       'Authorization': 'Bearer ' + this.local.get('access_token')
+  //     }
+  //   }).subscribe((response) => {
+  //     let data: any = response;
+  //     console.log('getCollection', response)
+  //     return data;
+  //   });
+  // }
+  //
+  // createCollection(redirect: boolean) {
+  //   let httpWithoutInterceptor = new HttpClient(this.httpBackend);
+  //   let body = {
+  //     title: 'task-image-elinext'
+  //   }
+  //   httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/collection', JSON.stringify(body), {
+  //     headers: {
+  //       'Authorization': 'Bearer ' + this.local.get('access_token'),
+  //       'content-type': 'application/json; charset=utf-8'
+  //     }
+  //   }).subscribe((response) => {
+  //     this.req = response;
+  //     this.local.set('collection_id', this.req.item.title._id);
+  //     console.log('createCollection', this.req)
+  //     console.log('collection_id', this.local.get('collection_id'))
+  //     redirect ? window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue" : null;
+  //   });
+  // }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogLoginComponent, {
