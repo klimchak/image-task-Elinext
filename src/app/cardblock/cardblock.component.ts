@@ -52,7 +52,9 @@ export class CardblockComponent implements OnInit {
           this.removeBookmark = true;
         }
       }else {
-        if(this.mapIdRaindrop.get(this.response.photo.id)){
+        console.log('this.mapIdRaindrop.get(this.idImage)', this.mapIdRaindrop.get(this.idImage))
+        if(this.mapIdRaindrop.get(this.idImage)){
+          console.log('this.mapIdRaindrop.get(this.idImage)', this.mapIdRaindrop.get(this.idImage))
           this.removeBookmark = true;
         }
       }
