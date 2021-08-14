@@ -39,7 +39,7 @@ export class CardblockComponent implements OnInit {
     this.dataService.loginToRaindrop$.subscribe((value) => {
       this.loginToRaindrop = value;
     });
-    if (!this.loginToRaindrop || !this.bookmarkPage){
+    if (!this.bookmarkPage || (this.bookmarkPage && !this.loginToRaindrop)){
       this.http.get('https://www.flickr.com/services/rest/', {
         params: {
           method: 'flickr.photos.getInfo',
