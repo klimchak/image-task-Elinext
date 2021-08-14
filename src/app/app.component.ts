@@ -46,35 +46,35 @@ export class AppComponent implements OnInit, OnDestroy {
       if (this.code != undefined) {
         this.dataService.getAccessToken(this.code).subscribe((response) => {
           this.accessData = response;
-          this.local.set('access_token', this.accessData.access_token);
-          this.local.set('refresh_token', this.accessData.refresh_token);
-          this.local.set('token_type', this.accessData.token_type);
-          this.dataService.getCollection().subscribe((response) =>{
-            this.collectionData = response;
+        });
+        this.local.set('access_token', this.accessData.access_token);
+        this.local.set('refresh_token', this.accessData.refresh_token);
+        this.local.set('token_type', this.accessData.token_type);
+        this.dataService.getCollection().subscribe((response) => {
+          this.collectionData = response;
+        });
+        console.log('this.local.get(\'collection_id\') == null', this.local.get('collection_id') == null);
+        console.log('this.collectionData.item.length', this.collectionData.item.length);
+        if (this.collectionData.item.length == 0) {
+          this.dataService.createCollection().subscribe((response) => {
+            this.req = response;
           });
-          console.log('this.local.get(\'collection_id\') == null', this.local.get('collection_id') == null);
-          console.log('this.collectionData.item.length', this.collectionData.item.length);
-          if (this.collectionData.item.length == 0) {
+          this.local.set('collection_id', this.req.item.title._id);
+          console.log('createCollection', this.req)
+          console.log('collection_id', this.local.get('collection_id'))
+          window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
+        } else {
+          let devCollection = this.getIdCollection(this.collectionData);
+          if (!devCollection) {
             this.dataService.createCollection().subscribe((response) => {
               this.req = response;
-              this.local.set('collection_id', this.req.item.title._id);
-              console.log('createCollection', this.req)
-              console.log('collection_id', this.local.get('collection_id'))
-              window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
-            })
-          } else {
-            let devCollection = this.getIdCollection(this.collectionData);
-            if (!devCollection) {
-              this.dataService.createCollection().subscribe((response) => {
-                this.req = response;
-                this.local.set('collection_id', this.req.item.title._id);
-                console.log('createCollection', this.req)
-                console.log('collection_id', this.local.get('collection_id'));
-                window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
-              });
-            }
+            });
+            this.local.set('collection_id', this.req.item.title._id);
+            console.log('createCollection', this.req)
+            console.log('collection_id', this.local.get('collection_id'));
+            window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
           }
-        });
+        }
       }
     }
     if (this.local.get('access_token') != null) {
@@ -104,7 +104,7 @@ export class AppComponent implements OnInit, OnDestroy {
     // });
   }
 
-  getIdCollection(dataCollection: any): boolean{
+  getIdCollection(dataCollection: any): boolean {
     let interimBool = false;
     for (let i = 0; i < this.collectionData.items; i++) {
       console.log('this.req.items[i].title == \'task-image-elinext\'', this.collectionData.items[i].title, this.collectionData.items[i].title == 'task-image-elinext')

@@ -8,21 +8,21 @@ const options = {
   target: 'http://devapi.saved.io',
   changeOrigin: true,
   ws: false,
-  logLevel: 'debug',
+  logLevel: 'info',
   cookiePathRewrite: {"*": ""}
 };
 const optionsAccessToken = {
   target: 'https://raindrop.io/oauth',
   changeOrigin: true,
   ws: false,
-  logLevel: 'debug',
+  logLevel: 'info',
   cookiePathRewrite: {"*": ""}
 };
 const optionsCollectionsAndRaindrop = {
   target: 'https://api.raindrop.io/rest/v1',
   changeOrigin: true,
   ws: false,
-  logLevel: 'debug',
+  logLevel: 'info',
   cookiePathRewrite: {"*": ""}
 };
 
