@@ -16,6 +16,7 @@ export class CardblockComponent implements OnInit {
   @Input() secret: string = "";
   @Input() bookmarkPage: boolean = false;
   @Input() loginToRaindrop: any;
+  @Input() mapIdRaindrop: any;
   urlImage: string | undefined;
   tags: string[] | undefined;
   response: any;
@@ -46,15 +47,22 @@ export class CardblockComponent implements OnInit {
       },
     }).subscribe((response) => {
       this.response = response;
-      if (response && this.get()) {
-        this.removeBookmark = true;
+      if(!this.loginToRaindrop){
+        if (response && this.get()) {
+          this.removeBookmark = true;
+        }
+      }else {
+        if(this.mapIdRaindrop.get(this.response.photo.id)){
+          this.removeBookmark = true;
+        }
       }
+
     })
   }
 
   setRaindrop() {
     let link = "https://live.staticflickr.com/" + this.response.photo.server + "/" + this.response.photo.id + "_" + this.response.photo.secret + ".jpg";
-    this.dataService.saveToRaindrop(link).subscribe((response) => {
+    this.dataService.saveToRaindrop(link, this.response.photo.id).subscribe((response) => {
       this.req = response;
       this.idInRaindrop = this.req.item._id;
       console.log('save link to raindrop', response)
