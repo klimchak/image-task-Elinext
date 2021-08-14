@@ -55,7 +55,11 @@ export class CardblockComponent implements OnInit {
   setRaindrop() {
     this.httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/raindrop', {
       link: "https://live.staticflickr.com/" + this.response.photo.server + "/" + this.response.photo.id + "_" + this.response.photo.secret + ".jpg",
-      collection: this.local.get('collection_id')
+      collection: {
+        "title": "task-image-elinext",
+        "$id": this.local.get('collection_id')
+      },
+      title: this.response.photo.title._content
     }, {
       headers: {
         'Authorization': 'Bearer ' + this.local.get('access_token')
@@ -81,7 +85,7 @@ export class CardblockComponent implements OnInit {
       withCredentials: true
     }).subscribe((response) => {
       this.req = response;
-      if(this.req.result){
+      if (this.req.result) {
         this.removeBookmark = false;
       }
       console.log('getpocket.com', this.req)
