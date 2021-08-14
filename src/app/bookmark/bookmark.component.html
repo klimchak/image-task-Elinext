@@ -7,15 +7,17 @@
     class="image-container"
     fxLayout="row wrap"
     fxLayoutGap="grid"
-    *ngIf="dataStorage.length != 0; else elseBlock" >
+    *ngIf="dataStorage.length != 0; else elseBlock">
     <div
       *ngFor="let ph of dataStorage"
       fxFlex.xl="25%"
       fxFlex.lg="33%"
       fxFlex.md="50%"
       fxFlex.xs="100%">
-      <app-cardblock *ngIf="!loginToRaindrop" [bookmarkPage]="true" [idImage]="ph.id" [loginToRaindrop]="loginToRaindrop" [secret]="ph.secret"></app-cardblock>
-      <app-cardblock *ngIf="loginToRaindrop" [bookmarkPage]="true" [idImage]="ph.title" [loginToRaindrop]="loginToRaindrop" [tags]="ph.tags" [urlImageRaindrop]="ph.link"></app-cardblock>
+      <app-cardblock *ngIf="!loginToRaindrop" [bookmarkPage]="true" [idImage]="ph.id"
+                     [loginToRaindrop]="loginToRaindrop" [secret]="ph.secret"></app-cardblock>
+      <app-cardblock *ngIf="loginToRaindrop" [bookmarkPage]="true" [idImage]="ph.title"
+                     [loginToRaindrop]="loginToRaindrop" [tags]="ph.tags" [urlImageRaindrop]="ph.link"></app-cardblock>
     </div>
   </div>
   <ng-template #elseBlock>

@@ -23,6 +23,7 @@ export class CardblockComponent implements OnInit {
   removeBookmark: boolean = false;
   req: any;
   idInRaindrop: any;
+
   constructor(
     private http: HttpClient,
     private local: LocalStorageService,
@@ -31,14 +32,10 @@ export class CardblockComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.dataService.mapIdPhotos$.subscribe((value) => {
-    //   this.mapIdRaindrop = value;
-    // });
     this.dataService.loginToRaindrop$.subscribe((value) => {
       this.loginToRaindrop = value;
     });
-    console.log(this.mapIdRaindrop)
-    if ((!this.loginToRaindrop && this.bookmarkPage) || (!this.loginToRaindrop && !this.bookmarkPage) || (this.loginToRaindrop && !this.bookmarkPage)){
+    if ((!this.loginToRaindrop && this.bookmarkPage) || (!this.loginToRaindrop && !this.bookmarkPage) || (this.loginToRaindrop && !this.bookmarkPage)) {
       this.http.get('https://www.flickr.com/services/rest/', {
         params: {
           method: 'flickr.photos.getInfo',
@@ -55,9 +52,8 @@ export class CardblockComponent implements OnInit {
         }
       });
     }
-    if ((this.loginToRaindrop && this.bookmarkPage) || (this.loginToRaindrop && !this.bookmarkPage)){
-      if(this.dataService.mapIdPhotos$.get(this.idImage)){
-        console.log('this.mapIdRaindrop.get(this.idImage)', this.dataService.mapIdPhotos$.get(this.idImage))
+    if ((this.loginToRaindrop && this.bookmarkPage) || (this.loginToRaindrop && !this.bookmarkPage)) {
+      if (this.dataService.mapIdPhotos$.get(this.idImage)) {
         this.idInRaindrop = this.dataService.mapIdPhotos$.get(this.idImage);
         this.removeBookmark = true;
       }
@@ -66,7 +62,7 @@ export class CardblockComponent implements OnInit {
 
   setRaindrop() {
     let tags = [];
-    for (let i = 0; i < this.response.photo.tags.tag.length; i++){
+    for (let i = 0; i < this.response.photo.tags.tag.length; i++) {
       tags.push(this.response.photo.tags.tag[i].raw);
     }
     let link = "https://live.staticflickr.com/" + this.response.photo.server + "/" + this.response.photo.id + "_" + this.response.photo.secret + ".jpg";
@@ -74,7 +70,6 @@ export class CardblockComponent implements OnInit {
       this.req = response;
       this.idInRaindrop = this.req.item._id;
       this.dataService.mapIdPhotos$.set(this.response.photo.id, this.req.item._id);
-      console.log('save link to raindrop', response)
     });
     this.removeBookmark = true;
   }
@@ -91,13 +86,11 @@ export class CardblockComponent implements OnInit {
         this.dataService.mapIdPhotos$.delete(this.idImage);
         this.removeBookmark = false;
       }
-      console.log('removeRaindrop', this.req)
     });
   }
 
   remove() {
     this.local.remove(this.idImage);
-    // this.urlImageRaindrop = null;
     this.removeBookmark = false;
   }
 
@@ -106,9 +99,8 @@ export class CardblockComponent implements OnInit {
     return value != null;
   }
 
-  getMap(){
+  getMap() {
     let value = this.dataService.mapIdPhotos$.get(this.idImage)
     return value != null;
   }
-
 }

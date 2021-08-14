@@ -19,12 +19,14 @@ export class AppComponent implements OnInit, OnDestroy {
   userPhotoRaindrop: string | undefined;
   name: string | undefined;
   userPhoto: string | undefined;
-  title = 'ggg'
+  title = 'Image Finder'
   code: string | undefined;
   req: any;
   accessData: any;
   collectionData: any;
   mapIdPhotos = new Map<string, string>();
+  containerSearch: boolean = true;
+  containerBookmark: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -36,9 +38,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.dataService.mapIdPhotos$.subscribe((value) => {
-    //   this.mapIdPhotos = value;
-    // });
     this.dataService.photoUrlRaindrop$.subscribe((value) => {
       this.userPhotoRaindrop = value;
     });
@@ -65,16 +64,16 @@ export class AppComponent implements OnInit, OnDestroy {
       this.dataService.changePhotoUrlRaindrop("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKTmr2GzVIC2tOD7CTwHBQyh0BpIBBBJpE2g&usqp=CAU");
       this.dataService.changeloginToRaindrop(true);
       this.dataService.loginToRaindrop = true;
-      // if (this.local.get('collection_id') == null) {
-        this.dataService.getCollection().subscribe((response) => {
-          this.collectionData = response;
-          this.getIdCollection(false);
-        });
-      // }
-      // this.getIdCollection(false);
+      this.dataService.getCollection().subscribe((response) => {
+        this.collectionData = response;
+        this.getIdCollection(false);
+      });
     }
     if (this.local.get('access_token') == null) {
       this.loginToRaindrop = false;
+      this.local.remove('collection_id');
+      this.local.remove('refresh_token');
+      this.local.remove('token_type');
       this.dataService.changePhotoUrlRaindrop(null);
       this.dataService.changeloginToRaindrop(false);
       this.dataService.loginToRaindrop = false;
@@ -97,17 +96,14 @@ export class AppComponent implements OnInit, OnDestroy {
         this.local.set('collection_id', this.req.item._id);
         window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue";
       });
-    }else {
+    } else {
       this.dataService.getBookmarksFromRaindrop().subscribe((response) => {
-        // this.dataStorageRaindrop = response;
         this.req = response;
-        for (let i = 0; i < this.req.items.length; i++){
+        for (let i = 0; i < this.req.items.length; i++) {
           this.dataService.mapIdPhotos$.set(this.req.items[i].title, this.req.items[i]._id)
         }
       });
-
-      console.log('firsf!!', this.dataService.mapIdPhotos$)
-      redirect? window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue": null;
+      redirect ? window.location.href = "https://task-img-elinext.herokuapp.com/loginIsTrue" : null;
     }
   }
 
@@ -115,7 +111,6 @@ export class AppComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(DialogLoginComponent, {
       width: '350px'
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
@@ -125,7 +120,6 @@ export class AppComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(DialogLoginRaindropComponent, {
       width: '400px'
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
@@ -134,11 +128,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
-
-
-  // логика на странице
-  containerSearch: boolean = true;
-  containerBookmark: boolean = false;
 
   setScreenSearch() {
     this.containerSearch = true;

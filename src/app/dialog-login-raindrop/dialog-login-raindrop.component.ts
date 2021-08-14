@@ -1,9 +1,8 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {DataService} from "../app.service";
 import {apikeys} from "../app.apikey";
 import {LocalStorageService} from "angular-web-storage";
-import {HttpClient, HttpBackend} from "@angular/common/http";
 
 @Component({
   selector: 'app-dialog-login-raindrop',
@@ -17,8 +16,7 @@ export class DialogLoginRaindropComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DialogLoginRaindropComponent>,
     private readonly dataService: DataService,
-    private local: LocalStorageService,
-    private httpBackend: HttpBackend
+    private local: LocalStorageService
   ) {
   }
 
@@ -27,15 +25,8 @@ export class DialogLoginRaindropComponent implements OnInit {
       this.loginToRaindrop = value;
     });
     if (this.local.get('access_token')) {
-      let httpWithoutInterceptor = new HttpClient(this.httpBackend);
-      httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/user', {
-        headers: {
-          // 'content-type': 'application/json; charset=utf-8',
-          'Authorization': 'Bearer ' + this.local.get('access_token')
-        }
-      }).subscribe((response) => {
+      this.dataService.getUserData().subscribe((response) => {
         this.userData = response;
-        console.log('this.userData', this.userData)
       });
     }
   }

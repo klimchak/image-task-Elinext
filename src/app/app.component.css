@@ -1,6 +1,5 @@
 mat-sidenav {
   width: fit-content;
-  /*background: #ffffff;*/
   color: #000000;
   padding: 16px;
   text-align: center;
@@ -11,12 +10,3 @@ mat-sidenav {
 button{
   margin-right: 15px;
 }
-
-/*mat-sidenav-container {*/
-/*  height: calc(100vh - 128px);*/
-/*}*/
-
-mat-toolbar{
-  /*background-color: #797979 !important;*/
-}
-

@@ -20,9 +20,6 @@ export class BookmarkComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    // this.dataService.mapIdPhotos$.subscribe((value) => {
-    //   this.mapIdRaindrop = value;
-    // });
     this.dataService.loginToRaindrop$.subscribe((value) => {
       this.loginToRaindrop = value;
     });
@@ -58,10 +55,8 @@ export class BookmarkComponent implements OnInit, OnChanges {
 
   getPhotosRaindrop() {
     this.dataService.getBookmarksFromRaindrop().subscribe((response) => {
-      // this.dataStorageRaindrop = response;
       this.req = response;
       this.dataStorage = this.req.items;
-      console.log('this.dataStorageRaindrop', this.dataStorage)
     });
   }
 }

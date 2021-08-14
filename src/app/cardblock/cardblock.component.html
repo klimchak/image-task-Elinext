@@ -1,6 +1,6 @@
 <mat-card *ngIf="(response && !bookmarkPage) || (bookmarkPage && getLocal() || (urlImageRaindrop && getMap())) ">
-<!--  -->
-  <img mat-card-image *ngIf="(!loginToRaindrop && bookmarkPage) || (!loginToRaindrop && !bookmarkPage) || (loginToRaindrop && !bookmarkPage)"
+  <img mat-card-image
+       *ngIf="(!loginToRaindrop && bookmarkPage) || (!loginToRaindrop && !bookmarkPage) || (loginToRaindrop && !bookmarkPage)"
        src="{{ 'https://live.staticflickr.com/' + response.photo.server + '/' + response.photo.id + '_' + response.photo.secret + '.jpg' }}"
        alt="{{ response.photo.title._content }}">
   <img mat-card-image *ngIf="loginToRaindrop && bookmarkPage"
@@ -15,13 +15,14 @@
     <button mat-raised-button *ngIf="removeBookmark" (click)="removeRaindrop()">Remove Bookmark</button>
   </mat-card-actions>
   <mat-card-footer>
-    <mat-chip-list aria-label="Tags" *ngIf="(!loginToRaindrop && bookmarkPage) || (!loginToRaindrop && !bookmarkPage)|| (loginToRaindrop && !bookmarkPage)">
+    <mat-chip-list aria-label="Tags"
+                   *ngIf="(!loginToRaindrop && bookmarkPage) || (!loginToRaindrop && !bookmarkPage)|| (loginToRaindrop && !bookmarkPage)">
       <mat-chip class="tag" disabled *ngIf="response.photo.tags.tag.length == 0; else elseBlock">
         No tags
       </mat-chip>
       <ng-template #elseBlock ngFor let-tag [ngForOf]="response.photo.tags.tag" let-i="index">
         <mat-chip class="tag" *ngIf="i <= 5">
-          {{tag.raw.length > 8 ? tag.raw.slice(0, 8) + '...': tag.raw}}
+          {{tag.raw.length > 8 ? tag.raw.slice(0, 8) + '...' : tag.raw}}
         </mat-chip>
       </ng-template>
     </mat-chip-list>
@@ -31,7 +32,7 @@
       </mat-chip>
       <ng-template #elseBlock ngFor let-tag [ngForOf]="tags" let-i="index">
         <mat-chip class="tag" *ngIf="i <= 5">
-          {{tag.length > 8 ? tag.slice(0, 8) + '...': tag}}
+          {{tag.length > 8 ? tag.slice(0, 8) + '...' : tag}}
         </mat-chip>
       </ng-template>
     </mat-chip-list>

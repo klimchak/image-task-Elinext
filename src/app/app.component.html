@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <span>My App</span>
+  <span>{{title}}</span>
   <span class="spacer"></span>
   <button mat-icon-button class="icon favorite-icon" aria-label="Icon-button with heart icon" mat-raised-button
           (click)="openDialogRaindrop()">
@@ -37,7 +37,8 @@
 
   <mat-sidenav-content>
     <app-search [mapIdRaindrop]="mapIdPhotos" [loginToRaindrop]="loginToRaindrop" *ngIf="containerSearch"></app-search>
-    <app-bookmark [mapIdRaindrop]="mapIdPhotos" [loginToRaindrop]="loginToRaindrop" *ngIf="containerBookmark"></app-bookmark>
+    <app-bookmark [mapIdRaindrop]="mapIdPhotos" [loginToRaindrop]="loginToRaindrop"
+                  *ngIf="containerBookmark"></app-bookmark>
   </mat-sidenav-content>
 
 </mat-sidenav-container>

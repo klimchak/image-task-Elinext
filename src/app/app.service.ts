@@ -26,14 +26,6 @@ export class DataService {
   public loginToRaindrop = false;
   public mapIdPhotos$ = new Map<string, string>();
 
-  // public addIdMapIdPhotos(data: any) {
-  //   this.mapIdPhotos$.next(data);
-  // }
-
-  // public removeIdMapIdPhotos() {
-  //   this.mapIdPhotos.delete();
-  // }
-
   public changePhotoUrl(photoUrl: any) {
     this.photoUrl$.next(photoUrl);
     this.photoUrl = photoUrl;
@@ -49,10 +41,6 @@ export class DataService {
     this.loginToRaindrop = boolLogin;
   }
 
-  public getLoginToRaindrop() {
-    return this.loginToRaindrop;
-  }
-
   public getAccessToken(code: string): Observable<any> {
     let body = {
       grant_type: apikeys.raindropApi.grant_type,
@@ -64,6 +52,14 @@ export class DataService {
     return this.httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/access_token', JSON.stringify(body), {
       headers: {
         'content-type': 'application/json; charset=utf-8'
+      }
+    });
+  }
+
+  public getUserData(): Observable<any> {
+    return this.httpWithoutInterceptor.get('https://task-img-elinext.herokuapp.com/user', {
+      headers: {
+        'Authorization': 'Bearer ' + this.local.get('access_token')
       }
     });
   }

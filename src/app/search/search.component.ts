@@ -16,7 +16,6 @@ export class SearchComponent implements OnInit {
   length: number | undefined;
   pageSize: number = 12;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-
   response: any = null;
   searchMessage: string = "";
 
@@ -27,22 +26,16 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.dataService.mapIdPhotos$.subscribe((value) => {
-    //   this.mapIdRaindrop = value;
-    // });
     this.dataService.loginToRaindrop$.subscribe((value) => {
       this.loginToRaindrop = value;
     });
-    console.log('search', this.loginToRaindrop)
   }
 
   getNextPage(event: any): void {
-    console.log(event)
     this.searchImage(null,  event.pageIndex + 1, event.pageSize);
   }
 
   searchImage(event: any, pageNumber = 1, pageSize = 12) {
-    console.log(this.searchMessage)
     event != null? event.preventDefault(): null;
     this.http.get('https://www.flickr.com/services/rest/', {
       params: {
@@ -57,11 +50,6 @@ export class SearchComponent implements OnInit {
     }).subscribe((response) => {
       this.response = response;
       this.length = this.response.photos.pages;
-      console.log(response)
     })
   }
-
-
-
-
 }
