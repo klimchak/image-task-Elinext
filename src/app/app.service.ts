@@ -69,7 +69,7 @@ export class DataService {
 
   public createCollection(): Observable<any> {
     let body = {
-      title: 'task-image-elinext'
+      title: 'taskImageElinext'
     }
     return this.httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/collection', JSON.stringify(body), {
       headers: {
@@ -83,7 +83,7 @@ export class DataService {
     return this.httpWithoutInterceptor.post('https://task-img-elinext.herokuapp.com/raindrop', {
       link: link,
       collection: {
-        "title": "task-image-elinext",
+        "title": "taskImageElinext",
         "$id": this.local.get('collection_id')
       }
     }, {
