@@ -86,7 +86,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.local.set('refresh_token', this.req.refresh_token);
       this.local.set('token_type', this.req.token_type);
       this.req = this.getCollection();
-      console.log(this.req);
+      console.log(this.local.get('collection_id'));
       if (this.req.item.length == 0){
         this.createCollection(true)
       }else {
